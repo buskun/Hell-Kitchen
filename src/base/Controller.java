@@ -21,7 +21,7 @@ abstract public class Controller {
 
     public abstract void init();
 
-    protected final void start() {
+    public final void start() {
         run = true;
         new Thread(() -> {
             while (run) {
@@ -33,7 +33,8 @@ abstract public class Controller {
         }).start();
     }
 
-    protected final void stop() {
+    public final void stop() {
+        if (currentScene != null) currentScene.stop();
         run = false;
     }
 

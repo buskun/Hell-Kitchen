@@ -42,8 +42,6 @@ public class GameController extends Controller {
                 System.err.println("Cannot init class: " + sceneMap.get(name));
             }
         }
-
-        changeScene("first");
     }
 
     public GameController addSceneMap(String name, String className) {
