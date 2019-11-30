@@ -21,7 +21,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         window = _window;
 
         addKeyListener(this);
-        
+
         setBounds(0, 0, window.getWidth(), window.getHeight());
         setLayout(null);
 
@@ -63,7 +63,7 @@ abstract public class Scene extends JLabel implements KeyListener {
     /*
      * Class Methods
      **/
-    public final void start() {
+    synchronized public final void start() {
         if (!readyFlag) init();
 
         setVisible(true);
@@ -75,7 +75,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         onStart();
     }
 
-    public final void stop() {
+    synchronized public final void stop() {
         onStop();
 
         setVisible(false);

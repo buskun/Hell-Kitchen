@@ -1,11 +1,16 @@
 package base;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 abstract public class Controller {
     private Scene loadingScene = null;
     private HashMap<String, Scene> sceneList = new HashMap<>();
+    private HashMap<String, String> sceneMap = new HashMap<>();
+    private Window window;
+
     private Scene currentScene;
+
     private boolean run = false;
     private int gameTick;
 
@@ -26,8 +31,11 @@ abstract public class Controller {
         new Thread(() -> {
             while (run) {
                 if (currentScene == null) continue;
-                while (!currentScene.isReady()) Thread.currentThread().interrupt();
-                currentScene.tick();
+                if (!currentScene.isReady()) {
+                    getLoadingScene().tick();
+                } else {
+                    currentScene.tick();
+                }
 
                 try { Thread.sleep(1000 / gameTick); } catch (InterruptedException ignored) { }
             }
@@ -42,7 +50,9 @@ abstract public class Controller {
         run = false;
     }
 
-    public final void addScene(String name, Scene scene) { sceneList.put(name, scene); }
+    public final void setWindow(Window _window) { window = _window; }
+
+    public final Window getWindow() { return window; }
 
     public final void removeScene(String name) { sceneList.remove(name); }
 
@@ -50,8 +60,28 @@ abstract public class Controller {
         if (sceneList.get(name) == null) return;
         if (sceneList.get(name) == currentScene) return;
 
-        if (currentScene != null) currentScene.stop();
-        currentScene = sceneList.get(name);
-        currentScene.start();
+        new Thread(() -> {
+            if (currentScene != null) currentScene.stop();
+            currentScene = sceneList.get(name);
+            currentScene.start();
+        }).start();
+    }
+
+    public final void addScene(String name, String className) { sceneMap.put(name, className); }
+
+    public final void loadScene() {
+        if (window == null) return;
+        for (String name : sceneMap.keySet()) {
+            try {
+                Scene scene = (Scene) Class.forName("game.scenes." + sceneMap.get(name)).getDeclaredConstructor(Window.class, Controller.class).newInstance(window, this);
+                sceneList.put(name, scene);
+            } catch (ClassNotFoundException exception) {
+                System.err.println("Cannot find class: " + sceneMap.get(name));
+            } catch (IllegalAccessException exception) {
+                System.err.println("Cannot access class: " + sceneMap.get(name));
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException exception) {
+                System.err.println("Cannot init class: " + sceneMap.get(name));
+            }
+        }
     }
 }
