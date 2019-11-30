@@ -26,6 +26,7 @@ abstract public class Controller {
         new Thread(() -> {
             while (run) {
                 if (currentScene == null) continue;
+                while (!currentScene.isReady()) Thread.currentThread().interrupt();
                 currentScene.tick();
 
                 try { Thread.sleep(1000 / gameTick); } catch (InterruptedException ignored) { }
@@ -34,7 +35,10 @@ abstract public class Controller {
     }
 
     public final void stop() {
-        if (currentScene != null) currentScene.stop();
+        if (currentScene != null) {
+            currentScene.stop();
+            currentScene = null;
+        }
         run = false;
     }
 

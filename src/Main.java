@@ -4,8 +4,8 @@ public class Main {
 
         gameController.addSceneMap("first", "FirstSceneTest");
 
-        gameController.changeScene("first");
         gameController.init();
+        gameController.changeScene("first");
         gameController.start();
     }
 }

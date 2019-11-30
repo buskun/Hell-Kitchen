@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.rmi.server.ExportException;
 
 abstract public class Scene extends JLabel implements KeyListener {
     private ImageLoader imageLoader;
@@ -111,4 +109,6 @@ abstract public class Scene extends JLabel implements KeyListener {
     public final void changeBackground(String imagePath) {
         changeBackground(new CustomImageIcon(imagePath));
     }
+
+    public boolean isReady() { return readyFlag && !imageLoader.isLoading(); }
 }
