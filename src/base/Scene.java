@@ -20,6 +20,8 @@ abstract public class Scene extends JLabel implements KeyListener {
         controller = _controller;
         window = _window;
 
+        addKeyListener(this);
+        
         setBounds(0, 0, window.getWidth(), window.getHeight());
         setLayout(null);
 
