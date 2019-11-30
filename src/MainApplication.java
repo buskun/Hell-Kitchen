@@ -1,4 +1,4 @@
-public class Main {
+public class MainApplication {
     public static void main(String[] args) {
         GameController gameController = new GameController();
 
