@@ -39,7 +39,7 @@ public class Utility {
         return new StateManager<>(initValue);
     }
 
-    public static <T> StateManager<T> useState() {
+    public static <T> StateManager<T> useState(Class<T> valueType) {
         return new StateManager<>();
     }
 }
