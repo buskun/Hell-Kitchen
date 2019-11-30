@@ -7,12 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 abstract public class Scene extends JLabel implements KeyListener {
     private ImageLoader imageLoader;
     private Controller controller;
     private Window window;
     private boolean readyFlag = false;
+    private HashMap<String, JComponent> componentIDMap = new HashMap<>();
 
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this);
@@ -112,5 +114,17 @@ abstract public class Scene extends JLabel implements KeyListener {
         changeBackground(new CustomImageIcon(imagePath));
     }
 
-    public boolean isReady() { return readyFlag && !imageLoader.isLoading(); }
+    public final boolean isReady() { return readyFlag && !imageLoader.isLoading(); }
+
+    public final void bindID(String id, JComponent component) { componentIDMap.put(id, component); }
+
+    public final void componentID(String id) { componentIDMap.get(id); }
+
+    public final String IDOf(JComponent component) {
+        return componentIDMap.keySet().stream().filter(_id -> componentIDMap.get(_id) == component).findFirst().orElse(null);
+    }
+
+    public final void unbindID(String id) { componentIDMap.remove(id); }
+
+    public final void unbindID(JComponent component) { unbindID(IDOf(component)); }
 }
