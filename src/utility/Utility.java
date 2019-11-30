@@ -24,7 +24,7 @@ public class Utility {
             }
         }
 
-        void stopRunning() { running = false; }
+        void stop() { running = false; }
     }
 
     public static Runnable setInterval(Supplier<Boolean> callback, int interval) {
@@ -32,7 +32,15 @@ public class Utility {
 
         new Thread(runnable).start();
 
-        return runnable::stopRunning;
+        return runnable::stop;
+    }
+
+    public static void setTimeout(Runnable callback, int time) {
+        new Thread(() -> {
+            try { Thread.sleep(time); } catch (Exception ignored) { }
+
+            callback.run();
+        }).start();
     }
 
     public static <T> StateManager<T> useState(T initValue) {
