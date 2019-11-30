@@ -3,6 +3,7 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
+import utility.Animator;
 import utility.StateManager;
 import utility.Utility;
 
@@ -15,17 +16,12 @@ public class LoadingScene extends Scene {
 
         StateManager<Integer> iconState = Utility.useState(0);
 
-        Utility.setInterval(() -> {
-            if (iconState.get() == 0) {
-                changeBackground("resources/images/base/fallback.png");
-                iconState.set(1);
-            } else if (iconState.get() == 1) {
-                changeBackground("resources/background.jpg");
-                iconState.set(0);
-            }
+        Animator<String> animator = new Animator<>(this::changeBackground);
 
-            return true;
-        }, 1000);
+        animator.setAnimationTime(1000);
+        animator.setAnimateSequence(new String[]{"resources/images/base/fallback.png", "resources/background.jpg"});
+
+        animator.start();
 
         ready();
     }
