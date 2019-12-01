@@ -16,7 +16,7 @@ public class Utility {
         @Override
         public void run() {
             while (running) {
-                running = callback.get();
+                running = !callback.get();
 
                 try {
                     Thread.sleep(interval);
