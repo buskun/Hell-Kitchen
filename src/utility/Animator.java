@@ -53,7 +53,7 @@ public class Animator<T> {
         Arrays.fill(animateTimeSequence, 0, animateTimeSequence.length, animateTime);
     }
 
-    public void setAnimationTimeSequence(int[] timeSequence) { animateTimeSequence = timeSequence; }
+    public void setAnimationTime(int[] timeSequence) { animateTimeSequence = timeSequence; }
 
     public void start() {
         running = true;
