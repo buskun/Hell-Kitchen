@@ -1,7 +1,5 @@
 package utility;
 
-import javax.swing.*;
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class Animator<T> {
@@ -17,43 +15,37 @@ public class Animator<T> {
         callbackMethod = method;
         animatorThread = new Thread(() -> {
             while (running) {
+                callbackMethod.accept(animateSequence[state]);
+
                 int delay = animateTime;
 
-                if (animateTimeSequence.length > state) {
+                if (animateTimeSequence != null && animateTimeSequence.length > state) {
                     delay = animateTimeSequence[state];
                 }
 
-                try { Thread.sleep(delay); } catch (Exception ignored) { }
-
-                callbackMethod.accept(animateSequence[state]);
-
                 state = (state + 1) % animateSequence.length;
+
+                try { Thread.sleep(delay); } catch (Exception ignored) { }
             }
         });
     }
 
     public void setAnimateSequence(T[] sequence) {
         animateSequence = sequence;
-
-        if (animateTimeSequence == null) setAnimationTime(animateTime);
+        setState(state);
     }
 
     public void setState(int newState) { state = newState % animateSequence.length; }
 
     public void setAnimationTime(int time) {
         animateTime = time;
-
-        if (animateSequence == null) {
-            animateTimeSequence = null;
-            return;
-        }
-
-        animateTimeSequence = new int[animateSequence.length];
-
-        Arrays.fill(animateTimeSequence, 0, animateTimeSequence.length, animateTime);
+        animateTimeSequence = null;
     }
 
-    public void setAnimationTime(int[] timeSequence) { animateTimeSequence = timeSequence; }
+    public void setAnimationTime(int[] timeSequence) {
+        animateTime = 0;
+        animateTimeSequence = timeSequence;
+    }
 
     public void start() {
         running = true;
