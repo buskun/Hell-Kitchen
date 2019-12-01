@@ -74,11 +74,21 @@ abstract public class Scene extends JLabel implements KeyListener {
         window.revalidate();
         window.repaint();
 
-        onStart();
+        try {
+            onStart();
+        } catch (Exception exception) {
+            System.err.println("Error while starting Scene " + getClass().getName());
+            exception.printStackTrace();
+        }
     }
 
     synchronized public final void stop() {
-        onStop();
+        try {
+            onStop();
+        } catch (Exception exception) {
+            System.err.println("Error while stopping Scene " + getClass().getName());
+            exception.printStackTrace();
+        }
 
         setVisible(false);
 
