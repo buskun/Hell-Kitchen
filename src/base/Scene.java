@@ -1,13 +1,16 @@
 package base;
 
 import components.CustomImageIcon;
+import utility.Animation;
 import utility.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 abstract public class Scene extends JLabel implements KeyListener {
     private ImageLoader imageLoader;
@@ -15,6 +18,7 @@ abstract public class Scene extends JLabel implements KeyListener {
     private Window window;
     private boolean readyFlag = false;
     private HashMap<String, JComponent> componentIDMap = new HashMap<>();
+    private ArrayList<Animation> animations = new ArrayList<>();
 
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this);
@@ -104,6 +108,17 @@ abstract public class Scene extends JLabel implements KeyListener {
         window.repaint();
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        for (Iterator<Animation> iterator = animations.iterator(); iterator.hasNext(); ) {
+            if (iterator.next().next()) continue;
+
+            iterator.remove();
+        }
+    }
+
     public final Window getWindow() { return window; }
 
     public final Controller getController() { return controller; }
@@ -137,4 +152,6 @@ abstract public class Scene extends JLabel implements KeyListener {
     public final void unbindID(String id) { componentIDMap.remove(id); }
 
     public final void unbindID(JComponent component) { unbindID(IDOf(component)); }
+
+    public final void addAnimation(Animation animation) { animations.add(animation); }
 }
