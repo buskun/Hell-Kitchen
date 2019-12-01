@@ -8,20 +8,17 @@ import utility.StateManager;
 import utility.Utility;
 
 public class LoadingScene extends Scene {
+    Animator<String> animator;
     public LoadingScene(Window window, Controller controller) { super(window, controller); }
 
     @Override
     public void init() {
-        changeBackground("resources/background.jpg");
-
         StateManager<Integer> iconState = Utility.useState(0);
 
-        Animator<String> animator = new Animator<>(this::changeBackground);
+        animator = new Animator<>(this::changeBackground);
 
         animator.setAnimationTime(1000);
-        animator.setAnimateSequence(new String[]{"resources/images/base/fallback.png", "resources/background.jpg"});
-
-        animator.start();
+        animator.setAnimateSequence(new String[]{"resources/background.jpg", "resources/images/base/fallback.png"});
 
         ready();
     }
@@ -30,8 +27,12 @@ public class LoadingScene extends Scene {
     public void tick() { }
 
     @Override
-    public void onStart() { }
+    public void onStart() {
+        animator.start();
+    }
 
     @Override
-    public void onStop() { }
+    public void onStop() {
+        animator.stop();
+    }
 }
