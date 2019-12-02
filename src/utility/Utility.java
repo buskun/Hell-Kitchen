@@ -1,8 +1,14 @@
 package utility;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 public class Utility {
+    private static HashMap<String, Font> customFontList = new HashMap<>();
+
     private static class IntervalRunnable implements Runnable {
         private boolean running = true;
         private Supplier<Boolean> callback;
@@ -50,4 +56,19 @@ public class Utility {
     public static <T> StateManager<T> useState(Class<T> valueType) {
         return new StateManager<>();
     }
+
+    public static void addCustomFont(String fontName, String fontPath) {
+        try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath));
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
+
+            customFontList.put(fontName, customFont);
+        } catch (IOException e) {
+            System.err.println("Cannot find font in " + fontPath);
+        } catch (FontFormatException e) {
+            System.err.println("Font in " + fontPath + " is invalid");
+        }
+    }
+
+    public static Font getFont(String name) { return customFontList.get(name); }
 }
