@@ -93,6 +93,7 @@ abstract public class Scene extends JLabel implements KeyListener {
             System.err.println("Error while stopping Scene " + getClass().getName());
             exception.printStackTrace();
         }
+        animations = new ArrayList<>();
 
         setVisible(false);
 
@@ -112,11 +113,16 @@ abstract public class Scene extends JLabel implements KeyListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        boolean hasAnimation = false;
+
         for (Iterator<Animation> iterator = animations.iterator(); iterator.hasNext(); ) {
+            hasAnimation = true;
             if (iterator.next().next()) continue;
 
             iterator.remove();
         }
+
+        if (hasAnimation) repaint();
     }
 
     public final Window getWindow() { return window; }
