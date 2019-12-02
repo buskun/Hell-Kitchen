@@ -3,10 +3,7 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
-import utility.Animation;
-import utility.Animator;
-import utility.StateManager;
-import utility.Utility;
+import utility.*;
 
 public class LoadingScene extends Scene {
     Animator<String> animator;
@@ -19,15 +16,29 @@ public class LoadingScene extends Scene {
 
         animator = new Animator<>(this::changeBackground);
 
-        animator.setAnimationTime(1000);
+        animator.setAnimationTime(200);
         animator.setAnimateSequence(new String[]{"resources/background.jpg", "resources/images/base/fallback.png"});
+
+        new Thread(() -> {
+            iconState.set(5);
+            iconState.get();
+        }).start();
+
+        Utility.setInterval(() -> {
+            // do Sth
+            return true;
+        }, 1000);
+
+        Utility.setTimeout(() -> {
+            // do Sth
+        }, 1000);
 
         StateManager<Double> value = Utility.useState(0.0);
 
         new Animation(this, (val) -> {
             System.out.println(val);
             value.set(val);
-        }, value::get, 10000, 1000);
+        }, value::get, AnimationMap.EASE_IN_ELASTIC, 100, 1000);
 
         ready();
     }

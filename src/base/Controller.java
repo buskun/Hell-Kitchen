@@ -6,7 +6,7 @@ import java.util.HashMap;
 abstract public class Controller {
     private Scene loadingScene = null;
     private HashMap<String, Scene> sceneList = new HashMap<>();
-    private HashMap<String, String> sceneMap = new HashMap<>();
+    private HashMap<String, Class<Scene>> sceneMap = new HashMap<>();
     private Window window;
 
     private Scene currentScene;
@@ -67,16 +67,13 @@ abstract public class Controller {
         }).start();
     }
 
-    public final void addScene(String name, String className) { sceneMap.put(name, className); }
+    public final  <SC extends Scene> void addScene(String name, Class<SC> sceneClass) { sceneMap.put(name, (Class<Scene>) sceneClass); }
 
     public final void loadScene() {
         if (window == null) return;
         for (String name : sceneMap.keySet()) {
             try {
-                Scene scene = (Scene) Class.forName("game.scenes." + sceneMap.get(name)).getDeclaredConstructor(Window.class, Controller.class).newInstance(window, this);
-                sceneList.put(name, scene);
-            } catch (ClassNotFoundException exception) {
-                System.err.println("Cannot find class: " + sceneMap.get(name));
+                sceneList.put(name, sceneMap.get(name).getDeclaredConstructor(Window.class, Controller.class).newInstance(window, this));
             } catch (IllegalAccessException exception) {
                 System.err.println("Cannot access class: " + sceneMap.get(name));
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException exception) {
