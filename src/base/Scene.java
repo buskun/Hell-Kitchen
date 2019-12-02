@@ -160,4 +160,13 @@ abstract public class Scene extends JLabel implements KeyListener {
     public final void unbindID(JComponent component) { unbindID(IDOf(component)); }
 
     public final void addAnimation(Animation animation) { animations.add(animation); }
+
+    public final Rectangle grid(double x, double y, double width, double height) {
+        return new Rectangle(
+                (int) Math.round(getWidth() * x),
+                (int) Math.round(getHeight() * y),
+                (int) Math.round(getWidth() * width),
+                (int) Math.round(getHeight() * height)
+        );
+    }
 }
