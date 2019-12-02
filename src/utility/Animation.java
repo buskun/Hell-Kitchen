@@ -6,25 +6,27 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Animation {
-    Consumer<Double> valueSetter;
-    Supplier<Double> valueGetter;
-    long lastAnimatedTime;
-    long startTime;
-    int totalAnimateTime;
-    double endValue;
-    Scene currentScene;
+    private Consumer<Double> valueSetter;
+    private Supplier<Double> valueGetter;
+    private long lastAnimatedTime;
+    private long startTime;
+    private int totalAnimateTime;
+    private double endValue;
+    private double startValue;
+    private AnimationMap easingEffect;
 
-    public Animation(Scene scene, Consumer<Double> setter, Supplier<Double> getter, double to, int time) {
+    public Animation(Scene scene, Consumer<Double> setter, Supplier<Double> getter, AnimationMap easing, double to, int time) {
         valueSetter = setter;
         valueGetter = getter;
         totalAnimateTime = time;
         endValue = to;
-        currentScene = scene;
+        startValue = valueGetter.get();
+        easingEffect = easing;
 
         lastAnimatedTime = -1;
         startTime = -1;
 
-        currentScene.addAnimation(this);
+        scene.addAnimation(this);
     }
 
     public boolean next() {
@@ -35,19 +37,15 @@ public class Animation {
             return true;
         }
 
-        double currentValue = valueGetter.get();
-
         long remainingTime = (totalAnimateTime - (lastAnimatedTime - startTime));
 
 
         if (remainingTime > 0) {
-            double newValue = ((endValue - currentValue) * (lastAnimatedTime - startTime) / totalAnimateTime) + currentValue;
+            double newValue = ((endValue - startValue) * easingEffect.getValueScale((double) 100 * (lastAnimatedTime - startTime)/ totalAnimateTime)) / 100;
             valueSetter.accept(newValue);
-            currentScene.repaint();
             return true;
         } else {
             valueSetter.accept(endValue);
-            currentScene.repaint();
             return false;
         }
     }
