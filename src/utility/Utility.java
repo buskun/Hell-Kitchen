@@ -1,8 +1,10 @@
 package utility;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.function.Supplier;
 
@@ -71,4 +73,16 @@ public class Utility {
     }
 
     public static Font getFont(String name) { return customFontList.get(name); }
+
+    public static void setDefaultFont(Font font) {
+        Enumeration keys = UIManager.getDefaults().keys();
+
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+
+            if (value instanceof javax.swing.plaf.FontUIResource)
+                UIManager.put(key, font);
+        }
+    }
 }
