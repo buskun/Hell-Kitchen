@@ -5,6 +5,7 @@ import base.Scene;
 import base.Window;
 import utility.Animation;
 import utility.AnimationMap;
+import utility.ImageLoader;
 
 import javax.swing.*;
 
@@ -16,10 +17,12 @@ public class FirstSceneTest extends Scene {
     }
 
     @Override
-    public void init() {
-        getImageLoader().addImage("bg", "resources/n.jpg");
-        getImageLoader().load();
+    public void loadImage(ImageLoader imageLoader) {
+        imageLoader.add("bg", "resources/n.jpg");
+    }
 
+    @Override
+    public void init() {
         button = new JButton(getImageLoader().getIcon("bg"));
 //        changeBackground(getImageLoader().getIcon("bg"));
 //        setLayout(new BorderLayout());
@@ -36,7 +39,7 @@ public class FirstSceneTest extends Scene {
     public void onStart() {
         new Animation(this,
                 (val) -> button.setLocation((int) Math.round(val), button.getY()),
-                () -> (double) button.getX(),
+                (double) button.getX(),
                 AnimationMap.EASE_IN_BACK, 300, 1000);
     }
 

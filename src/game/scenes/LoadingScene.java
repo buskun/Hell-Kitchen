@@ -35,10 +35,10 @@ public class LoadingScene extends Scene {
 
         StateManager<Double> value = Utility.useState(0.0);
 
-        new Animation(this, (val) -> {
+/*        new Animation(this, (val) -> {
             System.out.println(val);
             value.set(val);
-        }, value::get, AnimationMap.EASE_IN_ELASTIC, 100, 1000);
+        }, value::get, AnimationMap.EASE_IN_ELASTIC, 100, 1000);*/
 
         ready();
     }
