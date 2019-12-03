@@ -7,27 +7,11 @@ public class Animator<T> {
     private T[] animateSequence;
     private int[] animateTimeSequence;
     private boolean running = false;
-    private Thread animatorThread;
     private int state = 0;
     private int animateTime = 0;
 
     public Animator(Consumer<T> method) {
         callbackMethod = method;
-        animatorThread = new Thread(() -> {
-            while (running) {
-                callbackMethod.accept(animateSequence[state]);
-
-                int delay = animateTime;
-
-                if (animateTimeSequence != null && animateTimeSequence.length > state) {
-                    delay = animateTimeSequence[state];
-                }
-
-                state = (state + 1) % animateSequence.length;
-
-                try { Thread.sleep(delay); } catch (Exception ignored) { }
-            }
-        });
     }
 
     public void setAnimateSequence(T[] sequence) {
@@ -49,7 +33,21 @@ public class Animator<T> {
 
     public void start() {
         running = true;
-        animatorThread.start();
+        new Thread(() -> {
+            while (running) {
+                callbackMethod.accept(animateSequence[state]);
+
+                int delay = animateTime;
+
+                if (animateTimeSequence != null && animateTimeSequence.length > state) {
+                    delay = animateTimeSequence[state];
+                }
+
+                state = (state + 1) % animateSequence.length;
+
+                try { Thread.sleep(delay); } catch (Exception ignored) { }
+            }
+        }).start();
     }
 
     public void stop() { running = false; }
