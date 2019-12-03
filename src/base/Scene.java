@@ -2,6 +2,7 @@ package base;
 
 import components.CustomImageIcon;
 import utility.Animation;
+import utility.AudioLoader;
 import utility.ImageLoader;
 
 import javax.swing.*;
@@ -14,14 +15,18 @@ import java.util.Iterator;
 
 abstract public class Scene extends JLabel implements KeyListener {
     private ImageLoader imageLoader;
+    private AudioLoader audioLoader;
     private Controller controller;
     private Window window;
     private boolean readyFlag = false;
     private HashMap<String, JComponent> componentIDMap = new HashMap<>();
     private ArrayList<Animation> animations = new ArrayList<>();
+    private boolean imageLoaded = false;
+    private boolean audioLoaded = false;
 
     public Scene(Window _window, Controller _controller) {
-        imageLoader = new ImageLoader(this);
+        imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
+        audioLoader = new AudioLoader(this::onStartLoadingAudio, this::onAudioLoaded);
 
         controller = _controller;
         window = _window;
@@ -32,7 +37,16 @@ abstract public class Scene extends JLabel implements KeyListener {
         setLayout(null);
 
         setVisible(false);
+
+        new Thread(() -> {
+            loadImage(imageLoader);
+            loadAudio(audioLoader);
+        }).start();
     }
+
+    public void loadImage(ImageLoader imageLoader) {}
+
+    public void loadAudio(AudioLoader audioLoader) {}
 
     public abstract void init();
 
@@ -46,16 +60,13 @@ abstract public class Scene extends JLabel implements KeyListener {
         return imageLoader;
     }
 
-    public void onStartLoadingResource() {
-        controller.getLoadingScene().start();
-    }
+    public void onStartLoadingImage() { imageLoaded = false; }
 
-    public void onResourceLoaded() {
-        new Thread(() -> {
-            while (!readyFlag) Thread.currentThread().interrupt();
-            controller.getLoadingScene().stop();
-        }).start();
-    }
+    public void onImageLoaded() { imageLoaded = true; }
+
+    public void onStartLoadingAudio() { audioLoaded = false; }
+
+    public void onAudioLoaded() { audioLoaded = true; }
 
     /*
      * Dummy methods
@@ -70,7 +81,19 @@ abstract public class Scene extends JLabel implements KeyListener {
      * Class Methods
      **/
     synchronized public final void start() {
-        if (!readyFlag) init();
+        if (controller.getLoadingScene() != this) {
+            controller.getLoadingScene().start();
+
+            if (!imageLoaded) imageLoader.load();
+            if (!audioLoaded) audioLoader.load();
+            if (!readyFlag) init();
+
+            if (!isReady()) {
+                while (!isReady()) Thread.currentThread().interrupt();
+            }
+
+            controller.getLoadingScene().stop();
+        }
 
         setVisible(true);
         window.getContentPane().add(this, BorderLayout.CENTER);
@@ -145,7 +168,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         changeBackground(new CustomImageIcon(imagePath));
     }
 
-    public final boolean isReady() { return readyFlag && !imageLoader.isLoading(); }
+    public final boolean isReady() { return readyFlag && imageLoaded && audioLoaded; }
 
     public final void bindID(String id, JComponent component) { componentIDMap.put(id, component); }
 
@@ -173,9 +196,9 @@ abstract public class Scene extends JLabel implements KeyListener {
     public final Rectangle grid(Point pos, Dimension size) {
         return new Rectangle(
                 (int) Math.round(pos.getX()),
-                (int)  Math.round(pos.getY()),
-                (int)  Math.round(size.getWidth()),
-                (int)  Math.round(size.getHeight())
+                (int) Math.round(pos.getY()),
+                (int) Math.round(size.getWidth()),
+                (int) Math.round(size.getHeight())
         );
     }
 
@@ -190,7 +213,7 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public final Rectangle grid(Point pos, double width, double height) {
         return new Rectangle(
-                (int)  Math.round(pos.getX()),
+                (int) Math.round(pos.getX()),
                 (int) Math.round(pos.getY()),
                 (int) Math.round(getWidth() * width),
                 (int) Math.round(getHeight() * height)
