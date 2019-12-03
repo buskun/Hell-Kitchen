@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 public class Animation {
     private Consumer<Double> valueSetter;
+    private Supplier<Number> valueGetter;
     private long lastAnimatedTime;
     private long startTime;
     private int totalAnimateTime;
@@ -14,11 +15,11 @@ public class Animation {
     private double startValue;
     private AnimationMap easingEffect;
 
-    public Animation(Scene scene, Consumer<Double> setter, Double initValue, AnimationMap easing, double to, int time) {
+    public Animation(Scene scene, Consumer<Double> setter, Supplier<Number> getter, AnimationMap easing, double to, int time) {
         valueSetter = setter;
+        valueGetter = getter;
         totalAnimateTime = time;
         endValue = to;
-        startValue = initValue;
         easingEffect = easing;
 
         lastAnimatedTime = -1;
@@ -31,20 +32,20 @@ public class Animation {
         lastAnimatedTime = System.currentTimeMillis();
 
         if (startTime == -1) {
+            startValue = valueGetter.get().doubleValue();
             startTime = lastAnimatedTime;
             return true;
         }
 
         long remainingTime = (totalAnimateTime - (lastAnimatedTime - startTime));
-
+        double newValue = endValue;
 
         if (remainingTime > 0) {
-            double newValue = ((endValue - startValue) * easingEffect.getValueScale((double) 100 * (lastAnimatedTime - startTime)/ totalAnimateTime)) / 100;
-            valueSetter.accept(newValue);
-            return true;
-        } else {
-            valueSetter.accept(endValue);
-            return false;
+            newValue = ((endValue - startValue) * easingEffect.getValueScale((double) 100 * (lastAnimatedTime - startTime) / totalAnimateTime)) / 100;
         }
+
+        valueSetter.accept(newValue);
+
+        return remainingTime > 0;
     }
 }

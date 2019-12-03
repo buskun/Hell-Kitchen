@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 abstract public class Scene extends JLabel implements KeyListener {
     private ImageLoader imageLoader;
@@ -137,15 +136,19 @@ abstract public class Scene extends JLabel implements KeyListener {
         super.paintComponent(g);
 
         boolean hasAnimation = false;
+        ArrayList<Animation> toBeRemoved = new ArrayList<>();
 
-        for (Iterator<Animation> iterator = animations.iterator(); iterator.hasNext(); ) {
+        for (Animation animation : animations) {
             hasAnimation = true;
-            if (iterator.next().next()) continue;
+            if (animation.next()) continue;
 
-            iterator.remove();
+            toBeRemoved.add(animation);
         }
 
-        if (hasAnimation) repaint();
+        if (hasAnimation) {
+            animations.removeAll(toBeRemoved);
+            repaint();
+        }
     }
 
     public final Window getWindow() { return window; }

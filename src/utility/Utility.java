@@ -1,5 +1,7 @@
 package utility;
 
+import base.Scene;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -43,12 +45,27 @@ public class Utility {
         return runnable::stop;
     }
 
+    public static Runnable setInterval(Scene scene, Supplier<Boolean> callback, int interval) {
+        return setInterval(() -> {
+            boolean continued = callback.get();
+            scene.repaint();
+            return continued;
+        }, interval);
+    }
+
     public static void setTimeout(Runnable callback, int time) {
         new Thread(() -> {
             try { Thread.sleep(time); } catch (Exception ignored) { }
 
             callback.run();
         }).start();
+    }
+
+    public static void setTimeout(Scene scene, Runnable callback, int time) {
+        setTimeout(() -> {
+            callback.run();
+            scene.repaint();
+        }, time);
     }
 
     public static <T> StateManager<T> useState(T initValue) {

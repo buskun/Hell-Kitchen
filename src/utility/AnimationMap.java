@@ -248,21 +248,19 @@ public enum AnimationMap {
         AData leftBound = new AData(0, 0);
         AData rightBound = new AData(100, 100);
 
-        for (int i = 0; i < animationData.length; i++) {
-            if (i == 0) {
-                if (animationData[i].getPercentage() >= percentage) {
-                    rightBound = animationData[i];
-                    break;
-                }
-            } else {
-                if (animationData[i - 1].getPercentage() <= percentage && percentage <= animationData[i].getPercentage()) {
-                    leftBound = animationData[i - 1];
-                    rightBound = animationData[i];
-                    break;
-                }
+        for (int i = 1; i < animationData.length; i++) {
+            if (animationData[i - 1].getPercentage() <= percentage && percentage <= animationData[i].getPercentage()) {
+                leftBound = animationData[i - 1];
+                rightBound = animationData[i];
+                break;
             }
         }
 
-        return (percentage - leftBound.getPercentage()) / (rightBound.getPercentage() - leftBound.getPercentage()) * (rightBound.getValuePercentage() - leftBound.getValuePercentage()) + leftBound.getValuePercentage();
+        double leftPercentage = leftBound.getPercentage();
+        double rightPercentage = rightBound.getPercentage();
+        double leftValue = leftBound.getValuePercentage();
+        double rightValue = rightBound.getValuePercentage();
+
+        return leftValue + ((percentage - leftPercentage) * (rightValue - leftValue) / (rightPercentage - leftPercentage));
     }
 }

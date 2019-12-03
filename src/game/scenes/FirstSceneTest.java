@@ -6,6 +6,7 @@ import base.Window;
 import utility.Animation;
 import utility.AnimationMap;
 import utility.ImageLoader;
+import utility.Utility;
 
 import javax.swing.*;
 
@@ -37,10 +38,12 @@ public class FirstSceneTest extends Scene {
 
     @Override
     public void onStart() {
-        new Animation(this,
-                (val) -> button.setLocation((int) Math.round(val), button.getY()),
-                (double) button.getX(),
-                AnimationMap.EASE_IN_BACK, 300, 1000);
+        Utility.setTimeout(this, () -> {
+            new Animation(this,
+                    val -> button.setLocation(val.intValue(), button.getY()),
+                    button::getX,
+                    AnimationMap.EASE_IN_ELASTIC, 300, 1000);
+        }, 1000);
     }
 
     @Override
