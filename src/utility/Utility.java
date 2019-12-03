@@ -75,7 +75,7 @@ public class Utility {
     public static Font getFont(String name) { return customFontList.get(name); }
 
     public static void setDefaultFont(Font font) {
-        Enumeration keys = UIManager.getDefaults().keys();
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
 
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
