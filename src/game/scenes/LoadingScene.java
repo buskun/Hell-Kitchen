@@ -24,14 +24,14 @@ public class LoadingScene extends Scene {
             iconState.get();
         }).start();
 
-        Utility.setInterval(() -> {
+/*        Utility.setInterval(() -> {
             // do Sth
             return true;
-        }, 1000);
+        }, 1000);*/
 
-        Utility.setTimeout(() -> {
+/*        Utility.setTimeout(() -> {
             // do Sth
-        }, 1000);
+        }, 1000);*/
 
         StateManager<Double> value = Utility.useState(0.0);
 
