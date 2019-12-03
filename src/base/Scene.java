@@ -169,4 +169,18 @@ abstract public class Scene extends JLabel implements KeyListener {
                 (int) Math.round(getHeight() * height)
         );
     }
+
+    public final Dimension size(double width, double height) {
+        return new Dimension(
+                (int) Math.round(getWidth() * width),
+                (int) Math.round(getHeight() * height)
+        );
+    }
+
+    public final Point position(double x, double y) {
+        return new Point(
+                (int) Math.round(getWidth() * x),
+                (int) Math.round(getHeight() * y)
+        );
+    }
 }
