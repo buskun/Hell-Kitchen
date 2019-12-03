@@ -170,10 +170,51 @@ abstract public class Scene extends JLabel implements KeyListener {
         );
     }
 
+    public final Rectangle grid(Point pos, Dimension size) {
+        return grid(
+                pos.x,
+                pos.y,
+                size.width,
+                size.height
+        );
+    }
+
+    public final Rectangle grid(double x, double y, Dimension size) {
+        return grid(
+                x,
+                y,
+                size.width,
+                size.height
+        );
+    }
+
+    public final Rectangle grid(Point pos, double width, double height) {
+        return grid(
+                pos.x,
+                pos.y,
+                width,
+                height
+        );
+    }
+
     public final Dimension size(double width, double height) {
         return new Dimension(
                 (int) Math.round(getWidth() * width),
                 (int) Math.round(getHeight() * height)
+        );
+    }
+
+    public final Dimension sizeByW(double val) {
+        return new Dimension(
+                (int) Math.round(getWidth() * val),
+                (int) Math.round(getWidth() * val)
+        );
+    }
+
+    public final Dimension sizeByH(double val) {
+        return new Dimension(
+                (int) Math.round(getHeight() * val),
+                (int) Math.round(getHeight() * val)
         );
     }
 
@@ -182,5 +223,13 @@ abstract public class Scene extends JLabel implements KeyListener {
                 (int) Math.round(getWidth() * x),
                 (int) Math.round(getHeight() * y)
         );
+    }
+
+    public final Point positionByW(double val) {
+        return position(getWidth() * val, getWidth() * val);
+    }
+
+    public final Point positionByH(double val) {
+        return position(getHeight() * val, getHeight() * val);
     }
 }
