@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 
 public class Animation {
     private Consumer<Double> valueSetter;
-    private Supplier<Double> valueGetter;
     private long lastAnimatedTime;
     private long startTime;
     private int totalAnimateTime;
@@ -15,12 +14,11 @@ public class Animation {
     private double startValue;
     private AnimationMap easingEffect;
 
-    public Animation(Scene scene, Consumer<Double> setter, Supplier<Double> getter, AnimationMap easing, double to, int time) {
+    public Animation(Scene scene, Consumer<Double> setter, Double initValue, AnimationMap easing, double to, int time) {
         valueSetter = setter;
-        valueGetter = getter;
         totalAnimateTime = time;
         endValue = to;
-        startValue = valueGetter.get();
+        startValue = initValue;
         easingEffect = easing;
 
         lastAnimatedTime = -1;

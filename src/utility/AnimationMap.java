@@ -72,10 +72,7 @@ class CubicBezier {
 
     double getValueScale(double percentage) {
         double t = percentage / 100;
-        double value = 100 * sampleCurveY(solveCurveX(t));
-
-        System.out.printf("%f %f\n", percentage, value);
-        return value;
+        return 100 * sampleCurveY(solveCurveX(t));
     }
 }
 
