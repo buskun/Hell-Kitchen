@@ -171,29 +171,29 @@ abstract public class Scene extends JLabel implements KeyListener {
     }
 
     public final Rectangle grid(Point pos, Dimension size) {
-        return grid(
-                pos.x,
-                pos.y,
-                size.width,
-                size.height
+        return new Rectangle(
+                Math.round(getWidth() * pos.x),
+                Math.round(getHeight() * pos.y),
+                Math.round(getWidth() * size.width),
+                Math.round(getHeight() * size.height)
         );
     }
 
     public final Rectangle grid(double x, double y, Dimension size) {
-        return grid(
-                x,
-                y,
-                size.width,
-                size.height
+        return new Rectangle(
+                (int) Math.round(getWidth() * x),
+                (int) Math.round(getHeight() * y),
+                Math.round(getWidth() * size.width),
+                Math.round(getHeight() * size.height)
         );
     }
 
     public final Rectangle grid(Point pos, double width, double height) {
-        return grid(
-                pos.x,
-                pos.y,
-                width,
-                height
+        return new Rectangle(
+                Math.round(getWidth() * pos.x),
+                Math.round(getHeight() * pos.y),
+                (int) Math.round(getWidth() * width),
+                (int) Math.round(getHeight() * height)
         );
     }
 
@@ -226,10 +226,16 @@ abstract public class Scene extends JLabel implements KeyListener {
     }
 
     public final Point positionByW(double val) {
-        return position(getWidth() * val, getWidth() * val);
+        return new Point(
+                (int) Math.round(getWidth() * val),
+                (int) Math.round(getWidth() * val)
+        );
     }
 
     public final Point positionByH(double val) {
-        return position(getHeight() * val, getHeight() * val);
+        return position(
+                (int) Math.round(getWidth() * val),
+                (int) Math.round(getWidth() * val)
+        );
     }
 }
