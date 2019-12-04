@@ -1,9 +1,9 @@
 package base;
 
 import components.CustomImageIcon;
-import utility.Animation;
-import utility.AudioLoader;
-import utility.ImageLoader;
+import utility.animation.Animation;
+import utility.loader.AudioLoader;
+import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -187,7 +187,7 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public final void addAnimation(Animation animation) { animations.add(animation); }
 
-    public final Rectangle grid(double x, double y, double width, double height) {
+    public Rectangle grid(double x, double y, double width, double height) {
         return new Rectangle(
                 (int) Math.round(getWidth() * x),
                 (int) Math.round(getHeight() * y),
@@ -196,7 +196,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         );
     }
 
-    public final Rectangle grid(Point pos, Dimension size) {
+    public Rectangle grid(Point pos, Dimension size) {
         return new Rectangle(
                 (int) Math.round(pos.getX()),
                 (int) Math.round(pos.getY()),
@@ -205,7 +205,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         );
     }
 
-    public final Rectangle grid(double x, double y, Dimension size) {
+    public Rectangle grid(double x, double y, Dimension size) {
         return new Rectangle(
                 (int) Math.round(getWidth() * x),
                 (int) Math.round(getHeight() * y),
@@ -214,7 +214,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         );
     }
 
-    public final Rectangle grid(Point pos, double width, double height) {
+    public Rectangle grid(Point pos, double width, double height) {
         return new Rectangle(
                 (int) Math.round(pos.getX()),
                 (int) Math.round(pos.getY()),
@@ -223,42 +223,42 @@ abstract public class Scene extends JLabel implements KeyListener {
         );
     }
 
-    public final Dimension size(double width, double height) {
+    public Dimension size(double width, double height) {
         return new Dimension(
                 (int) Math.round(getWidth() * width),
                 (int) Math.round(getHeight() * height)
         );
     }
 
-    public final Dimension sizeByW(double val) {
+    public Dimension sizeByW(double val) {
         return new Dimension(
                 (int) Math.round(getWidth() * val),
                 (int) Math.round(getWidth() * val)
         );
     }
 
-    public final Dimension sizeByH(double val) {
+    public Dimension sizeByH(double val) {
         return new Dimension(
                 (int) Math.round(getHeight() * val),
                 (int) Math.round(getHeight() * val)
         );
     }
 
-    public final Point position(double x, double y) {
+    public Point position(double x, double y) {
         return new Point(
                 (int) Math.round(getWidth() * x),
                 (int) Math.round(getHeight() * y)
         );
     }
 
-    public final Point positionByW(double val) {
+    public Point positionByW(double val) {
         return new Point(
                 (int) Math.round(getWidth() * val),
                 (int) Math.round(getWidth() * val)
         );
     }
 
-    public final Point positionByH(double val) {
+    public Point positionByH(double val) {
         return position(
                 (int) Math.round(getWidth() * val),
                 (int) Math.round(getWidth() * val)
