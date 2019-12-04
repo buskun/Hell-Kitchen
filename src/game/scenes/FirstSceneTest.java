@@ -9,6 +9,8 @@ import utility.loader.ImageLoader;
 import utility.Utility;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class FirstSceneTest extends Scene {
     JButton button;
@@ -34,7 +36,9 @@ public class FirstSceneTest extends Scene {
     }
 
     @Override
-    public void tick() { }
+    public void tick() {
+        if (isKeyPressed(KeyEvent.VK_D)) System.out.println(System.currentTimeMillis());
+    }
 
     @Override
     public void onStart() {

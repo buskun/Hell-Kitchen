@@ -9,6 +9,7 @@ public abstract class ResourceLoader<T> {
     private final HashMap<String, String> waitList = new HashMap<>();
     private final HashMap<String, T> loadedList = new HashMap<>();
     private boolean loading = false;
+    private int timeout = 0;
     private T fallback;
     private Function<File, T> fileReader;
     private Runnable onStartLoadingRes;
@@ -28,6 +29,8 @@ public abstract class ResourceLoader<T> {
         onLoadedRes = onLoaded;
     }
 
+    public void setTimeout(int timeout) { this.timeout = timeout; }
+
     public void add(String name, String path) {
         waitList.put(name, path);
         loadedList.put(name, null);
@@ -46,7 +49,7 @@ public abstract class ResourceLoader<T> {
             System.err.printf("Cannot load: %s (%s)\n", name, waitList.get(name));
         }
 
-        if(loadedValue == null) {
+        if (loadedValue == null) {
             loadedList.remove(name);
 
             onLoadFailed(name);
@@ -60,6 +63,7 @@ public abstract class ResourceLoader<T> {
     public void load() { load(false); }
 
     public void load(boolean synchronous) {
+        long startTime = System.currentTimeMillis();
         loading = true;
         new Thread(onStartLoadingRes).start();
 
@@ -93,6 +97,7 @@ public abstract class ResourceLoader<T> {
                 }
             }
 
+            if (timeout != 0 && System.currentTimeMillis() - startTime > timeout) break;
             if (allLoaded) break;
             Thread.currentThread().interrupt();
         }
