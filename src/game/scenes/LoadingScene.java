@@ -21,7 +21,7 @@ public class LoadingScene extends Scene {
 
         new Thread(() -> {
             iconState.set(5);
-            iconState.get();
+//            iconState.get();
         }).start();
 
 /*        Utility.setInterval(() -> {
