@@ -3,9 +3,9 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
-import utility.Animation;
-import utility.AnimationMap;
-import utility.ImageLoader;
+import utility.animation.Animation;
+import utility.animation.AnimationMap;
+import utility.loader.ImageLoader;
 import utility.Utility;
 
 import javax.swing.*;
