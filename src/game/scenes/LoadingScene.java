@@ -4,6 +4,7 @@ import base.Controller;
 import base.Scene;
 import base.Window;
 import utility.*;
+import utility.animation.Animator;
 
 public class LoadingScene extends Scene {
     Animator<String> animator;

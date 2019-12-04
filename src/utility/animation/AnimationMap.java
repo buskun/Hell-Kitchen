@@ -1,4 +1,4 @@
-package utility;
+package utility.animation;
 
 import java.util.Arrays;
 

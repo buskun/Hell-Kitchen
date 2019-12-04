@@ -1,10 +1,9 @@
-package utility;
+package utility.loader;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.function.Function;
 
 public class AudioLoader extends ResourceLoader<AudioClip> {
     public AudioLoader(Runnable onStartLoading, Runnable onLoaded) {

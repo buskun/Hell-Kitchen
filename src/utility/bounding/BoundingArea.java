@@ -1,0 +1,60 @@
+package utility.bounding;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Function;
+
+public class BoundingArea {
+    HashMap<String, JComponent> entities = new HashMap<>();
+    ArrayList<Function<String, Boolean>> intersectionListener = new ArrayList<>();
+
+    public void add(String name, JComponent entity) { entities.put(name, entity); }
+
+    public void remove(String name) { entities.remove(name); }
+
+    public void remove(JComponent entity) {
+        for (String name : entities.keySet()) {
+            if (entities.get(name) == entity) {
+                remove(name);
+                break;
+            }
+        }
+    }
+
+    public void addIntersectionListener(Function<String, Boolean> listener) { intersectionListener.add(listener); }
+
+    public void removeIntersectionListener(Function<String, Boolean> listener) { intersectionListener.remove(listener); }
+
+    public boolean intersects(JComponent component) {
+        for (String name : entities.keySet()) {
+            if (entities.get(name).getBounds().intersects(component.getBounds())) {
+                emitIntersectionEvent(name);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean intersects(BoundingArea boundingArea) {
+        for (String name : boundingArea.entities.keySet()) {
+            if (intersects(boundingArea.entities.get(name))) {
+                boundingArea.emitIntersectionEvent(name);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void emitIntersectionEvent(String name) {
+        ArrayList<Function<String, Boolean>> toBeRemoved = new ArrayList<>();
+
+        intersectionListener.forEach(listener -> {
+            if (!listener.apply(name)) toBeRemoved.add(listener);
+        });
+
+        intersectionListener.removeAll(toBeRemoved);
+    }
+}
