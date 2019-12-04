@@ -1,4 +1,4 @@
-package utility;
+package utility.loader;
 
 import java.io.File;
 import java.util.HashMap;
