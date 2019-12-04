@@ -22,6 +22,7 @@ abstract public class Scene extends JLabel implements KeyListener {
     private ArrayList<Animation> animations = new ArrayList<>();
     private boolean imageLoaded = false;
     private boolean audioLoaded = false;
+    private HashMap<Integer, Boolean> pressedKey = new HashMap<>();
 
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
@@ -29,8 +30,6 @@ abstract public class Scene extends JLabel implements KeyListener {
 
         controller = _controller;
         window = _window;
-
-        addKeyListener(this);
 
         setBounds(0, 0, window.getWidth(), window.getHeight());
         setLayout(null);
@@ -67,14 +66,15 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public void onAudioLoaded() { audioLoaded = true; }
 
-    /*
-     * Dummy methods
-     **/
     public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {
+        pressedKey.put(e.getKeyCode(), true);
+    }
 
-    public void keyReleased(KeyEvent e) { }
+    public void keyReleased(KeyEvent e) {
+        pressedKey.put(e.getKeyCode(), false);
+    }
 
     /*
      * Class Methods
@@ -94,6 +94,7 @@ abstract public class Scene extends JLabel implements KeyListener {
             controller.getLoadingScene().stop();
         }
 
+        window.addKeyListener(this);
         setVisible(true);
         window.getContentPane().add(this, BorderLayout.CENTER);
 
@@ -118,6 +119,7 @@ abstract public class Scene extends JLabel implements KeyListener {
         animations = new ArrayList<>();
 
         setVisible(false);
+        window.removeKeyListener(this);
 
         removeAll();
         revalidate();
@@ -155,37 +157,31 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public final Controller getController() { return controller; }
 
-    public final void ready() {
-        readyFlag = true;
-    }
+    public void ready() { readyFlag = true; }
 
-    public final void changeBackground(CustomImageIcon imageIcon) {
-        setIcon(imageIcon.resize(window.getSize()));
-    }
+    public void changeBackground(CustomImageIcon imageIcon) { setIcon(imageIcon.resize(window.getSize())); }
 
-    public final void changeBackground(Image image) {
-        changeBackground(new CustomImageIcon(image));
-    }
+    public void changeBackground(Image image) { changeBackground(new CustomImageIcon(image)); }
 
-    public final void changeBackground(String imagePath) {
-        changeBackground(new CustomImageIcon(imagePath));
-    }
+    public void changeBackground(String imagePath) { changeBackground(new CustomImageIcon(imagePath)); }
 
-    public final boolean isReady() { return readyFlag && imageLoaded && audioLoaded; }
+    public boolean isReady() { return readyFlag && imageLoaded && audioLoaded; }
 
-    public final void bindID(String id, JComponent component) { componentIDMap.put(id, component); }
+    public boolean isKeyPressed(int keyCode) { return Boolean.TRUE.equals(pressedKey.get(keyCode)); }
 
-    public final void componentID(String id) { componentIDMap.get(id); }
+    public void bindID(String id, JComponent component) { componentIDMap.put(id, component); }
 
-    public final String IDOf(JComponent component) {
+    public void componentID(String id) { componentIDMap.get(id); }
+
+    public String IDOf(JComponent component) {
         return componentIDMap.keySet().stream().filter(_id -> componentIDMap.get(_id) == component).findFirst().orElse(null);
     }
 
-    public final void unbindID(String id) { componentIDMap.remove(id); }
+    public void unbindID(String id) { componentIDMap.remove(id); }
 
-    public final void unbindID(JComponent component) { unbindID(IDOf(component)); }
+    public void unbindID(JComponent component) { unbindID(IDOf(component)); }
 
-    public final void addAnimation(Animation animation) { animations.add(animation); }
+    public void addAnimation(Animation animation) { animations.add(animation); }
 
     public Rectangle grid(double x, double y, double width, double height) {
         return new Rectangle(
