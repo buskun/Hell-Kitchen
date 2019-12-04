@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        
       - name: Nightly Merge
         uses: robotology/gh-action-nightly-merge@v1.2.0
         env:
