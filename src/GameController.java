@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameController extends Controller {
-    private static final Dimension mainWindowSize = new Dimension(1600, 900);
+    private static final Dimension mainWindowSize = new Dimension(1200, 675);
     private static final Point mainWindowPosition = new Point(50, 50);
     private static final String mainWindowTitle = "Hell Kitchen";
     private static final int gameTickPerSec = 10;
