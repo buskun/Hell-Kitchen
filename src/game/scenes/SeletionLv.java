@@ -3,7 +3,7 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
-import utility.ImageLoader;
+import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class SeletionLv extends Scene {
 
         JButton backBtn = new JButton(getImageLoader().getIcon("closebtn").resize(sizeByH(0.13)));
         backBtn.addActionListener(e -> {
-            getController().changeScene("MenuScene");
+            getController().changeScene("menu");
         });
         backBtn.setBounds(grid(0.80,0.050,0.073,0.13));
         backBtn.setOpaque(false);
@@ -257,6 +257,12 @@ public class SeletionLv extends Scene {
         lv10star3.setBounds(grid(0.9,0.755,sizeByH(0.1)));
         add(lv10star3);
 
+
+
+        JLabel levelBorder = new JLabel(getImageLoader().getIcon("closebtn").resize(sizeByH(0.15)));
+        levelBorder.setBounds(grid(0.07, 0.3, sizeByH(0.15)));
+        add(levelBorder);
+        setComponentZOrder(levelBorder, getComponentCount() - 1);
 
 
         ready();
