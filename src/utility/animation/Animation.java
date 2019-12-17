@@ -14,6 +14,7 @@ public class Animation {
     private double endValue;
     private double startValue;
     private AnimationMap easingEffect;
+    private boolean stopFlag;
 
     public Animation(Scene scene, Consumer<Double> setter, Supplier<Number> getter, AnimationMap easing, double to, int time) {
         valueSetter = setter;
@@ -21,6 +22,7 @@ public class Animation {
         totalAnimateTime = time;
         endValue = to;
         easingEffect = easing;
+        stopFlag = false;
 
         lastAnimatedTime = -1;
         startTime = -1;
@@ -29,6 +31,7 @@ public class Animation {
     }
 
     public boolean next() {
+        if (stopFlag) return false;
         lastAnimatedTime = System.currentTimeMillis();
 
         if (startTime == -1) {
@@ -48,4 +51,6 @@ public class Animation {
 
         return remainingTime > 0;
     }
+
+    public void stop() { stopFlag = true; }
 }
