@@ -88,7 +88,7 @@ abstract public class Scene extends JLabel implements KeyListener {
             if (!readyFlag) init();
 
             if (!isReady()) {
-                while (!isReady()) Thread.currentThread().interrupt();
+                while (!isReady()) try { wait(); } catch (Exception ignored) {}
             }
 
             controller.getLoadingScene().stop();
@@ -121,13 +121,13 @@ abstract public class Scene extends JLabel implements KeyListener {
         setVisible(false);
         window.removeKeyListener(this);
 
-        removeAll();
-        revalidate();
-        repaint();
+//        removeAll();
+//        revalidate();
+//        repaint();
 
         window.getContentPane().remove(this);
 
-        readyFlag = false;
+//        readyFlag = false;
 
         window.revalidate();
         window.repaint();
