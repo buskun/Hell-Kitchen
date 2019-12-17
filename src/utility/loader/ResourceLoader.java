@@ -65,7 +65,7 @@ public abstract class ResourceLoader<T> {
     public void load(boolean synchronous) {
         long startTime = System.currentTimeMillis();
         loading = true;
-        new Thread(onStartLoadingRes).start();
+        onStartLoadingRes.run();
 
         if (synchronous) {
             for (String name : loadedList.keySet()) {
@@ -102,7 +102,7 @@ public abstract class ResourceLoader<T> {
             Thread.currentThread().interrupt();
         }
 
-        new Thread(onLoadedRes).start();
+        onLoadedRes.run();
         loading = false;
     }
 

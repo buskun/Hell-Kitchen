@@ -27,25 +27,27 @@ public class BoundingArea {
     public void removeIntersectionListener(Function<String, Boolean> listener) { intersectionListener.remove(listener); }
 
     public boolean intersects(JComponent component) {
+        boolean intersect = false;
         for (String name : entities.keySet()) {
             if (entities.get(name).getBounds().intersects(component.getBounds())) {
                 emitIntersectionEvent(name);
-                return true;
+                intersect = true;
             }
         }
 
-        return false;
+        return intersect;
     }
 
     public boolean intersects(BoundingArea boundingArea) {
+        boolean intersect = false;
         for (String name : boundingArea.entities.keySet()) {
             if (intersects(boundingArea.entities.get(name))) {
                 boundingArea.emitIntersectionEvent(name);
-                return true;
+                intersect = true;
             }
         }
 
-        return false;
+        return intersect;
     }
 
     private void emitIntersectionEvent(String name) {
