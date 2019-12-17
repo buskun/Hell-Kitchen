@@ -41,7 +41,7 @@ public class Animation {
         double newValue = endValue;
 
         if (remainingTime > 0) {
-            newValue = ((endValue - startValue) * easingEffect.getValueScale((double) 100 * (lastAnimatedTime - startTime) / totalAnimateTime)) / 100;
+            newValue = startValue + ((endValue - startValue) * easingEffect.getValueScale((double) 100 * (lastAnimatedTime - startTime) / totalAnimateTime)) / 100;
         }
 
         valueSetter.accept(newValue);
