@@ -3,10 +3,17 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
+import utility.animation.Animation;
+import utility.animation.AnimationMap;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class SeletionLv extends Scene {
 
@@ -28,8 +35,8 @@ public class SeletionLv extends Scene {
         imageLoader.add("8", "resources/seletionlv/8.png");
         imageLoader.add("9", "resources/seletionlv/9.png");
         imageLoader.add("10", "resources/seletionlv/10.png");
-        imageLoader.add("star","resources/seletionlv/star.png");
-        imageLoader.add("starvictory","resources/seletionlv/starvictory.png");
+        imageLoader.add("star", "resources/seletionlv/star.png");
+        imageLoader.add("starvictory", "resources/seletionlv/starvictory.png");
     }
 
     @Override
@@ -42,7 +49,7 @@ public class SeletionLv extends Scene {
         JLabel totalStar = new JLabel("Test");
         totalStar.setText("10/30");
         totalStar.setFont(new Font("Dimbo", Font.PLAIN, 75));
-        totalStar.setBounds(grid(0.12,0-0.015,sizeByH(0.25)));
+        totalStar.setBounds(grid(0.12, 0 - 0.015, sizeByH(0.25)));
         add(totalStar);
 
 
@@ -50,7 +57,7 @@ public class SeletionLv extends Scene {
         backBtn.addActionListener(e -> {
             getController().changeScene("menu");
         });
-        backBtn.setBounds(grid(0.80,0.050,0.073,0.13));
+        backBtn.setBounds(grid(0.80, 0.050, 0.073, 0.13));
         backBtn.setOpaque(false);
         backBtn.setContentAreaFilled(false);
         backBtn.setBorderPainted(false);
@@ -71,13 +78,13 @@ public class SeletionLv extends Scene {
         });
 
         JLabel lv1star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv1star1.setBounds(grid(0.030,0.455,sizeByH(0.1)));//ลบด้วย 0.055 ของอันกลาง
+        lv1star1.setBounds(grid(0.030, 0.455, sizeByH(0.1)));//ลบด้วย 0.055 ของอันกลาง
         add(lv1star1);
         JLabel lv1star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv1star2.setBounds(grid(0.085,0.455,sizeByH(0.1)));//++0.015 ของ X
+        lv1star2.setBounds(grid(0.085, 0.455, sizeByH(0.1)));//++0.015 ของ X
         add(lv1star2);
         JLabel lv1star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv1star3.setBounds(grid(0.14,0.455,sizeByH(0.1)));
+        lv1star3.setBounds(grid(0.14, 0.455, sizeByH(0.1)));
         add(lv1star3);
 
         JButton btn2 = new JButton(getImageLoader().getIcon("2").resize(sizeByH(0.15)));
@@ -90,13 +97,13 @@ public class SeletionLv extends Scene {
         });
         add(btn2);
         JLabel lv2star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv2star1.setBounds(grid(0.22,0.455,sizeByH(0.1)));
+        lv2star1.setBounds(grid(0.22, 0.455, sizeByH(0.1)));
         add(lv2star1);
         JLabel lv2star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv2star2.setBounds(grid(0.275,0.455,sizeByH(0.1)));
+        lv2star2.setBounds(grid(0.275, 0.455, sizeByH(0.1)));
         add(lv2star2);
         JLabel lv2star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv2star3.setBounds(grid(0.33,0.455,sizeByH(0.1)));
+        lv2star3.setBounds(grid(0.33, 0.455, sizeByH(0.1)));
         add(lv2star3);
 
         JButton btn3 = new JButton(getImageLoader().getIcon("3").resize(sizeByH(0.15)));
@@ -110,13 +117,13 @@ public class SeletionLv extends Scene {
         add(btn3);
 
         JLabel lv3star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv3star1.setBounds(grid(0.41,0.455,sizeByH(0.1)));
+        lv3star1.setBounds(grid(0.41, 0.455, sizeByH(0.1)));
         add(lv3star1);
         JLabel lv3star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv3star2.setBounds(grid(0.465,0.455,sizeByH(0.1)));
+        lv3star2.setBounds(grid(0.465, 0.455, sizeByH(0.1)));
         add(lv3star2);
         JLabel lv3star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv3star3.setBounds(grid(0.52,0.455,sizeByH(0.1)));
+        lv3star3.setBounds(grid(0.52, 0.455, sizeByH(0.1)));
         add(lv3star3);
 
 
@@ -131,13 +138,13 @@ public class SeletionLv extends Scene {
         add(btn4);
 
         JLabel lv4star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv4star1.setBounds(grid(0.6,0.455,sizeByH(0.1)));
+        lv4star1.setBounds(grid(0.6, 0.455, sizeByH(0.1)));
         add(lv4star1);
         JLabel lv4star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv4star2.setBounds(grid(0.655,0.455,sizeByH(0.1)));
+        lv4star2.setBounds(grid(0.655, 0.455, sizeByH(0.1)));
         add(lv4star2);
         JLabel lv4star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv4star3.setBounds(grid(0.71,0.455,sizeByH(0.1)));
+        lv4star3.setBounds(grid(0.71, 0.455, sizeByH(0.1)));
         add(lv4star3);
 
 
@@ -152,13 +159,13 @@ public class SeletionLv extends Scene {
         add(btn5);
 
         JLabel lv5star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv5star1.setBounds(grid(0.79,0.455,sizeByH(0.1)));
+        lv5star1.setBounds(grid(0.79, 0.455, sizeByH(0.1)));
         add(lv5star1);
         JLabel lv5star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv5star2.setBounds(grid(0.845,0.455,sizeByH(0.1)));
+        lv5star2.setBounds(grid(0.845, 0.455, sizeByH(0.1)));
         add(lv5star2);
         JLabel lv5star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv5star3.setBounds(grid(0.9,0.455,sizeByH(0.1)));
+        lv5star3.setBounds(grid(0.9, 0.455, sizeByH(0.1)));
         add(lv5star3);
 
         JButton btn6 = new JButton(getImageLoader().getIcon("6").resize(sizeByH(0.15)));
@@ -172,13 +179,13 @@ public class SeletionLv extends Scene {
         add(btn6);
 
         JLabel lv6star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv6star1.setBounds(grid(0.030,0.755,sizeByH(0.1)));//ลบด้วย 0.055 ของอันกลาง
+        lv6star1.setBounds(grid(0.030, 0.755, sizeByH(0.1)));//ลบด้วย 0.055 ของอันกลาง
         add(lv6star1);
         JLabel lv6star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv6star2.setBounds(grid(0.085,0.755,sizeByH(0.1)));//++0.015 ของ X
+        lv6star2.setBounds(grid(0.085, 0.755, sizeByH(0.1)));//++0.015 ของ X
         add(lv6star2);
         JLabel lv6star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv6star3.setBounds(grid(0.14,0.755,sizeByH(0.1)));
+        lv6star3.setBounds(grid(0.14, 0.755, sizeByH(0.1)));
         add(lv6star3);
 
         JButton btn7 = new JButton(getImageLoader().getIcon("7").resize(sizeByH(0.15)));
@@ -191,13 +198,13 @@ public class SeletionLv extends Scene {
         });
         add(btn7);
         JLabel lv7star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv7star1.setBounds(grid(0.22,0.755,sizeByH(0.1)));
+        lv7star1.setBounds(grid(0.22, 0.755, sizeByH(0.1)));
         add(lv7star1);
         JLabel lv7star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv7star2.setBounds(grid(0.275,0.755,sizeByH(0.1)));
+        lv7star2.setBounds(grid(0.275, 0.755, sizeByH(0.1)));
         add(lv7star2);
         JLabel lv7star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv7star3.setBounds(grid(0.33,0.755,sizeByH(0.1)));
+        lv7star3.setBounds(grid(0.33, 0.755, sizeByH(0.1)));
         add(lv7star3);
 
         JButton btn8 = new JButton(getImageLoader().getIcon("8").resize(sizeByH(0.15)));
@@ -211,13 +218,13 @@ public class SeletionLv extends Scene {
         add(btn8);
 
         JLabel lv8star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv8star1.setBounds(grid(0.41,0.755,sizeByH(0.1)));
+        lv8star1.setBounds(grid(0.41, 0.755, sizeByH(0.1)));
         add(lv8star1);
         JLabel lv8star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv8star2.setBounds(grid(0.465,0.755,sizeByH(0.1)));
+        lv8star2.setBounds(grid(0.465, 0.755, sizeByH(0.1)));
         add(lv8star2);
         JLabel lv8star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv8star3.setBounds(grid(0.52,0.755,sizeByH(0.1)));
+        lv8star3.setBounds(grid(0.52, 0.755, sizeByH(0.1)));
         add(lv8star3);
 
         JButton btn9 = new JButton(getImageLoader().getIcon("9").resize(sizeByH(0.15)));
@@ -231,13 +238,13 @@ public class SeletionLv extends Scene {
         add(btn9);
 
         JLabel lv9star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv9star1.setBounds(grid(0.6,0.755,sizeByH(0.1)));
+        lv9star1.setBounds(grid(0.6, 0.755, sizeByH(0.1)));
         add(lv9star1);
         JLabel lv9star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv9star2.setBounds(grid(0.655,0.755,sizeByH(0.1)));
+        lv9star2.setBounds(grid(0.655, 0.755, sizeByH(0.1)));
         add(lv9star2);
         JLabel lv9star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv9star3.setBounds(grid(0.71,0.755,sizeByH(0.1)));
+        lv9star3.setBounds(grid(0.71, 0.755, sizeByH(0.1)));
         add(lv9star3);
 
         JButton btn10 = new JButton(getImageLoader().getIcon("10").resize(sizeByH(0.15)));
@@ -251,22 +258,49 @@ public class SeletionLv extends Scene {
         add(btn10);
 
         JLabel lv10star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv10star1.setBounds(grid(0.79,0.755,sizeByH(0.1)));
+        lv10star1.setBounds(grid(0.79, 0.755, sizeByH(0.1)));
         add(lv10star1);
         JLabel lv10star2 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv10star2.setBounds(grid(0.845,0.755,sizeByH(0.1)));
+        lv10star2.setBounds(grid(0.845, 0.755, sizeByH(0.1)));
         add(lv10star2);
         JLabel lv10star3 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
-        lv10star3.setBounds(grid(0.9,0.755,sizeByH(0.1)));
+        lv10star3.setBounds(grid(0.9, 0.755, sizeByH(0.1)));
         add(lv10star3);
-
 
 
         JLabel levelBorder = new JLabel(getImageLoader().getIcon("closebtn").resize(sizeByH(0.15)));
         levelBorder.setBounds(grid(0.07, 0.3, sizeByH(0.15)));
         add(levelBorder);
-        setComponentZOrder(levelBorder, getComponentCount() - 1);
+        setComponentZOrder(levelBorder, 0);
 
+        Animation[] lastAnimation = new Animation[2];
+        Arrays.asList(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10).forEach(
+                btn -> btn.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        super.mouseEntered(e);
+                        if (lastAnimation[0] != null) lastAnimation[0].stop();
+                        if (lastAnimation[1] != null) lastAnimation[1].stop();
+
+                        lastAnimation[0] = new Animation(SeletionLv.this,
+                                x -> levelBorder.setLocation((int) Math.round(x), levelBorder.getY()),
+                                levelBorder::getX,
+                                AnimationMap.EASE_IN_OUT_ELASTIC,
+                                e.getComponent().getX(),
+                                300
+                        );
+                        lastAnimation[1] = new Animation(SeletionLv.this,
+                                y -> levelBorder.setLocation(levelBorder.getX(), (int) Math.round(y)),
+                                levelBorder::getY,
+                                AnimationMap.EASE_IN_OUT_ELASTIC,
+                                e.getComponent().getY(),
+                                300
+                        );
+                    }
+                })
+        );
+
+        System.out.println("Init");
 
         ready();
     }

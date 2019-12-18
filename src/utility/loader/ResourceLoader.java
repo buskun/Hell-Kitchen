@@ -99,7 +99,7 @@ public abstract class ResourceLoader<T> {
 
             if (timeout != 0 && System.currentTimeMillis() - startTime > timeout) break;
             if (allLoaded) break;
-            Thread.currentThread().interrupt();
+            try { wait(); } catch (Exception ignored) {}
         }
 
         onLoadedRes.run();
