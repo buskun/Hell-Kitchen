@@ -24,9 +24,9 @@ public class MenuScene extends Scene {
         imageLoader.add("start", "resources/menu/start.png");
         imageLoader.add("load", "resources/menu/load.png");
         imageLoader.add("exit", "resources/menu/exit.png");
-        imageLoader.add("startp", "resources/menu/startp.png");
-        imageLoader.add("loadp", "resources/menu/loadp.png");
-        imageLoader.add("exitp", "resources/menu/exitp.png");
+        imageLoader.add("startpress", "resources/menu/startp.png");
+        imageLoader.add("loadpress", "resources/menu/loadp.png");
+        imageLoader.add("exitpress", "resources/menu/exitp.png");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MenuScene extends Scene {
         startBtn.setBorderPainted(false);
         //startBtn.setFont(getFont().deriveFont(30f));
         startBtn.addMouseListener(new MouseAdapter() {
-            CustomImageIcon hoveredIcon = getImageLoader().getIcon("startp").resize(size(0.2, 0.1));
+            CustomImageIcon hoveredIcon = getImageLoader().getIcon("startpress").resize(size(0.2, 0.1));
             CustomImageIcon normalIcon = getImageLoader().getIcon("start").resize(size(0.2, 0.1));
             @Override
             public void mousePressed(MouseEvent e) {
@@ -56,14 +56,23 @@ public class MenuScene extends Scene {
                 startBtn.setIcon(this.normalIcon);
             }
         });
-
         startBtn.addActionListener(e -> {
             getController().changeScene("SeletionLv");
-
         });
         add(startBtn);
 
         JButton loadGameBtn = new JButton(getImageLoader().getIcon("load").resize(size(0.2, 0.1)));
+        loadGameBtn.addMouseListener(new MouseAdapter() {
+            CustomImageIcon hoveredIcon = getImageLoader().getIcon("loadpress").resize(size(0.2, 0.1));
+            CustomImageIcon normalIcon = getImageLoader().getIcon("load").resize(size(0.2, 0.1));
+            public void mousePressed(MouseEvent e) {
+                loadGameBtn.setIcon(this.hoveredIcon);
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                loadGameBtn.setIcon(this.normalIcon);
+            }
+        });
         loadGameBtn.setBounds(grid(0.75, 0.67, 0.2, 0.1));
         loadGameBtn.setOpaque(false);
         loadGameBtn.setContentAreaFilled(false);
@@ -71,6 +80,17 @@ public class MenuScene extends Scene {
         add(loadGameBtn);
 
         JButton exitGameBtn = new JButton(getImageLoader().getIcon("exit").resize(size(0.2, 0.1)));
+        exitGameBtn.addMouseListener(new MouseAdapter() {
+            CustomImageIcon hoveredIcon = getImageLoader().getIcon("exitpress").resize(size(0.2, 0.1));
+            CustomImageIcon normalIcon = getImageLoader().getIcon("exit").resize(size(0.2, 0.1));
+            public void mousePressed(MouseEvent e) {
+                exitGameBtn.setIcon(this.hoveredIcon);
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                exitGameBtn.setIcon(this.normalIcon);
+            }
+        });
         exitGameBtn.setOpaque(false);
         exitGameBtn.setContentAreaFilled(false);
         exitGameBtn.setBorderPainted(false);

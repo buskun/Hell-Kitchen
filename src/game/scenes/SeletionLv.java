@@ -66,6 +66,9 @@ public class SeletionLv extends Scene {
             //getController().changeScene("MenuScene");
         });
         add(btn1);
+        btn1.addActionListener(e -> {
+            getController().changeScene("gameScene1");
+        });
 
         JLabel lv1star1 = new JLabel(getImageLoader().getIcon("star").resize(sizeByH(0.1)));
         lv1star1.setBounds(grid(0.030,0.455,sizeByH(0.1)));//ลบด้วย 0.055 ของอันกลาง

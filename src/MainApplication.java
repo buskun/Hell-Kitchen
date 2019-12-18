@@ -1,6 +1,8 @@
 import game.scenes.FirstSceneTest;
 import game.scenes.MenuScene;
 import game.scenes.SeletionLv;
+import game.scenes.gameScene1;
+import game.scenes.gameScene2;
 import utility.Utility;
 
 public class MainApplication {
@@ -10,6 +12,8 @@ public class MainApplication {
         gameController.addScene("first", FirstSceneTest.class);
         gameController.addScene("menu", MenuScene.class);
         gameController.addScene("SeletionLv", SeletionLv.class);
+        gameController.addScene("gameScene1", gameScene1.class);
+        gameController.addScene("gameScene2",gameScene2.class);
 
         Utility.addCustomFont("Dimbo", "resources/font/Dimbo.ttf");
         Utility.setDefaultFont(Utility.getFont("Dimbo").deriveFont(20f));
