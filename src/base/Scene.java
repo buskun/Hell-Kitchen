@@ -202,7 +202,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     public void ready() { readyFlag = true; }
 
     public void changeBackground(CustomImageIcon imageIcon) {
-        background = imageIcon.resize(window.getSize());
+        background = imageIcon.scaleToFill(window.getSize());
         setIcon(background);
     }
 
