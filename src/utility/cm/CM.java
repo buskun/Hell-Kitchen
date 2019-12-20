@@ -1,6 +1,7 @@
 package utility.cm;
 
 import base.Scene;
+import components.CustomImageIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,8 +96,9 @@ public class CM extends ComponentAdapter {
     }
 
     private Scene cScene;
-    private ArrayList<CMData<Point>> pointCalculationList = new ArrayList<>();
-    private ArrayList<CMData<Dimension>> dimensionCalculationList = new ArrayList<>();
+    private ArrayList<CMData<PointStore, ?>> pointCalculationList = new ArrayList<>();
+    private ArrayList<CMData<DimensionStore, ?>> dimensionCalculationList = new ArrayList<>();
+    private ArrayList<CMData<DimensionStore, CustomImageIcon>> iconCalculationList = new ArrayList<>();
 
     public CM(Scene scene) {
         cScene = scene;
@@ -113,7 +115,7 @@ public class CM extends ComponentAdapter {
         component.setSize(dimension.calculate(cScene.getWidth(), cScene.getHeight()));
 
         boolean foundDim = false;
-        for (CMData<Dimension> dimData : dimensionCalculationList) {
+        for (CMData<DimensionStore, ?> dimData : dimensionCalculationList) {
             if (dimData.is(component)) {
                 foundDim = true;
                 dimData.setStore(dimension);
@@ -124,11 +126,21 @@ public class CM extends ComponentAdapter {
         if (!foundDim) dimensionCalculationList.add(new CMData<>(component, dimension));
     }
 
+    public DimensionStore getScaledSize(JComponent component) {
+        for (CMData<DimensionStore, ?> dimData : dimensionCalculationList) {
+            if (dimData.is(component)) {
+                return dimData.getStore();
+            }
+        }
+
+        return null;
+    }
+
     public void setLocation(JComponent component, PointStore location) {
         component.setLocation(location.calculate(cScene.getWidth(), cScene.getHeight()));
 
         boolean foundPoint = false;
-        for (CMData<Point> pointData : pointCalculationList) {
+        for (CMData<PointStore, ?> pointData : pointCalculationList) {
             if (pointData.is(component)) {
                 foundPoint = true;
                 pointData.setStore(location);
@@ -138,20 +150,95 @@ public class CM extends ComponentAdapter {
 
         if (!foundPoint) pointCalculationList.add(new CMData<>(component, location));
     }
+
+    public PointStore getScaledLocation(JComponent component) {
+        for (CMData<PointStore, ?> pointData : pointCalculationList) {
+            if (pointData.is(component)) {
+                return pointData.getStore();
+            }
+        }
+
+        return null;
+    }
+
+    public void setIcon(JComponent component, CustomImageIcon icon, DimensionStore size) {
+        try {
+            component.getClass().getMethod("setIcon", Icon.class).invoke(component, icon.scaleToFill(component.getSize()));
+        } catch (Exception ignored) {}
+
+        boolean foundIcon = false;
+        for (CMData<DimensionStore, CustomImageIcon> iconData : iconCalculationList) {
+            if (iconData.is(component)) {
+                foundIcon = true;
+                iconData.setStore(size);
+                iconData.setOtherData(icon);
+                break;
+            }
+        }
+
+        if (!foundIcon) iconCalculationList.add(new CMData<>(component, size, icon));
+    }
+
+    public void setIcon(JComponent component, CustomImageIcon icon) {
+        DimensionStore scaledIconSize = getScaledIconSize(component);
+        if(scaledIconSize == null) return;
+
+        setIcon(component, icon, scaledIconSize);
+    }
+
+    public void setIcon(JComponent component, DimensionStore size) {
+        CustomImageIcon icon = getIcon(component);
+        if(icon == null) return;
+
+        setIcon(component, icon, size);
+    }
+
+    public DimensionStore getScaledIconSize(JComponent component) {
+        for (CMData<DimensionStore, ?> iconData : iconCalculationList) {
+            if (iconData.is(component)) {
+                return iconData.getStore();
+            }
+        }
+
+        return null;
+    }
+
+    public CustomImageIcon getIcon(JComponent component) {
+        for (CMData<DimensionStore, CustomImageIcon> iconData : iconCalculationList) {
+            if (iconData.is(component)) {
+                return iconData.getOtherData();
+            }
+        }
+
+        return null;
+    }
+
     public void recalculate(JComponent component) {
         int width = cScene.getWidth();
         int height = cScene.getHeight();
 
-        for (CMData<Point> pointData : pointCalculationList) {
+        for (CMData<PointStore, ?> pointData : pointCalculationList) {
             if (pointData.is(component)) {
                 pointData.getComponent().setLocation(pointData.getStore().calculate(width, height));
                 break;
             }
         }
 
-        for (CMData<Dimension> dimData : dimensionCalculationList) {
+        for (CMData<DimensionStore, ?> dimData : dimensionCalculationList) {
             if (dimData.is(component)) {
                 dimData.getComponent().setSize(dimData.getStore().calculate(width, height));
+                break;
+            }
+        }
+
+        for (CMData<DimensionStore, CustomImageIcon> iconData : iconCalculationList) {
+            if (iconData.is(component)) {
+                try {
+                    component.getClass().getMethod("setIcon", Icon.class)
+                            .invoke(component, iconData.getOtherData().resize(
+                                    iconData.getStore().calculate(width, height)
+                            ));
+                } catch (Exception ignored) {}
                 break;
             }
         }
@@ -163,6 +250,14 @@ public class CM extends ComponentAdapter {
 
         pointCalculationList.forEach(pointData -> pointData.getComponent().setLocation(pointData.getStore().calculate(width, height)));
         dimensionCalculationList.forEach(dimData -> dimData.getComponent().setSize(dimData.getStore().calculate(width, height)));
+        iconCalculationList.forEach(iconData -> {
+            try {
+                iconData.getComponent().getClass().getMethod("setIcon", Icon.class)
+                        .invoke(iconData.getComponent(), iconData.getOtherData().resize(
+                                iconData.getStore().calculate(width, height)
+                        ));
+            } catch (Exception ignored) {}
+        });
     }
 
     @Override
