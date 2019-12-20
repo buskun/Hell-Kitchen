@@ -1,6 +1,7 @@
 package base;
 
 import components.CustomImageIcon;
+import utility.Utility;
 import utility.animation.Animation;
 import utility.cm.CM;
 import utility.loader.AudioLoader;
@@ -8,12 +9,14 @@ import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-abstract public class Scene extends JLabel implements KeyListener {
+abstract public class Scene extends JLabel implements KeyListener, ComponentListener {
     private ImageLoader imageLoader;
     private AudioLoader audioLoader;
     private Controller controller;
@@ -25,6 +28,8 @@ abstract public class Scene extends JLabel implements KeyListener {
     private boolean imageLoaded = false;
     private boolean audioLoaded = false;
     private HashMap<Integer, Boolean> pressedKey = new HashMap<>();
+    private CustomImageIcon background = null;
+    ArrayList<Runnable> backgroundAutoResizeQueue = new ArrayList<>();
 
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
@@ -76,14 +81,35 @@ abstract public class Scene extends JLabel implements KeyListener {
         onKeyPress(e);
     }
 
-    public void onKeyPress(KeyEvent e) {};
+    public void onKeyPress(KeyEvent e) {}
 
     public final void keyReleased(KeyEvent e) {
         pressedKey.put(e.getKeyCode(), false);
         onKeyReleased(e);
     }
 
-    public void onKeyReleased(KeyEvent e) {};
+    public void onKeyReleased(KeyEvent e) {}
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        if (background != null) {
+            if (!backgroundAutoResizeQueue.isEmpty()) {
+                backgroundAutoResizeQueue.forEach(Runnable::run);
+                backgroundAutoResizeQueue = new ArrayList<>();
+            }
+
+            backgroundAutoResizeQueue.add(Utility.setTimeout(() -> changeBackground(background), 100));
+        }
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) { }
+
+    @Override
+    public void componentShown(ComponentEvent e) { }
+
+    @Override
+    public void componentHidden(ComponentEvent e) { }
 
     /*
      * Class Methods
@@ -104,6 +130,8 @@ abstract public class Scene extends JLabel implements KeyListener {
         }
 
         window.addKeyListener(this);
+        window.addComponentListener(this);
+        if (background != null) changeBackground(background);
         setVisible(true);
         window.getContentPane().add(this, BorderLayout.CENTER);
 
@@ -131,6 +159,7 @@ abstract public class Scene extends JLabel implements KeyListener {
 
         setVisible(false);
         window.removeKeyListener(this);
+        window.removeComponentListener(this);
 
 //        removeAll();
 //        revalidate();
@@ -172,7 +201,10 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public void ready() { readyFlag = true; }
 
-    public void changeBackground(CustomImageIcon imageIcon) { setIcon(imageIcon.resize(window.getSize())); }
+    public void changeBackground(CustomImageIcon imageIcon) {
+        background = imageIcon.resize(window.getSize());
+        setIcon(background);
+    }
 
     public void changeBackground(Image image) { changeBackground(new CustomImageIcon(image)); }
 
