@@ -59,10 +59,12 @@ public class Utility {
         Thread timeoutThread = new Thread(() -> {
             try { Thread.sleep(time); } catch (Exception ignored) { }
 
-            if(interrupt.get()) return;
+            if (interrupt.get()) return;
 
             callback.run();
         });
+
+        timeoutThread.start();
 
         return () -> {
             interrupt.set(true);
