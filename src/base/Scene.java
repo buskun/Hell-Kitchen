@@ -131,7 +131,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
         window.addKeyListener(this);
         window.addComponentListener(this);
-        changeBackground(background);
+        if (background != null) changeBackground(background);
         setVisible(true);
         window.getContentPane().add(this, BorderLayout.CENTER);
 
