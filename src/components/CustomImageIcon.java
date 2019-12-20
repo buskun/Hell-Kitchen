@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CustomImageIcon extends ImageIcon {
-    Image originalImage = null;
+    Image originalImage;
 
-    public CustomImageIcon(String fname) { super(fname); }
+    public CustomImageIcon(String fname) {
+        super(fname);
+        originalImage = getImage();
+    }
 
     public CustomImageIcon(Image cOriginalImage) {
         super(cOriginalImage);
@@ -19,7 +22,6 @@ public class CustomImageIcon extends ImageIcon {
     }
 
     public CustomImageIcon resize(int width, int height) {
-        if (originalImage == null) originalImage = getImage();
         return new CustomImageIcon(originalImage, originalImage.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
     }
 
@@ -31,23 +33,24 @@ public class CustomImageIcon extends ImageIcon {
         Dimension imageSize = getImageDimension();
         double scale = (double) width / imageSize.width;
 
-        return resize(width, (int) Math.round(imageSize.height * scale));
+        return resize(width, (int) (imageSize.height * scale));
     }
 
     public CustomImageIcon scaleToHeight(int height) {
         Dimension imageSize = getImageDimension();
         double scale = (double) height / imageSize.height;
 
-        return resize((int) Math.round(imageSize.width * scale), height);
+        return resize((int) (imageSize.width * scale), height);
     }
 
     public CustomImageIcon scaleToFill(int width, int height) {
-        Dimension imageSize = getImageDimension();
-        double scaleW = (double) width / imageSize.width;
-        double scaleH = (double) height / imageSize.width;
+        int imgWidth = originalImage.getWidth(null);
+        int imgHeight = originalImage.getHeight(null);
+        double scaleW = (double) width / imgWidth;
+        double scaleH = (double) height / imgHeight;
         double scale = Math.max(scaleH, scaleW);
 
-        return resize((int) Math.round(width * scale), (int) Math.round(height * scale));
+        return resize((int) (imgWidth * scale), (int) (imgHeight * scale));
 
     }
 
@@ -56,12 +59,13 @@ public class CustomImageIcon extends ImageIcon {
     }
 
     public CustomImageIcon scaleToFit(int width, int height) {
-        Dimension imageSize = getImageDimension();
-        double scaleW = (double) width / imageSize.width;
-        double scaleH = (double) height / imageSize.width;
+        int imgWidth = originalImage.getWidth(null);
+        int imgHeight = originalImage.getHeight(null);
+        double scaleW = (double) width / imgWidth;
+        double scaleH = (double) height / imgHeight;
         double scale = Math.min(scaleH, scaleW);
 
-        return resize((int) Math.round(width * scale), (int) Math.round(height * scale));
+        return resize((int) (imgWidth * scale), (int) (imgHeight * scale));
 
     }
 
