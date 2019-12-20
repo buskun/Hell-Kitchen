@@ -2,6 +2,7 @@ package base;
 
 import components.CustomImageIcon;
 import utility.animation.Animation;
+import utility.cm.CM;
 import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
@@ -17,6 +18,7 @@ abstract public class Scene extends JLabel implements KeyListener {
     private AudioLoader audioLoader;
     private Controller controller;
     private Window window;
+    private CM cm;
     private boolean readyFlag = false;
     private HashMap<String, JComponent> componentIDMap = new HashMap<>();
     private ArrayList<Animation> animations = new ArrayList<>();
@@ -27,6 +29,7 @@ abstract public class Scene extends JLabel implements KeyListener {
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
         audioLoader = new AudioLoader(this::onStartLoadingAudio, this::onAudioLoaded);
+        cm = new CM(this);
 
         controller = _controller;
         window = _window;
@@ -68,13 +71,19 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e) {
+    public final void keyPressed(KeyEvent e) {
         pressedKey.put(e.getKeyCode(), true);
+        onKeyPress(e);
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void onKeyPress(KeyEvent e) {};
+
+    public final void keyReleased(KeyEvent e) {
         pressedKey.put(e.getKeyCode(), false);
+        onKeyReleased(e);
     }
+
+    public void onKeyReleased(KeyEvent e) {};
 
     /*
      * Class Methods
@@ -107,6 +116,8 @@ abstract public class Scene extends JLabel implements KeyListener {
             System.err.println("Error while starting Scene " + getClass().getName());
             exception.printStackTrace();
         }
+
+        window.requestFocus();
     }
 
     synchronized public final void stop() {
@@ -156,6 +167,8 @@ abstract public class Scene extends JLabel implements KeyListener {
     public final Window getWindow() { return window; }
 
     public final Controller getController() { return controller; }
+
+    public final CM getCM() { return cm; }
 
     public void ready() { readyFlag = true; }
 
