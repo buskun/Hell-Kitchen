@@ -44,8 +44,8 @@ public class DimensionStore extends CMStore<Dimension> {
     @Override
     public Dimension calculate(double width, double height) {
         return new Dimension(
-                (int) (calFlag == CMFlag.BY_H ? height : width * w),
-                (int) (calFlag == CMFlag.BY_W ? width : height * h)
+                (int) ((calFlag == CMFlag.BY_H ? height : width) * w / 100),
+                (int) ((calFlag == CMFlag.BY_W ? width : height) * h / 100)
         );
     }
 }

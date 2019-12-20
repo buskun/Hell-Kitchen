@@ -47,8 +47,8 @@ public class PointStore extends CMStore<Point> {
     @Override
     public Point calculate(double width, double height) {
         return new Point(
-                (int) (calFlag == CMFlag.BY_H ? height : width * x),
-                (int) (calFlag == CMFlag.BY_W ? width : height * y)
+                (int) ((calFlag == CMFlag.BY_H ? height : width) * x / 100),
+                (int) ((calFlag == CMFlag.BY_W ? width : height) * y / 100)
         );
     }
 }
