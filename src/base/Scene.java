@@ -29,7 +29,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     private boolean audioLoaded = false;
     private HashMap<Integer, Boolean> pressedKey = new HashMap<>();
     private CustomImageIcon background = null;
-    ArrayList<Runnable> backgroundAutoResizeQueue = new ArrayList<>();
+    private ArrayList<Runnable> backgroundAutoResizeQueue = new ArrayList<>();
 
     public Scene(Window _window, Controller _controller) {
         imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
