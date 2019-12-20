@@ -2,13 +2,20 @@ package utility.cm;
 
 import javax.swing.*;
 
-public class CMData<T> {
+public class CMData<T extends CMStore<?>, O> {
     private JComponent component;
-    private CMStore<T> store;
+    private T store;
+    private O otherData;
 
-    CMData(JComponent cComponent, CMStore<T> cStore) {
+    CMData(JComponent cComponent, T cStore) {
         component = cComponent;
         store = cStore;
+    }
+
+    CMData(JComponent cComponent, T cStore, O cOtherData) {
+        component = cComponent;
+        store = cStore;
+        otherData = cOtherData;
     }
 
     public JComponent getComponent() {
@@ -23,11 +30,19 @@ public class CMData<T> {
         return component == cComponent;
     }
 
-    public CMStore<T> getStore() {
+    public T getStore() {
         return store;
     }
 
-    public void setStore(CMStore<T> cStore) {
+    public void setStore(T cStore) {
         store = cStore;
+    }
+
+    public O getOtherData() {
+        return otherData;
+    }
+
+    public void setOtherData(O cOtherData) {
+        otherData = cOtherData;
     }
 }
