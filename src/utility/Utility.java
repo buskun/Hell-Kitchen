@@ -1,9 +1,12 @@
 package utility;
 
 import base.Scene;
+import components.CustomImageIcon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -112,5 +115,55 @@ public class Utility {
             if (value instanceof javax.swing.plaf.FontUIResource)
                 UIManager.put(key, font);
         }
+    }
+
+    public static void setHoverIcon(JComponent component, CustomImageIcon normalIcon, CustomImageIcon hoverIcon) {
+        component.addMouseListener(new MouseAdapter() {
+            private void setIcon(CustomImageIcon nIcon) {
+                try {
+                    component.getClass().getMethod("setIcon", Icon.class)
+                            .invoke(component, nIcon.resize(component.getSize()));
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(hoverIcon);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(normalIcon);
+                }
+            }
+        });
+    }
+
+    public static void setActiveIcon(JComponent component, CustomImageIcon normalIcon, CustomImageIcon activeIcon) {
+        component.addMouseListener(new MouseAdapter() {
+            private void setIcon(CustomImageIcon nIcon) {
+                try {
+                    component.getClass().getMethod("setIcon", Icon.class)
+                            .invoke(component, nIcon.resize(component.getSize()));
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(activeIcon);
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(normalIcon);
+                }
+            }
+        });
     }
 }

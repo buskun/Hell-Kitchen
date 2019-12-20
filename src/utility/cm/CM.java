@@ -4,9 +4,10 @@ import base.Scene;
 import components.CustomImageIcon;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class CM extends ComponentAdapter {
@@ -181,14 +182,14 @@ public class CM extends ComponentAdapter {
 
     public void setIcon(JComponent component, CustomImageIcon icon) {
         DimensionStore scaledIconSize = getScaledIconSize(component);
-        if(scaledIconSize == null) return;
+        if (scaledIconSize == null) return;
 
         setIcon(component, icon, scaledIconSize);
     }
 
     public void setIcon(JComponent component, DimensionStore size) {
         CustomImageIcon icon = getIcon(component);
-        if(icon == null) return;
+        if (icon == null) return;
 
         setIcon(component, icon, size);
     }
@@ -257,6 +258,46 @@ public class CM extends ComponentAdapter {
                                 iconData.getStore().calculate(width, height)
                         ));
             } catch (Exception ignored) {}
+        });
+    }
+
+    public void setHoverIcon(JComponent component, CustomImageIcon normalIcon, CustomImageIcon hoverIcon) {
+        component.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(component, hoverIcon);
+                    recalculate(component);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(component, normalIcon);
+                    recalculate(component);
+                }
+            }
+        });
+    }
+
+    public void setActiveIcon(JComponent component, CustomImageIcon normalIcon, CustomImageIcon activeIcon) {
+        component.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(component, activeIcon);
+                    recalculate(component);
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                synchronized (component) {
+                    setIcon(component, normalIcon);
+                    recalculate(component);
+                }
+            }
         });
     }
 
