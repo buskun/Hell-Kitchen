@@ -53,16 +53,27 @@ public class Utility {
         }, interval);
     }
 
-    public static void setTimeout(Runnable callback, int time) {
-        new Thread(() -> {
+    public static Runnable setTimeout(Runnable callback, int time) {
+        StateManager<Boolean> interrupt = useState(false);
+
+        Thread timeoutThread = new Thread(() -> {
             try { Thread.sleep(time); } catch (Exception ignored) { }
 
+            if (interrupt.get()) return;
+
             callback.run();
-        }).start();
+        });
+
+        timeoutThread.start();
+
+        return () -> {
+            interrupt.set(true);
+            timeoutThread.interrupt();
+        };
     }
 
-    public static void setTimeout(Scene scene, Runnable callback, int time) {
-        setTimeout(() -> {
+    public static Runnable setTimeout(Scene scene, Runnable callback, int time) {
+        return setTimeout(() -> {
             callback.run();
             scene.repaint();
         }, time);

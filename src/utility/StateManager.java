@@ -16,7 +16,7 @@ public class StateManager<T> {
         this(null);
     }
 
-    public void set(T newValue) {
+    synchronized public void set(T newValue) {
         value = newValue;
 
         new Thread(() -> {
@@ -26,7 +26,7 @@ public class StateManager<T> {
         }).start();
     }
 
-    public T get() { return value; }
+    synchronized public T get() { return value; }
 
     public void addListener(Function<T, Boolean> listener) { listenerList.add(listener); }
 
