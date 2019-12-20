@@ -4,12 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CustomImageIcon extends ImageIcon {
+    Image originalImage = null;
+
     public CustomImageIcon(String fname) { super(fname); }
 
-    public CustomImageIcon(Image image) { super(image); }
+    public CustomImageIcon(Image cOriginalImage) {
+        super(cOriginalImage);
+        originalImage = cOriginalImage;
+    }
+
+    public CustomImageIcon(Image cOriginalImage, Image image) {
+        super(image);
+        originalImage = cOriginalImage;
+    }
 
     public CustomImageIcon resize(int width, int height) {
-        return new CustomImageIcon(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
+        if (originalImage == null) originalImage = getImage();
+        return new CustomImageIcon(originalImage, originalImage.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
     }
 
     public CustomImageIcon resize(Dimension size) {
