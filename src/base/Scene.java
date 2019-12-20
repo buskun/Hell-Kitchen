@@ -71,13 +71,19 @@ abstract public class Scene extends JLabel implements KeyListener {
 
     public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e) {
+    public final void keyPressed(KeyEvent e) {
         pressedKey.put(e.getKeyCode(), true);
+        onKeyPress(e);
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void onKeyPress(KeyEvent e) {};
+
+    public final void keyReleased(KeyEvent e) {
         pressedKey.put(e.getKeyCode(), false);
+        onKeyReleased(e);
     }
+
+    public void onKeyReleased(KeyEvent e) {};
 
     /*
      * Class Methods
