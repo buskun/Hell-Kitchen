@@ -107,6 +107,8 @@ abstract public class Scene extends JLabel implements KeyListener {
             System.err.println("Error while starting Scene " + getClass().getName());
             exception.printStackTrace();
         }
+
+        window.requestFocus();
     }
 
     synchronized public final void stop() {
