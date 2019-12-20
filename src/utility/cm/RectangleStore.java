@@ -90,10 +90,10 @@ public class RectangleStore extends CMStore<Rectangle> {
     @Override
     public Rectangle calculate(double width, double height) {
         return new Rectangle(
-                (int) (calLocationFlag == CMFlag.BY_H ? height : width * x),
-                (int) (calLocationFlag == CMFlag.BY_W ? width : height * y),
-                (int) (calSizeFlag == CMFlag.BY_H ? height : width * w),
-                (int) (calSizeFlag == CMFlag.BY_W ? width : height * h)
+                (int) ((calLocationFlag == CMFlag.BY_H ? height : width) * x / 100),
+                (int) ((calLocationFlag == CMFlag.BY_W ? width : height) * y / 100),
+                (int) ((calSizeFlag == CMFlag.BY_H ? height : width) * w / 100),
+                (int) ((calSizeFlag == CMFlag.BY_W ? width : height) * h / 100)
         );
     }
 }
