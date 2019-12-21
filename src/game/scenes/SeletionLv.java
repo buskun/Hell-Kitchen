@@ -62,7 +62,7 @@ public class SeletionLv extends Scene {
         add(backBtn);
 
         java.util.List<String> levelIconNameList = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-        java.util.List<String> levelSceneNameList = Arrays.asList("gameScene1");
+        java.util.List<String> levelSceneNameList = Arrays.asList("gameScene1","gameScene2");
         java.util.List<JButton> levelButtonList = IntStream.range(0, levelIconNameList.size())
                 .mapToObj(index -> {
                     JButton btn = new JButton();
@@ -80,7 +80,6 @@ public class SeletionLv extends Scene {
 
                     if (levelSceneNameList.size() > index)
                         btn.addActionListener(e -> getController().changeScene(levelSceneNameList.get(index)));
-
                     return btn;
                 })
                 .collect(Collectors.toList());

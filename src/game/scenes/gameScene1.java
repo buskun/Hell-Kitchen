@@ -22,22 +22,30 @@ public class gameScene1 extends Scene {
     }
 
     public void loadImage(ImageLoader imageLoader) {
-        imageLoader.add("background", "resources/gameScene/background.jpg");
+        imageLoader.add("background", "resources/gameScene/background.png");
         imageLoader.add("head", "resources/gameScene/Iconplayer.png");
-        imageLoader.add("refrigerator", "resources/gameScene/refrigerator.png");
-        imageLoader.add("BarLeft", "resources/gameScene/left.png");
-        imageLoader.add("BarCenter", "resources/gameScene/bar.png");
-        imageLoader.add("BarUnder", "resources/gameScene/under.png");
-
+        imageLoader.add("refrigerator", "resources/gameScene/Fridge.png");
+        imageLoader.add("bar","resources/gameScene/bar.png");
+        imageLoader.add("plate","resources/gameScene/plate.png");
+        imageLoader.add("Cutting","resources/gameScene/Cutting.png");
+        imageLoader.add("Drinking","resources/gameScene/Drinking.png");
+        imageLoader.add("pot","resources/gameScene/pot.png");
+        imageLoader.add("pan","resources/gameScene/pan.png");
     }
 
     private BoundingArea map = new BoundingArea();
     private JLabel character = new JLabel();
     private JLabel refrigerator = new JLabel();
+    private JLabel bar = new JLabel();
+    private JLabel plate = new JLabel();
+    private JLabel Cutting = new JLabel();
+    private JLabel Drinking = new JLabel();
+    private JLabel pot = new JLabel();
+    private JLabel pan = new JLabel();
+    JFrame refrigeratorFrame = new JFrame();
+
     private HashMap<String, Boolean> interactable = new HashMap<>();
-    private JLabel barButton = new JLabel();
-    private JLabel barLeft = new JLabel();
-    private JLabel barCenter = new JLabel();
+
 
     @Override
     public void init() {
@@ -46,26 +54,55 @@ public class gameScene1 extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        cm.setIcon(character, imageLoader.getIcon("head"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(character, CM.grid(20, 20, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(character, imageLoader.getIcon("head"), CM.size(13, CMFlag.BY_H));
+        cm.setBounds(character, CM.grid(15, 15, CM.size(13, CMFlag.BY_H)));
         add(character);
 
-        cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(20, 40));
-        cm.setBounds(refrigerator, CM.grid(80, 20, 20, 40));
+        cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
+        cm.setBounds(refrigerator, CM.grid(85, 20, 15, 40));
         add(refrigerator);
         map.add("refrigerator", refrigerator);
 
-        cm.setIcon(barButton, imageLoader.getIcon("BarUnder"), CM.size(40, 20));
-        cm.setBounds(barButton, CM.grid(30, 70, 40, 20));
-        add(barButton);
+        cm.setIcon(plate,imageLoader.getIcon("plate"),CM.size(10,CMFlag.BY_H));
+        cm.setBounds(plate,CM.grid(30,29,CM.size(10, CMFlag.BY_H)));
+        add(plate);
+        map.add("plate",plate);
 
-        cm.setIcon(barLeft, imageLoader.getIcon("BarLeft"), CM.size(20, 40));
-        cm.setBounds(barLeft, CM.grid(0, 20, 20, 40));
-        add(barLeft);
+        cm.setIcon(bar,imageLoader.getIcon("bar"),CM.size(44,37));
+        cm.setBounds(bar,CM.grid(24,29,44,37));
+        add(bar);
+        map.add("bar",bar);
 
-        cm.setIcon(barCenter, imageLoader.getIcon("BarCenter"), CM.size(40, 20));
-        cm.setBounds(barCenter, CM.grid(30, 40, 40, 20));
-        add(barCenter);
+        cm.setIcon(Cutting,imageLoader.getIcon("Cutting"),CM.size(7,13));
+        cm.setBounds(Cutting,CM.grid(0,28,7,15));
+        add(Cutting);
+        map.add("Cutting",Cutting);
+
+        cm.setIcon(Drinking,imageLoader.getIcon("Drinking"),CM.size(7,22));
+        cm.setBounds(Drinking,CM.grid(0,50,7,22));
+        add(Drinking);
+        map.add("Drinking",Drinking);
+
+        cm.setIcon(pot,imageLoader.getIcon("pot"),CM.size(15,12));
+        cm.setBounds(pot,CM.grid(34,82,15,12));
+        add(pot);
+        map.add("pot",pot);
+
+        cm.setIcon(pan,imageLoader.getIcon("pan"),CM.size(14,CMFlag.BY_H));
+        cm.setBounds(pan,CM.grid(54,82,CM.size(14, CMFlag.BY_H)));
+        add(pan);
+        map.add("pan",pan);
+
+
+
+
+
+
+
+
+
+
+
         ready();
 
         map.addIntersectionListener((name) -> {
@@ -100,7 +137,9 @@ public class gameScene1 extends Scene {
 
     @Override
     public void tick() {
-        int pixelPerMove = 20;
+        int pixelPerMove = 25;
+        int wH = getWindow().getHeight();
+        int wW = getWindow().getWidth();
         double percentPPMHeight = 100 * (double) pixelPerMove / getHeight();
         double percentPPMWidth = 100 * (double) pixelPerMove / getWidth();
 
@@ -112,9 +151,14 @@ public class gameScene1 extends Scene {
             moveCharacter(-percentPPMWidth, 0);
         if (isKeyPressed(KeyEvent.VK_RIGHT))
             moveCharacter(percentPPMWidth, 0);
+        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isKeyPressed(KeyEvent.VK_SPACE)) {
+            System.out.println("Hi ref");
+            refrigeratorFrame.setVisible(true);
+            refrigeratorFrame.setSize(new Dimension(wW, wH));
+            refrigeratorFrame.setResizable(false);
 
-
-        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isKeyPressed(KeyEvent.VK_SPACE)) System.out.println("Hi ref");
+        }
+        if (Boolean.TRUE.equals(interactable.get("plate")) && isKeyPressed(KeyEvent.VK_SPACE)) System.out.println("kuy");
     }
 
 
