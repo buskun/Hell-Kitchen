@@ -1,6 +1,7 @@
 package utility.bounding;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
@@ -26,16 +27,20 @@ public class BoundingArea {
 
     public void removeIntersectionListener(Function<String, Boolean> listener) { intersectionListener.remove(listener); }
 
-    public boolean intersects(JComponent component) {
+    public boolean intersects(Rectangle rectangle) {
         boolean intersect = false;
         for (String name : entities.keySet()) {
-            if (entities.get(name).getBounds().intersects(component.getBounds())) {
+            if (entities.get(name).getBounds().intersects(rectangle.getBounds())) {
                 emitIntersectionEvent(name);
                 intersect = true;
             }
         }
 
         return intersect;
+    }
+
+    public boolean intersects(JComponent component) {
+        return intersects(component.getBounds());
     }
 
     public boolean intersects(BoundingArea boundingArea) {
