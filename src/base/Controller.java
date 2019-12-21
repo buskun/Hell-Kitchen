@@ -15,7 +15,12 @@ abstract public class Controller {
     private int gameTick;
 
     public final void setLoadingScene(Scene newLoadingScene) {
+        if (loadingScene != null) {
+            window.remove(loadingScene);
+            window.removeComponentListener(loadingScene);
+        }
         loadingScene = newLoadingScene;
+        window.add(loadingScene);
     }
 
     public final Scene getLoadingScene() { return loadingScene; }
@@ -67,7 +72,7 @@ abstract public class Controller {
         }).start();
     }
 
-    public final  <SC extends Scene> void addScene(String name, Class<SC> sceneClass) { sceneMap.put(name, (Class<Scene>) sceneClass); }
+    public final <SC extends Scene> void addScene(String name, Class<SC> sceneClass) { sceneMap.put(name, (Class<Scene>) sceneClass); }
 
     public final void loadScene() {
         if (window == null) return;
@@ -80,5 +85,9 @@ abstract public class Controller {
                 System.err.println("Cannot init class: " + sceneMap.get(name));
             }
         }
+    }
+
+    public HashMap<String, Scene> getSceneList() {
+        return sceneList;
     }
 }
