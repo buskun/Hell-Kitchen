@@ -33,12 +33,10 @@ public class MenuScene extends Scene {
 
     @Override
     public void init() {
-        int wH = getWindow().getHeight();
-        int wW = getWindow().getWidth();
         CM cm = getCM();
         ImageLoader imageLoader = getImageLoader();
 
-        changeBackground(imageLoader.getIcon("background").resize(wH, wW));
+        changeBackground(imageLoader.getIcon("background"));
 
 
         JButton startBtn = new JButton();
