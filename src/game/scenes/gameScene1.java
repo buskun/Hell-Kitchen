@@ -93,22 +93,12 @@ public class gameScene1 extends Scene {
         add(pan);
         map.add("pan",pan);
 
-
-
-
-
-
-
-
-
-
-
-        ready();
-
         map.addIntersectionListener((name) -> {
             interactable.put(name, true);
             return true;
         });
+
+        ready();
     }
 
     public void moveCharacter(double pX, double pY) {
@@ -138,8 +128,6 @@ public class gameScene1 extends Scene {
     @Override
     public void tick() {
         int pixelPerMove = 25;
-        int wH = getWindow().getHeight();
-        int wW = getWindow().getWidth();
         double percentPPMHeight = 100 * (double) pixelPerMove / getHeight();
         double percentPPMWidth = 100 * (double) pixelPerMove / getWidth();
 
@@ -151,16 +139,18 @@ public class gameScene1 extends Scene {
             moveCharacter(-percentPPMWidth, 0);
         if (isKeyPressed(KeyEvent.VK_RIGHT))
             moveCharacter(percentPPMWidth, 0);
-        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isKeyPressed(KeyEvent.VK_SPACE)) {
+
+        boolean isActionKeyPressed = isKeyPressed(KeyEvent.VK_SPACE, true);
+
+        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isActionKeyPressed) {
             System.out.println("Hi ref");
             refrigeratorFrame.setVisible(true);
-            refrigeratorFrame.setSize(new Dimension(wW, wH));
+            refrigeratorFrame.setSize(new Dimension(1200, 900));
             refrigeratorFrame.setResizable(false);
 
         }
-        if (Boolean.TRUE.equals(interactable.get("plate")) && isKeyPressed(KeyEvent.VK_SPACE)) System.out.println("kuy");
+        if (Boolean.TRUE.equals(interactable.get("plate")) && isActionKeyPressed) System.out.println("kuy");
     }
-
 
     @Override
     public void onStart() {
