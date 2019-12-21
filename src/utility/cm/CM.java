@@ -264,31 +264,22 @@ public class CM extends ComponentAdapter {
         int width = cScene.getWindow().getWidth();
         int height = cScene.getWindow().getHeight();
 
-        for (CMData<PointStore, ?> pointData : pointCalculationList) {
-            if (pointData.is(component)) {
-                pointData.getComponent().setLocation(pointData.getStore().calculate(width, height));
-                break;
-            }
-        }
+        Rectangle newComponentBounds = component.getBounds();
 
-        for (CMData<DimensionStore, ?> dimData : dimensionCalculationList) {
-            if (dimData.is(component)) {
-                dimData.getComponent().setSize(dimData.getStore().calculate(width, height));
-                break;
-            }
-        }
+        pointCalculationList.stream().filter(pc -> pc.is(component)).findFirst().ifPresent(pc -> newComponentBounds.setLocation(pc.getStore().calculate(width, height)));
 
-        for (CMData<DimensionStore, CustomImageIcon> iconData : iconCalculationList) {
-            if (iconData.is(component)) {
-                try {
-                    component.getClass().getMethod("setIcon", Icon.class)
-                            .invoke(component, iconData.getOtherData().resize(
-                                    iconData.getStore().calculate(width, height)
-                            ));
-                } catch (Exception ignored) {}
-                break;
-            }
-        }
+        dimensionCalculationList.stream().filter(dc -> dc.is(component)).findFirst().ifPresent(dc -> newComponentBounds.setSize(dc.getStore().calculate(width, height)));
+
+        iconCalculationList.stream().filter(ic -> ic.is(component)).findFirst().ifPresent(ic -> {
+            try {
+                component.getClass().getMethod("setIcon", Icon.class)
+                        .invoke(component, ic.getOtherData().resize(
+                                ic.getStore().calculate(width, height)
+                        ));
+            } catch (Exception ignored) {}
+        });
+
+        component.setBounds(newComponentBounds);
         ready = true;
     }
 
