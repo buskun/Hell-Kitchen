@@ -3,110 +3,118 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
-import utility.animation.Animation;
-import utility.animation.AnimationMap;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
+import utility.cm.CMFlag;
+import utility.cm.DimensionStore;
+import utility.cm.PointStore;
 import utility.loader.ImageLoader;
-import utility.Utility;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
-public class gameScene1 extends Scene{
+public class gameScene1 extends Scene {
 
     public gameScene1(Window _window, Controller _controller) {
         super(_window, _controller);
     }
+
     public void loadImage(ImageLoader imageLoader) {
         imageLoader.add("background", "resources/gameScene/background.jpg");
-        imageLoader.add("head","resources/gameScene/Iconplayer.png");
-        imageLoader.add("refrigerator","resources/gameScene/refrigerator.png");
-        imageLoader.add("BarLeft","resources/gameScene/left.png");
-        imageLoader.add("BarCenter","resources/gameScene/bar.png");
-        imageLoader.add("BarUnder","resources/gameScene/under.png");
+        imageLoader.add("head", "resources/gameScene/Iconplayer.png");
+        imageLoader.add("refrigerator", "resources/gameScene/refrigerator.png");
+        imageLoader.add("BarLeft", "resources/gameScene/left.png");
+        imageLoader.add("BarCenter", "resources/gameScene/bar.png");
+        imageLoader.add("BarUnder", "resources/gameScene/under.png");
 
     }
-    int wH = getWindow().getHeight();
-    int wW = getWindow().getWidth();
-    BoundingArea map = new BoundingArea();
-    JLabel character = new JLabel();
-    JLabel refrigerator = new JLabel();
-    JLabel barButton = new JLabel();
-    JLabel barLeft = new JLabel();
-    JLabel barCenter = new JLabel();
+
+    private BoundingArea map = new BoundingArea();
+    private JLabel character = new JLabel();
+    private JLabel refrigerator = new JLabel();
+    private HashMap<String, Boolean> interactable = new HashMap<>();
+    private JLabel barButton = new JLabel();
+    private JLabel barLeft = new JLabel();
+    private JLabel barCenter = new JLabel();
+
     @Override
     public void init() {
         CM cm = getCM();
         ImageLoader imageLoader = getImageLoader();
 
-        changeBackground(getImageLoader().getIcon("background").resize(wH, wW));
+        changeBackground(getImageLoader().getIcon("background"));
 
-        cm.setIcon(character,imageLoader.getIcon("head"), CM.size(10, 20));
-        cm.setBounds(character, CM.grid(20, 20, 15, 20));
+        cm.setIcon(character, imageLoader.getIcon("head"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(character, CM.grid(20, 20, CM.size(20, CMFlag.BY_H)));
         add(character);
 
-        cm.setIcon(refrigerator,imageLoader.getIcon("refrigerator"), CM.size(20, 40));
+        cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(20, 40));
         cm.setBounds(refrigerator, CM.grid(80, 20, 20, 40));
         add(refrigerator);
+        map.add("refrigerator", refrigerator);
 
-        cm.setIcon(barButton,imageLoader.getIcon("BarUnder"), CM.size(40, 20));
+        cm.setIcon(barButton, imageLoader.getIcon("BarUnder"), CM.size(40, 20));
         cm.setBounds(barButton, CM.grid(30, 70, 40, 20));
         add(barButton);
 
-        cm.setIcon(barLeft,imageLoader.getIcon("BarLeft"), CM.size(20, 40));
+        cm.setIcon(barLeft, imageLoader.getIcon("BarLeft"), CM.size(20, 40));
         cm.setBounds(barLeft, CM.grid(0, 20, 20, 40));
         add(barLeft);
 
-        cm.setIcon(barCenter,imageLoader.getIcon("BarCenter"), CM.size(40, 20));
+        cm.setIcon(barCenter, imageLoader.getIcon("BarCenter"), CM.size(40, 20));
         cm.setBounds(barCenter, CM.grid(30, 40, 40, 20));
         add(barCenter);
-        if (map.intersects(character)) {
-            /* Do something */
-        }
         ready();
+
+        map.addIntersectionListener((name) -> {
+            interactable.put(name, true);
+            return true;
+        });
+    }
+
+    public void moveCharacter(double pX, double pY) {
+        interactable.keySet().forEach(key -> interactable.put(key, false));
+
+        Window window = getWindow();
+        CM cm = getCM();
+        DimensionStore characterSize = cm.getScaledSize(character);
+        PointStore characterLocation = cm.getScaledLocation(character);
+
+        pX = Math.min(Math.max(characterLocation.getX() + pX, 0), 100 - characterSize.getW());
+        pY = Math.min(Math.max(characterLocation.getY() + pY, 0), 100 - characterSize.getH());
+
+        Rectangle newCharacterBounds = CM.grid(
+                pX, pY,
+                characterSize.getW(),
+                characterSize.getH(),
+                characterSize.getFlag()
+        ).calculate(window.getWidth(), window.getHeight());
+
+        if (map.intersects(newCharacterBounds)) return;
+
+        cm.setLocation(character, CM.position(pX, pY));
+        cm.recalculate(character);
     }
 
     @Override
     public void tick() {
-    if(isKeyPressed(KeyEvent.VK_UP)){
-        Container p = getParent();
-        int x = getLocation().x;
-        int y = getLocation().y;
-        character.setLocation(character.getX(),character.getY()-20);
-         y = getLocation().y;
-        if(y < 0) {y = 0;}
-        if (y + wH > p.getHeight())  y = p.getHeight() - wH;
-        //setLocation(x, y);
-        character.setLocation(character.getX(),character.getY());
-        }
-        if(isKeyPressed(KeyEvent.VK_DOWN)){
-            Container p = getParent();
-            int x = getLocation().x;
-            int y = getLocation().y;
-            character.setLocation(character.getX(),character.getY()+20);
-            y = getLocation().y;
-            if(y < 0) {y = 0;}
-            if (y + wH > p.getHeight())  y = p.getHeight() - wH;
-            //setLocation(x, y);
-            character.setLocation(character.getX(),character.getY());
-        }
-        if(isKeyPressed(KeyEvent.VK_LEFT)){
-            Container p = getParent();
-            int x = getLocation().x;
-            int y = getLocation().y;
-            character.setLocation(character.getX()-20,character.getY());
-        }
-        if(isKeyPressed(KeyEvent.VK_RIGHT)){
-            Container p = getParent();
-            int x = getLocation().x;
-            int y = getLocation().y;
-            character.setLocation(character.getX()+20,character.getY());
-        }
-    repaint();
+        int pixelPerMove = 20;
+        double percentPPMHeight = 100 * (double) pixelPerMove / getHeight();
+        double percentPPMWidth = 100 * (double) pixelPerMove / getWidth();
 
+        if (isKeyPressed(KeyEvent.VK_UP))
+            moveCharacter(0, -percentPPMHeight);
+        if (isKeyPressed(KeyEvent.VK_DOWN))
+            moveCharacter(0, percentPPMHeight);
+        if (isKeyPressed(KeyEvent.VK_LEFT))
+            moveCharacter(-percentPPMWidth, 0);
+        if (isKeyPressed(KeyEvent.VK_RIGHT))
+            moveCharacter(percentPPMWidth, 0);
+
+
+        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isKeyPressed(KeyEvent.VK_SPACE)) System.out.println("Hi ref");
     }
 
 
