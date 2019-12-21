@@ -224,7 +224,13 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     public boolean isReady() { return readyFlag && imageLoaded && audioLoaded && cm.isReady(); }
 
-    public boolean isKeyPressed(int keyCode) { return Boolean.TRUE.equals(pressedKey.get(keyCode)); }
+    public boolean isKeyPressed(int keyCode, boolean consume) {
+        boolean isPressed = Boolean.TRUE.equals(pressedKey.get(keyCode));
+        if (consume) pressedKey.put(keyCode, false);
+        return isPressed;
+    }
+
+    public boolean isKeyPressed(int keyCode) { return isKeyPressed(keyCode, false); }
 
     public void bindID(String id, JComponent component) { componentIDMap.put(id, component); }
 

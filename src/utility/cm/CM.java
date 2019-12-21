@@ -12,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CM extends ComponentAdapter {
     public static RectangleStore grid(double x, double y, CMFlag locationFlag, double width, double height, CMFlag sizeFlag) {
@@ -291,7 +292,7 @@ public class CM extends ComponentAdapter {
         ArrayList<Runnable> queue = new ArrayList<>();
 
         synchronized (calculationComponentList) {
-            calculationComponentList.forEach(component -> {
+            for (JComponent component : calculationComponentList) {
                 Rectangle bound = component.getBounds();
 
                 StateManager<Boolean> edited = Utility.useState(false);
@@ -330,7 +331,7 @@ public class CM extends ComponentAdapter {
                         }
                     } catch (Exception ignored) { }
                 });
-            });
+            }
         }
 
         cScene.setVisible(false);
