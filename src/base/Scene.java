@@ -92,13 +92,28 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     @Override
     public void componentResized(ComponentEvent e) {
+        resize(true);
+    }
+
+    public void resize(boolean source) {
         if (background != null) {
             if (!backgroundAutoResizeQueue.isEmpty()) {
                 backgroundAutoResizeQueue.forEach(Runnable::run);
                 backgroundAutoResizeQueue = new ArrayList<>();
             }
 
-            backgroundAutoResizeQueue.add(Utility.setTimeout(() -> changeBackground(background), 100));
+            backgroundAutoResizeQueue.add(Utility.setTimeout(() -> {
+                changeBackground(background);
+                if (!source) return;
+                controller.getSceneList().values().forEach(sc -> {
+                    if (sc != Scene.this) sc.resize(false);
+                });
+
+                if (controller.getLoadingScene() != Scene.this)
+                    new Thread(() -> {
+                        controller.getLoadingScene().resize(false);
+                    }).start();
+            }, 100));
         }
     }
 
@@ -121,19 +136,19 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
             if (!imageLoaded) imageLoader.load();
             if (!audioLoaded) audioLoader.load();
             if (!readyFlag) init();
+            cm.recalculate();
 
             if (!isReady()) {
                 while (!isReady()) try { wait(); } catch (Exception ignored) {}
             }
 
-            controller.getLoadingScene().stop();
+            window.addKeyListener(this);
+            window.addComponentListener(this);
+            window.getContentPane().add(this, BorderLayout.CENTER);
         }
-
-        window.addKeyListener(this);
-        window.addComponentListener(this);
-        if (background != null) changeBackground(background);
         setVisible(true);
-        window.getContentPane().add(this, BorderLayout.CENTER);
+
+        if (background != null) changeBackground(background);
 
         window.revalidate();
         window.repaint();
@@ -144,7 +159,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
             System.err.println("Error while starting Scene " + getClass().getName());
             exception.printStackTrace();
         }
-
+        if (controller.getLoadingScene() != this) controller.getLoadingScene().stop();
         window.requestFocus();
     }
 
@@ -155,22 +170,19 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
             System.err.println("Error while stopping Scene " + getClass().getName());
             exception.printStackTrace();
         }
-        animations = new ArrayList<>();
-
         setVisible(false);
-        window.removeKeyListener(this);
-        window.removeComponentListener(this);
+        if (controller.getLoadingScene() != this) {
+            animations = new ArrayList<>();
 
-//        removeAll();
-//        revalidate();
-//        repaint();
+            window.removeKeyListener(this);
+            window.removeComponentListener(this);
 
-        window.getContentPane().remove(this);
-
-//        readyFlag = false;
+            window.getContentPane().remove(this);
+        }
 
         window.revalidate();
         window.repaint();
+        window.requestFocus();
     }
 
     @Override
@@ -210,7 +222,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     public void changeBackground(String imagePath) { changeBackground(new CustomImageIcon(imagePath)); }
 
-    public boolean isReady() { return readyFlag && imageLoaded && audioLoaded; }
+    public boolean isReady() { return readyFlag && imageLoaded && audioLoaded && cm.isReady(); }
 
     public boolean isKeyPressed(int keyCode) { return Boolean.TRUE.equals(pressedKey.get(keyCode)); }
 
