@@ -15,9 +15,7 @@ import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.HashMap;
 
 public class gameScene1 extends Scene {
@@ -160,10 +158,14 @@ public class gameScene1 extends Scene {
 
 
         if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isActionKeyPressed) {
-            JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader());
+            JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
             refrigeratorFrame.setVisible(true);
         }
         if (Boolean.TRUE.equals(interactable.get("plate")) && isActionKeyPressed) System.out.println("kuy");
+    }
+
+    public void onAddItem(String item) {
+        System.out.println(item);
     }
 
     @Override

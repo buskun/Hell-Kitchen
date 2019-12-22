@@ -7,12 +7,13 @@ import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
+import java.util.function.Consumer;
 
 public class RefrigeratorFrame extends JFrame {
     static final int width = 1200;
     static final int height = 900;
 
-    public RefrigeratorFrame(ImageLoader imageLoader, AudioLoader audioLoader) {
+    public RefrigeratorFrame(ImageLoader imageLoader, AudioLoader audioLoader, Consumer<String> getItemListener) {
         setTitle("Refrigerator");
         setBounds(100, 100, width, height);
         setResizable(false);
@@ -37,6 +38,7 @@ public class RefrigeratorFrame extends JFrame {
         Burger.setContentAreaFilled(false);
         Burger.setBorderPainted(false);
         contentPane.add(Burger);
+        Burger.addActionListener(e -> getItemListener.accept("Burger"));
 
         JButton Fish = new JButton();
         cm.setIcon(Fish, imageLoader.getIcon("Fish"), CM.size(20, CMFlag.BY_H));
@@ -45,6 +47,7 @@ public class RefrigeratorFrame extends JFrame {
         Fish.setContentAreaFilled(false);
         Fish.setBorderPainted(false);
         contentPane.add(Fish);
+        Fish.addActionListener(e -> getItemListener.accept("Fish"));
 
         JButton Ketchup = new JButton();
         cm.setIcon(Ketchup, imageLoader.getIcon("Ketchup"), CM.size(20, CMFlag.BY_H));
@@ -53,6 +56,7 @@ public class RefrigeratorFrame extends JFrame {
         Ketchup.setContentAreaFilled(false);
         Ketchup.setBorderPainted(false);
         contentPane.add(Ketchup);
+        Ketchup.addActionListener(e -> getItemListener.accept("Ketchup"));
 
         JButton Lettuce = new JButton();
         cm.setIcon(Lettuce, imageLoader.getIcon("Lettuce"), CM.size(20, CMFlag.BY_H));
@@ -61,6 +65,7 @@ public class RefrigeratorFrame extends JFrame {
         Lettuce.setContentAreaFilled(false);
         Lettuce.setBorderPainted(false);
         contentPane.add(Lettuce);
+        Lettuce.addActionListener(e -> getItemListener.accept("Lettuce"));
 
         JButton Meat = new JButton();
         cm.setIcon(Meat, imageLoader.getIcon("Meat"), CM.size(20, CMFlag.BY_H));
@@ -69,6 +74,7 @@ public class RefrigeratorFrame extends JFrame {
         Meat.setContentAreaFilled(false);
         Meat.setBorderPainted(false);
         contentPane.add(Meat);
+        Meat.addActionListener(e -> getItemListener.accept("Meat"));
 
         JButton Potato = new JButton();
         cm.setIcon(Potato, imageLoader.getIcon("Potato"), CM.size(20, CMFlag.BY_H));
@@ -77,6 +83,7 @@ public class RefrigeratorFrame extends JFrame {
         Potato.setContentAreaFilled(false);
         Potato.setBorderPainted(false);
         contentPane.add(Potato);
+        Potato.addActionListener(e -> getItemListener.accept("Potato"));
 
         JButton Rice = new JButton();
         cm.setIcon(Rice, imageLoader.getIcon("Rice"), CM.size(20, CMFlag.BY_H));
@@ -85,6 +92,7 @@ public class RefrigeratorFrame extends JFrame {
         Rice.setContentAreaFilled(false);
         Rice.setBorderPainted(false);
         contentPane.add(Rice);
+        Rice.addActionListener(e -> getItemListener.accept("Rice"));
 
         cm.recalculate();
 
