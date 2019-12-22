@@ -7,12 +7,10 @@ import utility.Utility;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class CM extends ComponentAdapter {
     public static RectangleStore grid(double x, double y, CMFlag locationFlag, double width, double height, CMFlag sizeFlag) {
@@ -100,7 +98,9 @@ public class CM extends ComponentAdapter {
         return position(val, val, CMFlag.NORMAL);
     }
 
-    private Scene cScene;
+    private Supplier<JFrame> getWindow;
+    private Supplier<Scene> getLoadingScene;
+    private Consumer<Boolean> setVisible;
     private final ArrayList<JComponent> calculationComponentList = new ArrayList<>();
     private ArrayList<CMData<PointStore, ?>> pointCalculationList = new ArrayList<>();
     private ArrayList<CMData<DimensionStore, ?>> dimensionCalculationList = new ArrayList<>();
@@ -109,8 +109,19 @@ public class CM extends ComponentAdapter {
     private ArrayList<Runnable> recalculationQueue = new ArrayList<>();
 
     public CM(Scene scene) {
-        cScene = scene;
-        cScene.addComponentListener(this);
+        getWindow = scene::getWindow;
+        setVisible = scene::setVisible;
+        getLoadingScene = () -> scene.getController().getLoadingScene();
+
+        scene.addComponentListener(this);
+    }
+
+    public CM(Supplier<JFrame> windowGetter, Consumer<Boolean> visibilitySetter, Supplier<Scene> loadingSceneGetter, Consumer<ComponentListener> addListener) {
+        getWindow = windowGetter;
+        setVisible = visibilitySetter;
+        getLoadingScene = loadingSceneGetter;
+
+        addListener.accept(this);
     }
 
     public void setBounds(JComponent component, RectangleStore bounds) {
@@ -262,8 +273,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculate(JComponent component) {
         ready = false;
-        int width = cScene.getWindow().getWidth();
-        int height = cScene.getWindow().getHeight();
+        int width = getWindow.get().getWidth();
+        int height = getWindow.get().getHeight();
 
         Rectangle newComponentBounds = component.getBounds();
 
@@ -286,8 +297,8 @@ public class CM extends ComponentAdapter {
 
     public void recalculate() {
         ready = false;
-        int width = cScene.getWindow().getWidth();
-        int height = cScene.getWindow().getHeight();
+        int width = getWindow.get().getWidth();
+        int height = getWindow.get().getHeight();
 
         ArrayList<Runnable> queue = new ArrayList<>();
 
@@ -334,9 +345,9 @@ public class CM extends ComponentAdapter {
             }
         }
 
-        cScene.setVisible(false);
+        setVisible.accept(false);
         queue.forEach(Runnable::run);
-        cScene.setVisible(true);
+        setVisible.accept(true);
 
         ready = true;
     }
@@ -355,14 +366,14 @@ public class CM extends ComponentAdapter {
         }
 
         recalculationQueue.add(Utility.setTimeout(() -> {
-            Scene loadingScene = cScene.getController().getLoadingScene();
-            cScene.setVisible(false);
+            Scene loadingScene = getLoadingScene.get();
+            setVisible.accept(false);
             if (loadingScene != null) loadingScene.start();
 
             recalculate();
 
             if (loadingScene != null) loadingScene.stop();
-            cScene.setVisible(true);
+            setVisible.accept(true);
         }, 100));
     }
 }
