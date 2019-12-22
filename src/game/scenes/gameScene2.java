@@ -20,14 +20,14 @@ public class gameScene2 extends Scene{
         super(_window, _controller);
     }
     public void loadImage(ImageLoader imageLoader) {
-        imageLoader.add("background", "resources/gameScene/Bgfridge.png");
-        imageLoader.add("Burger", "resources/gameScene/Burger.png");
-        imageLoader.add("Fish", "resources/gameScene/Fish.png");
-        imageLoader.add("Ketchup", "resources/gameScene/Ketchup.png");
-        imageLoader.add("Lettuce", "resources/gameScene/Lettuce.png");
-        imageLoader.add("Meat", "resources/gameScene/Meat.png");
-        imageLoader.add("Potato", "resources/gameScene/Potato.png");
-        imageLoader.add("Rice", "resources/gameScene/Rice.png");
+        imageLoader.add("background", "resources/refrigeratorFrame/Bgfridge.png");
+        imageLoader.add("Burger", "resources/refrigeratorFrame/Burger.png");
+        imageLoader.add("Fish", "resources/refrigeratorFrame/Fish.png");
+        imageLoader.add("Ketchup", "resources/refrigeratorFrame/Ketchup.png");
+        imageLoader.add("Lettuce", "resources/refrigeratorFrame/Lettuce.png");
+        imageLoader.add("Meat", "resources/refrigeratorFrame/Meat.png");
+        imageLoader.add("Potato", "resources/refrigeratorFrame/Potato.png");
+        imageLoader.add("Rice", "resources/refrigeratorFrame/Rice.png");
     }
 
 
@@ -36,8 +36,8 @@ public class gameScene2 extends Scene{
         changeBackground(getImageLoader().getIcon("background"));
         CM cm = getCM();
         JButton Burger = new JButton(getImageLoader().getIcon("Burger").resize(sizeByH(0.13)));
-        cm.setIcon(Burger, getImageLoader().getIcon("Burger"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Burger, CM.grid(30, 5,  CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Burger, getImageLoader().getIcon("Burger"), CM.size(30, CMFlag.BY_H));
+        cm.setBounds(Burger, CM.grid(30, 5,  CM.size(30, CMFlag.BY_H)));
         Burger.setOpaque(false);
         Burger.setContentAreaFilled(false);
         Burger.setBorderPainted(false);
