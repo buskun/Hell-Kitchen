@@ -66,6 +66,10 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
         return imageLoader;
     }
 
+    protected AudioLoader getAudioLoader() {
+        return audioLoader;
+    }
+
     public void onStartLoadingImage() { imageLoaded = false; }
 
     public void onImageLoaded() { imageLoaded = true; }
