@@ -82,7 +82,7 @@ public class CuttingFrame extends JFrame {
 
                 dragStoppingPosition.set(e.getPoint());
 
-                if (dragStartingPosition.get() != null || dragStoppingPosition.get() != null) {
+                if (dragStartingPosition.get() != null && dragStoppingPosition.get() != null) {
                     Point startingPosition = dragStartingPosition.get();
                     Point stoppingPosition = dragStoppingPosition.get();
 

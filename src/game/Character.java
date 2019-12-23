@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class Character {
     private static int pixelPerMove = 15;
@@ -23,16 +24,16 @@ public class Character {
     private JLabel characterIcon = new JLabel();
     private Scene scene;
     private CM cm;
-    private BiConsumer<String, String> changeState;
+    private BiConsumer<String, Consumer<String>> actionToPlate;
     private ImageLoader imageLoader;
     private AudioLoader audioLoader;
     private HashMap<String, Boolean> interactable;
     private WindowFrame window;
     private BoundingArea map;
 
-    private String holdingItem = "item-tomato-cut";
+    private String holdingItem = "";
 
-    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, String> onChangeState) {
+    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, Consumer<String>> onActionToPlate) {
         scene = cScene;
         cm = scene.getCM();
         imageLoader = scene.getImageLoader();
@@ -40,7 +41,7 @@ public class Character {
         interactable = interactableMap;
         window = scene.getWindow();
         map = cMap;
-        changeState = onChangeState;
+        actionToPlate = onActionToPlate;
 
         percentPPMHeight = 100 * (double) pixelPerMove / scene.getHeight();
         percentPPMWidth = 100 * (double) pixelPerMove / scene.getHeight();
@@ -83,8 +84,8 @@ public class Character {
             JFrame refrigeratorFrame = new RefrigeratorFrame(imageLoader, audioLoader, this::holdItem);
             refrigeratorFrame.setVisible(true);
         }
-        if (Boolean.TRUE.equals(interactable.get("Drinking"))) {
-            JFrame waterFrame = new waterFrame(imageLoader, audioLoader, this::holdItem);
+        if (Boolean.TRUE.equals(interactable.get("Drinking")) && holdingItem.equals("")) {
+            JFrame waterFrame = new DrinkFrame(imageLoader, audioLoader, this::holdItem);
             waterFrame.setVisible(true);
         }
         if (!holdingItem.equals("")) {
@@ -101,6 +102,10 @@ public class Character {
                 potFrame.setVisible(true);
             }
         }
+
+        if (Boolean.TRUE.equals(interactable.get("plate"))) {
+            actionToPlate.accept(holdingItem, this::holdItem);
+        }
     }
 
     public void holdItem(String item) {
@@ -113,7 +118,5 @@ public class Character {
             cm.setIcon(characterIcon, imageLoader.getIcon("avatar-" + holdingItem));
         }
         cm.recalculateIcon(characterIcon);
-
-        changeState.accept("hold", item);
     }
 }

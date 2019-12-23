@@ -17,6 +17,7 @@ public class PanFrame extends JFrame {
     private boolean turnedOn = false;
     private boolean cooking = false;
     private int cookedState = 1;
+    private Runnable interval;
 
     public PanFrame(ImageLoader imageLoader, AudioLoader audioLoader, String holdingItem, Consumer<String> getItemListener) {
         setTitle("pan");
@@ -58,12 +59,9 @@ public class PanFrame extends JFrame {
         contentPane.add(offBtn);
 
         offBtn.addActionListener(e -> {
-            if (cooking) {
-                if (cookedState != 2) {
-                    getItemListener.accept("");
-                } else {
-                    getItemListener.accept(holdingItem + "-boiled");
-                }
+            if (cooking && cookedState == 2) {
+                if (interval != null) interval.run();
+                getItemListener.accept(holdingItem + "-fried");
             }
 
             dispose();
@@ -80,6 +78,7 @@ public class PanFrame extends JFrame {
             if (!turnedOn) return;
 
             cooking = true;
+            getItemListener.accept("");
 
             JLabel food = new JLabel();
             cm.setBounds(food, CM.grid(37, 56, CM.size(18, CMFlag.BY_W)));
@@ -89,7 +88,7 @@ public class PanFrame extends JFrame {
 
             StateManager<Integer> passedSecond = Utility.useState(-1);
 
-            Utility.setInterval(() -> {
+            interval = Utility.setInterval(() -> {
                 switch (passedSecond.get()) {
                     case 8:
                         cookedState = 2;

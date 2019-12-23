@@ -13,7 +13,11 @@ public class Recipe {
     }
 
     public boolean match(List<String> ingredients) {
-        return ingredients.containsAll(ingredientList);
+        return ingredientList.containsAll(ingredients);
+    }
+
+    public boolean matchAll(List<String> ingredients) {
+        return ingredients.containsAll(ingredientList) && ingredientList.containsAll(ingredients);
     }
 
     public String getProduct() {
