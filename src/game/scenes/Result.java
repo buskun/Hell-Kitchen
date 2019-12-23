@@ -40,9 +40,41 @@ public class Result extends Scene {
 
         JLabel level = new JLabel();
         level.setText("1");
-        level.setFont(new Font("Dimbo", Font.PLAIN, 75));
-        cm.setBounds(level, CM.grid(12, -1.5, CM.size(25, CMFlag.BY_H)));
+        level.setFont(new Font("Dimbo", Font.PLAIN, 65));
+        cm.setBounds(level, CM.grid(52, 8.5, CM.size(25, CMFlag.BY_H)));
         add(level);
+
+        JLabel numberOrder = new JLabel();
+        numberOrder.setText("1");
+        numberOrder.setFont(new Font("Dimbo", Font.PLAIN, 40));
+        cm.setBounds(numberOrder, CM.grid(52, 19.5, CM.size(25, CMFlag.BY_H)));
+        add(numberOrder);
+
+        JLabel totalOrderScore = new JLabel();
+        totalOrderScore.setText("x20 = ");
+        totalOrderScore.setFont(new Font("Dimbo", Font.PLAIN, 40));
+        cm.setBounds(totalOrderScore, CM.grid(53, 19.5, CM.size(25, CMFlag.BY_H)));
+        add(totalOrderScore);
+
+        JLabel tip = new JLabel();
+        tip.setText("1");
+        tip.setFont(new Font("Dimbo", Font.PLAIN, 40));
+        cm.setBounds(tip, CM.grid(62, 25, CM.size(25, CMFlag.BY_H)));
+        add(tip);
+
+        JLabel orderFail = new JLabel();
+        orderFail.setText("0");
+        orderFail.setFont(new Font("Dimbo", Font.PLAIN, 40));
+        cm.setBounds(orderFail, CM.grid(62, 30, CM.size(25, CMFlag.BY_H)));
+        add(orderFail);
+
+        JLabel totalScore = new JLabel();
+        totalScore.setText("0");
+        totalScore.setFont(new Font("Dimbo", Font.PLAIN, 40));
+        cm.setBounds(totalScore, CM.grid(62, 42, CM.size(25, CMFlag.BY_H)));
+        add(totalScore);
+
+
 
 
 
