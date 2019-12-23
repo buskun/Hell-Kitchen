@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-public class Window extends JFrame {
+public class WindowFrame extends JFrame {
     private HashMap<Image, Cursor> cursorList = new HashMap<>();
 
-    public Window(String title, Dimension size, Point position) {
+    public WindowFrame(String title, Dimension size, Point position) {
         setTitle(title);
         setBounds(position.x, position.y, size.width, size.height);
 
