@@ -1,6 +1,5 @@
 package game.frames;
 
-import components.CustomImageIcon;
 import utility.cm.CM;
 import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
@@ -32,68 +31,86 @@ public class RefrigeratorFrame extends JFrame {
         contentPane.setLayout(null);
 
         JButton Burger = new JButton();
-        cm.setIcon(Burger, imageLoader.getIcon("BurgerFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Burger, imageLoader.getIcon("item-bread"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Burger, CM.grid(29, 5, CM.size(20, CMFlag.BY_H)));
         Burger.setBounds(0, 0, 100, 200);
         Burger.setOpaque(false);
         Burger.setContentAreaFilled(false);
         Burger.setBorderPainted(false);
         contentPane.add(Burger);
-        Burger.addActionListener(e -> getItemListener.accept("IconWithBurger"));
+        Burger.addActionListener(e -> {
+            getItemListener.accept("item-bread");
+            dispose();
+        });
 
         JButton Fish = new JButton();
-        cm.setIcon(Fish, imageLoader.getIcon("FishFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Fish, imageLoader.getIcon("item-fish"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Fish, CM.grid(47, 5, CM.size(20, CMFlag.BY_H)));
         Fish.setOpaque(false);
         Fish.setContentAreaFilled(false);
         Fish.setBorderPainted(false);
         contentPane.add(Fish);
-        Fish.addActionListener(e -> getItemListener.accept("iconFish"));
+        Fish.addActionListener(e -> {
+            getItemListener.accept("item-fish");
+            dispose();
+        });
 
         JButton Ketchup = new JButton();
-        cm.setIcon(Ketchup, imageLoader.getIcon("KetchupFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Ketchup, imageLoader.getIcon("item-tomato"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Ketchup, CM.grid(29, 32, CM.size(20, CMFlag.BY_H)));
         Ketchup.setOpaque(false);
         Ketchup.setContentAreaFilled(false);
         Ketchup.setBorderPainted(false);
         contentPane.add(Ketchup);
-        Ketchup.addActionListener(e -> getItemListener.accept("iconTomato"));
+        Ketchup.addActionListener(e -> {
+            getItemListener.accept("item-tomato");
+            dispose();
+        });
 
         JButton Lettuce = new JButton();
-        cm.setIcon(Lettuce, imageLoader.getIcon("LettuceFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Lettuce, imageLoader.getIcon("item-lettuce"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Lettuce, CM.grid(47, 32, CM.size(20, CMFlag.BY_H)));
         Lettuce.setOpaque(false);
         Lettuce.setContentAreaFilled(false);
         Lettuce.setBorderPainted(false);
         contentPane.add(Lettuce);
-        Lettuce.addActionListener(e -> getItemListener.accept("iconLettuce"));
+        Lettuce.addActionListener(e -> getItemListener.accept("item-lettuce"));
 
         JButton Meat = new JButton();
-        cm.setIcon(Meat, imageLoader.getIcon("MeatFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Meat, imageLoader.getIcon("item-lettuce"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Meat, CM.grid(29, 60, CM.size(20, CMFlag.BY_H)));
         Meat.setOpaque(false);
         Meat.setContentAreaFilled(false);
         Meat.setBorderPainted(false);
         contentPane.add(Meat);
-        Meat.addActionListener(e -> getItemListener.accept("iconMeat"));
+        Meat.addActionListener(e -> {
+            getItemListener.accept("item-lettuce");
+            dispose();
+        });
 
         JButton Potato = new JButton();
-        cm.setIcon(Potato, imageLoader.getIcon("PotatoFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Potato, imageLoader.getIcon("item-potato"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Potato, CM.grid(47, 60, CM.size(20, CMFlag.BY_H)));
         Potato.setOpaque(false);
         Potato.setContentAreaFilled(false);
         Potato.setBorderPainted(false);
         contentPane.add(Potato);
-        Potato.addActionListener(e -> getItemListener.accept("iconPotato"));
+        Potato.addActionListener(e -> {
+            getItemListener.accept("item-potato");
+            dispose();
+        });
 
         JButton Rice = new JButton();
-        cm.setIcon(Rice, imageLoader.getIcon("RiceFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Rice, imageLoader.getIcon("item-rice"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Rice, CM.grid(67, 60, CM.size(20, CMFlag.BY_H)));
         Rice.setOpaque(false);
         Rice.setContentAreaFilled(false);
         Rice.setBorderPainted(false);
         contentPane.add(Rice);
-        Rice.addActionListener(e -> getItemListener.accept("iconRice"));
+        Rice.addActionListener(e -> {
+            getItemListener.accept("item-rice");
+            dispose();
+        });
 
         cm.recalculate();
 

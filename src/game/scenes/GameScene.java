@@ -36,67 +36,80 @@ public class GameScene extends Scene {
         imageLoader.add("timeBar", "resources/gameScene/timeBar.png");
 
         imageLoader.add("backgroundFrame", "resources/refrigeratorFrame/Bgfridge.png");
-        imageLoader.add("BurgerFridge", "resources/refrigeratorFrame/Burger.png");
-        imageLoader.add("FishFridge", "resources/refrigeratorFrame/Fish.png");
-        imageLoader.add("KetchupFridge", "resources/refrigeratorFrame/Ketchup.png");
-        imageLoader.add("LettuceFridge", "resources/refrigeratorFrame/Lettuce.png");
-        imageLoader.add("MeatFridge", "resources/refrigeratorFrame/Meat.png");
-        imageLoader.add("PotatoFridge", "resources/refrigeratorFrame/Potato.png");
-        imageLoader.add("RiceFridge", "resources/refrigeratorFrame/Rice.png");
 
-        imageLoader.add("iconRice", "resources/iconPickup/Icon+burgur.png");
-        imageLoader.add("iconFish", "resources/iconPickup/Icon+fish.png");
-        imageLoader.add("iconLettuce", "resources/iconPickup/Icon+lettuce.png");
-        imageLoader.add("iconMeat", "resources/iconPickup/Icon+meat.png");
-        imageLoader.add("iconPotato", "resources/iconPickup/Icon+potato.png");
-        imageLoader.add("iconTomato", "resources/iconPickup/Icon+tomato.png");
-        imageLoader.add("IconWithBurger", "resources/iconPickup/IconWithBurger.png");
-        imageLoader.add("IconWithFantaL", "resources/iconPickup/IconWithFantaL.png");
-        imageLoader.add("IconWithFantaM", "resources/iconPickup/IconWithFantaM.png");
-        imageLoader.add("IconWithFantaS", "resources/iconPickup/IconWithFantaS.png");
-        imageLoader.add("IconWithFishCut", "resources/iconPickup/IconWithFishCut.png");
-        imageLoader.add("IconWithFishfin", "resources/iconPickup/IconWithFishfin.png");
-        imageLoader.add("IconWithFishnChip", "resources/iconPickup/IconWithFishnChip.png");
-        imageLoader.add("IconWithTomatoCut", "resources/iconPickup/IconWithKetchupCut.png");
-        imageLoader.add("IconWithMeatCut", "resources/iconPickup/IconWithMeatCut.png");
-        imageLoader.add("IconWithMeatfin", "resources/iconPickup/IconWithMeatfin.png");
-        imageLoader.add("IconWithPakCut", "resources/iconPickup/IconWithPakCut.png");
-        imageLoader.add("IconWithPepsiL", "resources/iconPickup/IconWithPepsiL.png");
-        imageLoader.add("IconWithPepsiM", "resources/iconPickup/IconWithPepsiM.png");
-        imageLoader.add("IconWithPepsiS", "resources/iconPickup/IconWithPepsiS.png");
-        imageLoader.add("IconWithPotatoCut", "resources/iconPickup/IconWithPotatoCut.png");
-        imageLoader.add("IconWithPotatofin", "resources/iconPickup/IconWithPotatofin.png");
-        imageLoader.add("IconWithSoup", "resources/iconPickup/IconWithSoup.png");
-        imageLoader.add("IconWithSpriteL", "resources/iconPickup/IconWithSpriteL.png");
-        imageLoader.add("IconWithSpriteM", "resources/iconPickup/IconWithSpriteM.png");
-        imageLoader.add("IconWithSpriteS", "resources/iconPickup/IconWithSpriteS.png");
-        imageLoader.add("IconWithSushi", "resources/iconPickup/IconWithSushi.png");
+        imageLoader.add("avatar-food-burger", "resources/avatar/IconWithBurger.png");
+        imageLoader.add("avatar-food-fish_n_chip", "resources/avatar/IconWithFishnChip.png");
+        imageLoader.add("avatar-food-sushi", "resources/avatar/IconWithSushi.png");
+        imageLoader.add("avatar-food-soup", "resources/avatar/IconWithSoup.png");
 
+        imageLoader.add("avatar-item-bread", "resources/avatar/Icon+burgur.png");
+        imageLoader.add("item-bread", "resources/refrigeratorFrame/Burger.png");
+
+        imageLoader.add("avatar-item-rice", "resources/avatar/Icon+rice.png");
+        imageLoader.add("avatar-item-rice-boiled", "resources/avatar/Icon+rice.png");
+        imageLoader.add("item-rice", "resources/refrigeratorFrame/Rice.png");
+
+        imageLoader.add("avatar-item-fish", "resources/avatar/Icon+fish.png");
+        imageLoader.add("avatar-item-fish-cut", "resources/avatar/IconWithFishCut.png");
+        imageLoader.add("avatar-item-fish-cut-fried", "resources/avatar/IconWithFishfin.png");
+        imageLoader.add("item-fish", "resources/refrigeratorFrame/Fish.png");
+        imageLoader.add("cutting-item-fish", "resources/cuttingFrame/Fish.png");
+        imageLoader.add("cutting-item-fish-cut", "resources/cuttingFrame/FishCut.png");
+        imageLoader.add("pan-item-fish-cut-1", "resources/panFrame/FishCut.png");
+        imageLoader.add("pan-item-fish-cut-2", "resources/panFrame/Fish2.png");
+        imageLoader.add("pan-item-fish-cut-3", "resources/panFrame/Fish3.png");
+
+        imageLoader.add("avatar-item-lettuce", "resources/avatar/Icon+lettuce.png");
+        imageLoader.add("avatar-item-lettuce-cut", "resources/avatar/IconWithPakCut.png");
+        imageLoader.add("item-lettuce", "resources/refrigeratorFrame/Lettuce.png");
+        imageLoader.add("cutting-item-lettuce", "resources/cuttingFrame/Lettuce.png");
+        imageLoader.add("cutting-item-lettuce-cut", "resources/cuttingFrame/LettuceCut.png");
+
+        imageLoader.add("avatar-item-tomato", "resources/avatar/Icon+tomato.png");
+        imageLoader.add("avatar-item-tomato-cut", "resources/avatar/IconWithKetchupCut.png");
+        imageLoader.add("avatar-item-tomato-cut-boiled", "resources/avatar/IconWithSoup.png");
+        imageLoader.add("item-tomato", "resources/refrigeratorFrame/Ketchup.png");
+        imageLoader.add("cutting-item-tomato", "resources/cuttingFrame/Ketchup.png");
+        imageLoader.add("cutting-item-tomato-cut", "resources/cuttingFrame/KetchupCut.png");
+
+        imageLoader.add("avatar-item-meat", "resources/avatar/Icon+meat.png");
+        imageLoader.add("avatar-item-meat-cut", "resources/avatar/IconWithMeatCut.png");
+        imageLoader.add("avatar-item-meat-fried", "resources/avatar/IconWithMeatfin.png");
+        imageLoader.add("item-meat", "resources/refrigeratorFrame/Meat.png");
+        imageLoader.add("cutting-item-meat", "resources/cuttingFrame/Meat.png");
+        imageLoader.add("cutting-item-meat-cut", "resources/cuttingFrame/MeatCut.png");
+        imageLoader.add("pan-item-meat-cut-1", "resources/panFrame/MeatCut.png");
+        imageLoader.add("pan-item-meat-cut-2", "resources/panFrame/Meat2.png");
+        imageLoader.add("pan-item-meat-cut-3", "resources/panFrame/Meat3.png");
+
+        imageLoader.add("avatar-item-potato", "resources/avatar/Icon+potato.png");
+        imageLoader.add("avatar-item-potato-cut", "resources/avatar/IconWithPotatoCut.png");
+        imageLoader.add("avatar-item-potato-cut-fried", "resources/avatar/IconWithPotatofin.png");
+        imageLoader.add("item-potato", "resources/refrigeratorFrame/Potato.png");
+        imageLoader.add("cutting-item-potato", "resources/cuttingFrame/Potato.png");
+        imageLoader.add("cutting-item-potato-cut", "resources/cuttingFrame/PotatoCut2.png");
+        imageLoader.add("pan-item-potato-cut-1", "resources/panFrame/FrenchfriesCut.png");
+        imageLoader.add("pan-item-potato-cut-2", "resources/panFrame/Frenchfries2.png");
+        imageLoader.add("pan-item-potato-cut-3", "resources/panFrame/Frenchfries3.png");
+//        String name = "plate-item-bread-item-lettuce-cut-item-tomato-cut";
+
+        imageLoader.add("avatar-drink-fanta-l", "resources/avatar/IconWithFantaL.png");
+        imageLoader.add("avatar-drink-fanta-m", "resources/avatar/IconWithFantaM.png");
+        imageLoader.add("avatar-drink-fanta-s", "resources/avatar/IconWithFantaS.png");
+        imageLoader.add("avatar-drink-pepsi-l", "resources/avatar/IconWithPepsiL.png");
+        imageLoader.add("avatar-drink-pepsi-m", "resources/avatar/IconWithPepsiM.png");
+        imageLoader.add("avatar-drink-pepsi-s", "resources/avatar/IconWithPepsiS.png");
+        imageLoader.add("avatar-drink-sprite-l", "resources/avatar/IconWithSpriteL.png");
+        imageLoader.add("avatar-drink-sprite-m", "resources/avatar/IconWithSpriteM.png");
+        imageLoader.add("avatar-drink-sprite-s", "resources/avatar/IconWithSpriteS.png");
 
         imageLoader.add("Bgcutting", "resources/cuttingFrame/Bgcutting.png");
-        imageLoader.add("Ketchup", "resources/cuttingFrame/Ketchup.png");
-        imageLoader.add("Potato", "resources/cuttingFrame/Potato.png");
-        imageLoader.add("Meat", "resources/cuttingFrame/Meat.png");
-        imageLoader.add("Lettuce", "resources/cuttingFrame/Lettuce.png");
-        imageLoader.add("Fish", "resources/cuttingFrame/Fish.png");
-        imageLoader.add("FishCut", "resources/cuttingFrame/FishCut.png");
-        imageLoader.add("KetchupCut", "resources/cuttingFrame/KetchupCut.png");
-        imageLoader.add("LettuceCut", "resources/cuttingFrame/LettuceCut.png");
-        imageLoader.add("MeatCut", "resources/cuttingFrame/MeatCut.png");
 
-        imageLoader.add("bgPan", "resources/panFrame/Bgkata.png");
-        imageLoader.add("BgkataOil", "resources/panFrame/BgkataOil.png");
-        imageLoader.add("FishCut1", "resources/panFrame/FishCut.png");
-        imageLoader.add("FishCut2", "resources/panFrame/Fish2.png");
-        imageLoader.add("FishCut3", "resources/panFrame/Fish3.png");
-        imageLoader.add("FrenchfriesCut1", "resources/panFrame/FrenchfriesCut.png");
-        imageLoader.add("FrenchfriesCut2", "resources/panFrame/Frenchfries2.png");
-        imageLoader.add("FrenchfriesCut3", "resources/panFrame/Frenchfries3.png");
-        imageLoader.add("MeatCut1", "resources/panFrame/MeatCut.png");
-        imageLoader.add("MeatCut2", "resources/panFrame/Meat2.png");
-        imageLoader.add("MeatCut3", "resources/panFrame/Meat3.png");
-        imageLoader.add("offBtn", "resources/panFrame/Off.png");
-        imageLoader.add("onBtn", "resources/panFrame/On.png");
+        imageLoader.add("pan", "resources/panFrame/Bgkata.png");
+        imageLoader.add("pan-on", "resources/panFrame/BgkataOil.png");
+
+        imageLoader.add("offBtn", "resources/panFrame/off.png");
+        imageLoader.add("onBtn", "resources/panFrame/on.png");
 
         imageLoader.add("Bgdrink", "resources/waterFrame/Bgdrink.png");
         imageLoader.add("Fanta", "resources/waterFrame/Fanta.png");
@@ -106,32 +119,29 @@ public class GameScene extends Scene {
         imageLoader.add("DrinkM", "resources/waterFrame/DrinkM.png");
         imageLoader.add("DrinkS", "resources/waterFrame/DrinkS.png");
 
-        imageLoader.add("Bgpot", "resources/ponFrame/Bgpot.png");
-        imageLoader.add("PotWithBoilWater", "resources/ponFrame/PotWithBoilWater.png");
-        imageLoader.add("Potwithketchup1", "resources/ponFrame/Potwithketchup1.png");
-        imageLoader.add("PotWithKetchup2", "resources/ponFrame/PotWithKetchup2.png");
-        imageLoader.add("PotWithKetchup3", "resources/ponFrame/PotWithKetchup3.png");
-        imageLoader.add("PotWithRice1", "resources/ponFrame/PotWithRice1.png");
-        imageLoader.add("PotWithRice2", "resources/ponFrame/PotWithRice2.png");
-        imageLoader.add("PotWithRice3", "resources/ponFrame/PotWithRice3.png");
-        imageLoader.add("PotWithWater", "resources/ponFrame/PotWithWater.png");
+        imageLoader.add("pot", "resources/potFrame/PotWithWater.png");
+        imageLoader.add("pot-on", "resources/potFrame/PotWithBoilWater.png");
+        imageLoader.add("pot-item-tomato-cut-1", "resources/potFrame/Potwithketchup1.png");
+        imageLoader.add("pot-item-tomato-cut-2", "resources/potFrame/PotWithKetchup2.png");
+        imageLoader.add("pot-item-tomato-cut-3", "resources/potFrame/PotWithKetchup3.png");
+        imageLoader.add("pot-item-rice-1", "resources/potFrame/PotWithRice1.png");
+        imageLoader.add("pot-item-rice-2", "resources/potFrame/PotWithRice2.png");
+        imageLoader.add("pot-item-rice-3", "resources/potFrame/PotWithRice3.png");
 
-        imageLoader.add("orderburger", "resources/order/orderburger.png");
-        imageLoader.add("orderFishandchips", "resources/order/orderFishandchips.png");
-        imageLoader.add("orderFrenchfries", "resources/order/orderFrenchfries.png");
-        imageLoader.add("orderSoup", "resources/order/orderSoup.png");
-        imageLoader.add("orderSushi", "resources/order/orderSushi.png");
-        imageLoader.add("orderWaterfantaL", "resources/order/orderWaterfantaL.png");
-        imageLoader.add("orderWaterfantaM", "resources/order/orderWaterfantaM.png");
-        imageLoader.add("orderWaterfantaS", "resources/order/orderWaterfantaS.png");
-        imageLoader.add("orderWaterPepsiL", "resources/order/orderWaterPepsiL.png");
-        imageLoader.add("orderWaterPepsiM", "resources/order/orderWaterPepsiM.png");
-        imageLoader.add("orderWaterPepsiS", "resources/order/orderWaterPepsiS.png");
-        imageLoader.add("orderWaterSpriteL", "resources/order/orderWaterSpriteL.png");
-        imageLoader.add("orderWaterSpriteM", "resources/order/orderWaterSpriteM.png");
-        imageLoader.add("orderWaterSpriteS", "resources/order/orderWaterSpriteS.png");
-
-
+        imageLoader.add("order-food-burger", "resources/order/orderburger.png");
+        imageLoader.add("order-food-fish_n_chip", "resources/order/orderFishandchips.png");
+        imageLoader.add("order-food-french_fries", "resources/order/orderFrenchfries.png");
+        imageLoader.add("order-food-soup", "resources/order/orderSoup.png");
+        imageLoader.add("order-food-sushi", "resources/order/orderSushi.png");
+        imageLoader.add("order-drink-fanta-l", "resources/order/orderWaterfantaL.png");
+        imageLoader.add("order-drink-fanta-m", "resources/order/orderWaterfantaM.png");
+        imageLoader.add("order-drink-fanta-s", "resources/order/orderWaterfantaS.png");
+        imageLoader.add("order-drink-pepsi-l", "resources/order/orderWaterPepsiL.png");
+        imageLoader.add("order-drink-pepsi-m", "resources/order/orderWaterPepsiM.png");
+        imageLoader.add("order-drink-pepsi-s", "resources/order/orderWaterPepsiS.png");
+        imageLoader.add("order-drink-sprite-l", "resources/order/orderWaterSpriteL.png");
+        imageLoader.add("order-drink-pepsi-m", "resources/order/orderWaterSpriteM.png");
+        imageLoader.add("order-drink-pepsi-s", "resources/order/orderWaterSpriteS.png");
     }
 
     private BoundingArea map = new BoundingArea();
