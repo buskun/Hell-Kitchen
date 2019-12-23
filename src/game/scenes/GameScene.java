@@ -31,6 +31,7 @@ public class GameScene extends Scene {
         imageLoader.add("Sent", "resources/gameScene2/Sent.png");
         imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
         imageLoader.add("plate", "resources/gameScene2/Dish.png");
+        imageLoader.add("Cuttingbar","resources/cuttingFrame/cuttingBar.png");
 
 
         imageLoader.add("character", "resources/gameScene/Iconplayer.png");

@@ -4,9 +4,11 @@ import base.Controller;
 import base.Scene;
 import base.WindowFrame;
 import utility.cm.CM;
+import utility.cm.CMFlag;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Result extends Scene {
 
@@ -32,10 +34,21 @@ public class Result extends Scene {
         exitGameBtn.setOpaque(false);
         exitGameBtn.setContentAreaFilled(false);
         exitGameBtn.setBorderPainted(false);
-
         cm.setActiveIcon(exitGameBtn, imageLoader.getIcon("exit"),imageLoader.getIcon("exitpress"));
         exitGameBtn.addActionListener(e -> getController().changeScene("SeletionLv"));
         add(exitGameBtn);
+
+        JLabel level = new JLabel();
+        level.setText("1");
+        level.setFont(new Font("Dimbo", Font.PLAIN, 75));
+        cm.setBounds(level, CM.grid(12, -1.5, CM.size(25, CMFlag.BY_H)));
+        add(level);
+
+
+
+
+
+
         ready();
     }
 
