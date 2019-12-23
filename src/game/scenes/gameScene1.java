@@ -3,23 +3,19 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.Window;
-import components.CustomImageIcon;
-import game.frames.RefrigeratorFrame;
-import game.frames.cuttingFrame;
-import game.frames.panFrame;
-import game.frames.waterFrame;
-import game.frames.potFrame;
+import game.frames.*;
+import utility.animation.Animation;
+import utility.animation.AnimationMap;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
 import utility.cm.DimensionStore;
 import utility.cm.PointStore;
-import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class gameScene1 extends Scene {
@@ -188,14 +184,43 @@ public class gameScene1 extends Scene {
         if (map.intersects(newCharacterBounds)) return;
 
         cm.setLocation(character, CM.position(pX, pY));
-        cm.recalculate(character);
+        cm.recalculateLocation(character);
     }
 
     @Override
-
     public void tick() {
         ImageLoader imageLoader = getImageLoader();
-        int pixelPerMove = 25;
+
+        boolean isActionKeyPressed = isKeyPressed(KeyEvent.VK_SPACE, true);
+        CM cm = getCM();
+        
+        if (isActionKeyPressed) {
+            if (Boolean.TRUE.equals(interactable.get("refrigerator"))) {
+                JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+                refrigeratorFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("Cutting"))) {
+                JFrame cuttingFrame = new cuttingFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+                cuttingFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("pan"))) {
+                JFrame panFrame = new panFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+                panFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("Drinking"))) {
+                JFrame waterFrame = new waterFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+                waterFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("pot"))) {
+                JFrame potFrame = new potFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+                potFrame.setVisible(true);
+            }
+        }
+    }
+
+    @Override
+    public void onKeyPress(KeyEvent e) {
+        int pixelPerMove = 15;
         double percentPPMHeight = 100 * (double) pixelPerMove / getHeight();
         double percentPPMWidth = 100 * (double) pixelPerMove / getWidth();
 
@@ -207,35 +232,6 @@ public class gameScene1 extends Scene {
             moveCharacter(-percentPPMWidth, 0);
         if (isKeyPressed(KeyEvent.VK_RIGHT))
             moveCharacter(percentPPMWidth, 0);
-
-        boolean isActionKeyPressed = isKeyPressed(KeyEvent.VK_SPACE, true);
-        CM cm = getCM();
-
-
-        if (Boolean.TRUE.equals(interactable.get("refrigerator")) && isActionKeyPressed) {
-            JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-            refrigeratorFrame.setVisible(true);
-        }
-        if (Boolean.TRUE.equals(interactable.get("Cutting")) && isActionKeyPressed)
-        {
-            JFrame cuttingFrame = new cuttingFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-            cuttingFrame.setVisible(true);
-        }
-        if (Boolean.TRUE.equals(interactable.get("pan")) && isActionKeyPressed)
-        {
-            JFrame panFrame = new panFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-            panFrame.setVisible(true);
-        }
-        if (Boolean.TRUE.equals(interactable.get("Drinking")) && isActionKeyPressed)
-        {
-            JFrame waterFrame = new waterFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-            waterFrame.setVisible(true);
-        }
-        if (Boolean.TRUE.equals(interactable.get("pot")) && isActionKeyPressed)
-        {
-            JFrame potFrame = new potFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-            potFrame.setVisible(true);
-        }
     }
 
     public void onAddItem(String item) {

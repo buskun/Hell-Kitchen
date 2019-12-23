@@ -60,7 +60,7 @@ public class MenuScene extends Scene {
         cm.setActiveIcon(loadGameBtn, imageLoader.getIcon("load"), imageLoader.getIcon("loadpress"));
         add(loadGameBtn);
 
-        JButton exitGameBtn = new JButton(imageLoader.getIcon("exit").resize(size(0.2, 0.1)));
+        JButton exitGameBtn = new JButton();
         cm.setIcon(exitGameBtn, imageLoader.getIcon("exit"), CM.size(20,10));
         cm.setBounds(exitGameBtn, CM.grid(75, 82, 20, 10));
         exitGameBtn.setOpaque(false);
