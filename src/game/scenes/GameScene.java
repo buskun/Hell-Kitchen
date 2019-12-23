@@ -74,6 +74,7 @@ public class GameScene extends Scene {
 
 
         imageLoader.add("Bgcutting", "resources/cuttingFrame/Bgcutting.png");
+        imageLoader.add("Ketchup","resources/cuttingFrame/Ketchup.png");
         imageLoader.add("Potato", "resources/cuttingFrame/Potato.png");
         imageLoader.add("Meat", "resources/cuttingFrame/Meat.png");
         imageLoader.add("Lettuce", "resources/cuttingFrame/Lettuce.png");
@@ -160,22 +161,22 @@ public class GameScene extends Scene {
         character = new Character(this, map, interactable, this::changeState);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
-        cm.setBounds(refrigerator, CM.grid(85, 20, 15, 40));
+        cm.setBounds(refrigerator, CM.grid(85, 21, 15, 40));
         add(refrigerator);
         map.add("refrigerator", refrigerator);
 
         cm.setIcon(plate, imageLoader.getIcon("plate"), CM.size(10, CMFlag.BY_H));
-        cm.setBounds(plate, CM.grid(30, 29, CM.size(10, CMFlag.BY_H)));
+        cm.setBounds(plate, CM.grid(30, 30, CM.size(10, CMFlag.BY_H)));
         add(plate);
         map.add("plate", plate);
 
         cm.setIcon(bar, imageLoader.getIcon("bar"), CM.size(44, 37));
-        cm.setBounds(bar, CM.grid(24, 29, 44, 37));
+        cm.setBounds(bar, CM.grid(25, 32, 44, 37));
         add(bar);
         map.add("bar", bar);
 
         cm.setIcon(Cutting, imageLoader.getIcon("Cutting"), CM.size(7, 13));
-        cm.setBounds(Cutting, CM.grid(0, 28, 7, 15));
+        cm.setBounds(Cutting, CM.grid(0, 29, 7, 15));
         add(Cutting);
         map.add("Cutting", Cutting);
 
@@ -185,16 +186,35 @@ public class GameScene extends Scene {
         map.add("Drinking", Drinking);
 
         cm.setIcon(pot, imageLoader.getIcon("pot"), CM.size(15, 12));
-        cm.setBounds(pot, CM.grid(34, 82, 15, 12));
+        cm.setBounds(pot, CM.grid(34, 83, 15, 12));
         add(pot);
         map.add("pot", pot);
 
         cm.setIcon(pan, imageLoader.getIcon("pan"), CM.size(14, CMFlag.BY_H));
-        cm.setBounds(pan, CM.grid(54, 82, CM.size(14, CMFlag.BY_H)));
+        cm.setBounds(pan, CM.grid(54, 83, CM.size(14, CMFlag.BY_H)));
         add(pan);
         map.add("pan", pan);
 
+        JLabel totalScore = new JLabel();
+        totalScore.setText("0");
+        totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
+        cm.setBounds(totalScore, CM.grid(92, -4, CM.size(25, CMFlag.BY_H)));
+        add(totalScore);
+        cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
+        cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
+        add(barScore);
+        map.add("barScore",barScore);
 
+        JLabel totalTime = new JLabel();
+        totalTime.setText("0");
+        totalTime.setFont(new Font("Dimbo", Font.PLAIN, 35));
+        cm.setBounds(totalTime, CM.grid(92, 74, CM.size(25, CMFlag.BY_H)));
+        add(totalTime);
+
+        cm.setIcon(barTime,imageLoader.getIcon("timeBar"),CM.size(19, 14));
+        cm.setBounds(barTime,CM.grid(80,80,CM.size(19, 14)));
+        add(barTime);
+        map.add("barTime",barTime);
 
 
         map.addIntersectionListener((name) -> {
@@ -230,7 +250,6 @@ public class GameScene extends Scene {
     public void changeState(String name, String item) {
         ImageLoader imageLoader = getImageLoader();
         CM cm = getCM();
-
 //        cm.setIcon(character, imageLoader.getIcon(item));
 //        cm.recalculateIcon(character);
     }

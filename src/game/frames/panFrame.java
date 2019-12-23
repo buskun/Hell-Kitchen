@@ -48,6 +48,9 @@ public class panFrame extends JFrame {
         contentPane.add(offBtn);
 
 
+
+
+
         cm.recalculate();
 
         contentPane.revalidate();

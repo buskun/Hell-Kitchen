@@ -30,7 +30,10 @@ public class cuttingFrame extends JFrame {
         cm.setBounds(contentPane, CM.grid(0, 0, 100, 100));
         contentPane.setLayout(null);
 
-
+        JLabel tomato = new JLabel();
+        cm.setIcon(tomato,imageLoader.getIcon("Ketchup"),CM.size(20,CMFlag.BY_H));
+        cm.setBounds(tomato,CM.grid(40,70,CM.size(20,CMFlag.BY_H)));
+        contentPane.add(tomato);
 
 
         cm.recalculate();
