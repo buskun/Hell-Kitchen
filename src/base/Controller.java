@@ -103,4 +103,8 @@ abstract public class Controller {
     public HashMap<String, Scene> getSceneList() {
         return sceneList;
     }
+
+    public int getGameTick() {
+        return gameTick;
+    }
 }
