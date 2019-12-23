@@ -16,6 +16,8 @@ public class Result extends Scene {
     @Override
     public void loadImage(ImageLoader imageLoader) {
         imageLoader.add("background", "resources/Result/background.png");
+        imageLoader.add("exit", "resources/menu/exit.png");
+        imageLoader.add("exitpress", "resources/menu/exitp.png");
 
 
     }
@@ -23,13 +25,17 @@ public class Result extends Scene {
     public void init() {
         CM cm = getCM();
         ImageLoader imageLoader = getImageLoader();
-        changeBackground(imageLoader.getIcon("background"));
-        JButton back = new JButton();
-        cm.setIcon(back, imageLoader.getIcon("load"), CM.size(20, 10));
-        cm.setBounds(back, CM.grid(75, 71, 20, 10));
-        back.setOpaque(false);
-        back.setContentAreaFilled(false);
-        back.setBorderPainted(false);
+        changeBackground(getImageLoader().getIcon("background"));
+        JButton exitGameBtn = new JButton();
+        cm.setIcon(exitGameBtn, imageLoader.getIcon("exit"), CM.size(20,10));
+        cm.setBounds(exitGameBtn, CM.grid(75, 82, 20, 10));
+        exitGameBtn.setOpaque(false);
+        exitGameBtn.setContentAreaFilled(false);
+        exitGameBtn.setBorderPainted(false);
+
+        cm.setActiveIcon(exitGameBtn, imageLoader.getIcon("exit"),imageLoader.getIcon("exitpress"));
+        exitGameBtn.addActionListener(e -> getController().changeScene("SeletionLv"));
+        add(exitGameBtn);
         ready();
     }
 

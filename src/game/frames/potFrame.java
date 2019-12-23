@@ -50,9 +50,6 @@ public class potFrame extends JFrame {
 
 
 
-
-
-
         cm.recalculate();
 
         contentPane.revalidate();

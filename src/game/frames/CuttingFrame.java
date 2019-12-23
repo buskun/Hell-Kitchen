@@ -19,6 +19,7 @@ public class CuttingFrame extends JFrame {
     static final int height = 900;
 
     public CuttingFrame(ImageLoader imageLoader, AudioLoader audioLoader, Consumer<String> getItemListener) {
+        JLabel barTime = new JLabel();
         setTitle("cutting");
         setBounds(100, 100, width, height);
         setResizable(false);
@@ -41,8 +42,14 @@ public class CuttingFrame extends JFrame {
         contentPane.add(food);
 
         JLabel cutDisplay = new JLabel();
-        cm.setBounds(cutDisplay, CM.grid(70, 70, CM.size(20, CMFlag.BY_H)));
+        cm.setBounds(cutDisplay, CM.grid(90, 50, CM.size(48, CMFlag.BY_H)));
         contentPane.add(cutDisplay);
+        //setComponentZOrder(cutDisplay,1);
+
+        cm.setIcon(barTime, imageLoader.getIcon("cuttingBar"), CM.size(21, 14));
+        cm.setBounds(barTime, CM.grid(78, 80, CM.size(21, 14)));
+        add(barTime);
+
 
         StateManager<Point> dragStartingPosition = Utility.useState(Point.class);
         StateManager<Point> dragStoppingPosition = Utility.useState(Point.class);

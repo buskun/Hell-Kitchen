@@ -83,6 +83,7 @@ public class GameScene extends Scene {
         imageLoader.add("KetchupCut", "resources/cuttingFrame/KetchupCut.png");
         imageLoader.add("LettuceCut", "resources/cuttingFrame/LettuceCut.png");
         imageLoader.add("MeatCut", "resources/cuttingFrame/MeatCut.png");
+        imageLoader.add("cuttingBar","resources/cuttingFrame/cuttingBar.png");
 
         imageLoader.add("bgPan", "resources/panFrame/Bgkata.png");
         imageLoader.add("BgkataOil", "resources/panFrame/BgkataOil.png");
