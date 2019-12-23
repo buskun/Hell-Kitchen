@@ -111,7 +111,7 @@ public class GameScene extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        character = new Character(this, map, interactable, this::onHoldItem);
+        character = new Character(this, map, interactable, this::changeState);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
         cm.setBounds(refrigerator, CM.grid(85, 20, 15, 40));
@@ -178,7 +178,7 @@ public class GameScene extends Scene {
             character.move(1, 0);
     }
 
-    public void onHoldItem(String item) {
+    public void changeState(String name, String item) {
         ImageLoader imageLoader = getImageLoader();
         CM cm = getCM();
 
