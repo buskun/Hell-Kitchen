@@ -16,6 +16,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Character {
     private static int pixelPerMove = 15;
@@ -25,6 +26,7 @@ public class Character {
     private Scene scene;
     private CM cm;
     private BiConsumer<String, Consumer<String>> actionToPlate;
+    private Predicate<String> finishOrder;
     private ImageLoader imageLoader;
     private AudioLoader audioLoader;
     private HashMap<String, Boolean> interactable;
@@ -33,7 +35,7 @@ public class Character {
 
     private String holdingItem = "";
 
-    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, Consumer<String>> onActionToPlate) {
+    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, Consumer<String>> onActionToPlate, Predicate<String> onFinishOrder) {
         scene = cScene;
         cm = scene.getCM();
         imageLoader = scene.getImageLoader();
@@ -42,6 +44,7 @@ public class Character {
         window = scene.getWindow();
         map = cMap;
         actionToPlate = onActionToPlate;
+        finishOrder = onFinishOrder;
 
         percentPPMHeight = 100 * (double) pixelPerMove / scene.getHeight();
         percentPPMWidth = 100 * (double) pixelPerMove / scene.getHeight();
@@ -100,6 +103,9 @@ public class Character {
             }
             if (Boolean.TRUE.equals(interactable.get("trash"))) {
                 holdItem("");
+            }
+            if (Boolean.TRUE.equals(interactable.get("sent"))) {
+                if (finishOrder.test(holdingItem)) holdItem("");
             }
         }
 

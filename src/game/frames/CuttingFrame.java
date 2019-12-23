@@ -40,9 +40,6 @@ public class CuttingFrame extends JFrame {
         cm.setBounds(food, CM.grid(40, 70, CM.size(20, CMFlag.BY_H)));
         contentPane.add(food);
 
-
-
-
         JLabel cutDisplay = new JLabel();
         cm.setBounds(cutDisplay, CM.grid(90, 50, CM.size(48, CMFlag.BY_H)));
         contentPane.add(cutDisplay);

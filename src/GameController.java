@@ -21,6 +21,8 @@ public class GameController extends Controller {
 
         setWindow(mainWindow);
 
+        changeState("level", 1);
+
         Scene loadingScene = new LoadingScene(mainWindow, this);
         loadingScene.init();
         setLoadingScene(loadingScene);

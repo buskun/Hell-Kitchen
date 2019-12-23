@@ -399,6 +399,13 @@ public class CM extends ComponentAdapter {
         return ready;
     }
 
+    synchronized public void remove(JComponent component) {
+        calculationComponentList.remove(component);
+        pointCalculationList.removeIf(cm -> cm.getComponent() == component);
+        dimensionCalculationList.removeIf(cm -> cm.getComponent() == component);
+        iconCalculationList.removeIf(cm -> cm.getComponent() == component);
+    }
+
     @Override
     public void componentResized(ComponentEvent e) {
         super.componentResized(e);

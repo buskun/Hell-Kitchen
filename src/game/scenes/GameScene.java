@@ -4,6 +4,8 @@ import base.Controller;
 import base.Scene;
 import base.WindowFrame;
 import game.Character;
+import game.Data;
+import game.Order;
 import game.Recipe;
 import utility.Utility;
 import utility.bounding.BoundingArea;
@@ -16,6 +18,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class GameScene extends Scene {
 
@@ -186,8 +189,8 @@ public class GameScene extends Scene {
         imageLoader.add("pot-item-rice-2", "resources/potFrame/PotWithRice2.png");
         imageLoader.add("pot-item-rice-3", "resources/potFrame/PotWithRice3.png");
 
-        imageLoader.add("order-food-burger", "resources/order/orderburger.png");
-        imageLoader.add("order-food-fish_n_chip", "resources/order/orderFishandchips.png");
+        imageLoader.add("order-food-burger", "resources/order/orderBurger.png");
+        imageLoader.add("order-food-fish_n_chip", "resources/order/orderFishNChips.png");
         imageLoader.add("order-food-soup", "resources/order/orderSoup.png");
         imageLoader.add("order-food-sushi", "resources/order/orderSushi.png");
         imageLoader.add("order-drink-fanta-l", "resources/order/orderWaterfantaL.png");
@@ -197,8 +200,8 @@ public class GameScene extends Scene {
         imageLoader.add("order-drink-pepsi-m", "resources/order/orderWaterPepsiM.png");
         imageLoader.add("order-drink-pepsi-s", "resources/order/orderWaterPepsiS.png");
         imageLoader.add("order-drink-sprite-l", "resources/order/orderWaterSpriteL.png");
-        imageLoader.add("order-drink-pepsi-m", "resources/order/orderWaterSpriteM.png");
-        imageLoader.add("order-drink-pepsi-s", "resources/order/orderWaterSpriteS.png");
+        imageLoader.add("order-drink-sprite-m", "resources/order/orderWaterSpriteM.png");
+        imageLoader.add("order-drink-sprite-s", "resources/order/orderWaterSpriteS.png");
     }
 
     private Recipe[] recipes = new Recipe[]{
@@ -224,12 +227,16 @@ public class GameScene extends Scene {
     private JLabel barScore = new JLabel();
     private JLabel barTime = new JLabel();
     private JLabel totalTime = new JLabel();
+    private JLabel totalScore = new JLabel();
     private int remainingTime = 100;
     private Runnable timer;
+    private Runnable orderTimer;
     private ArrayList<String> currentItemsOnPlate = new ArrayList<>();
-
     private HashMap<String, Boolean> interactable = new HashMap<>();
 
+    private ArrayList<String> allOrder = new ArrayList<>();
+    private ArrayList<Order> orderList = new ArrayList<>();
+    private int totalScoreI = 0;
 
     @Override
     public void init() {
@@ -238,7 +245,7 @@ public class GameScene extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        character = new Character(this, map, interactable, this::actionToPlate);
+        character = new Character(this, map, interactable, this::actionToPlate, this::finishOrder);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
         cm.setBounds(refrigerator, CM.grid(85, 21, 15, 40));
@@ -292,6 +299,7 @@ public class GameScene extends Scene {
         cm.setIcon(orderBar, imageLoader.getIcon("orderBar"), CM.size(51, 14));
         cm.setBounds(orderBar, CM.grid(24, 0, CM.size(51, 14)));
         add(orderBar);
+        orderBar.setLayout(new FlowLayout());
         map.add("orderBar", orderBar);
 
         JLabel trash = new JLabel();
@@ -300,8 +308,7 @@ public class GameScene extends Scene {
         add(trash);
         map.add("trash", trash);
 
-        JLabel totalScore = new JLabel();
-        totalScore.setText("0");
+        totalScore.setText(Integer.toString(totalScoreI));
         totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
         cm.setBounds(totalScore, CM.grid(92, -4, CM.size(25, CMFlag.BY_H)));
         add(totalScore);
@@ -381,8 +388,44 @@ public class GameScene extends Scene {
         getCM().recalculateIcon(plate);
     }
 
+    public boolean finishOrder(String orderName) {
+        Optional<Order> cOrder = orderList.stream().filter(order -> order.is(orderName)).findFirst();
+
+        if (cOrder.isPresent()) {
+            getCM().remove(cOrder.get().getComponent());
+            orderBar.remove(cOrder.get().getComponent());
+            totalScoreI += 20;
+            totalScore.setText(Integer.toString(totalScoreI));
+            return true;
+        }
+
+        return false;
+    }
+
+    public void newOrder() {
+        if (orderList.size() >= 6) return;
+        int levelIndex = (int) Math.floor(Math.random() * ((int) getController().getState("level") - 1));
+        int subIndex = (int) Math.floor(Math.random() * Data.orderList[levelIndex].length);
+        int index = IntStream.range(0, levelIndex).reduce(0, (acc, i) -> Data.orderList[i].length) + subIndex;
+        Order order = new Order(allOrder.get(index), new JLabel());
+
+        getCM().setIcon(order.getComponent(), getImageLoader().getIcon(order.getName()), CM.size(14, CMFlag.BY_H));
+        getCM().setSize(order.getComponent(), CM.size(14, CMFlag.BY_H));
+        getCM().recalculateSize(order.getComponent());
+        getCM().recalculateIcon(order.getComponent());
+
+        orderList.add(order);
+        orderBar.add(order.getComponent());
+        revalidate();
+    }
+
     @Override
     public void onStart() {
+        allOrder = new ArrayList<>();
+
+        int level = (int) getController().getState("level");
+        IntStream.range(0, level).forEach(i -> allOrder.addAll(Arrays.asList(Data.orderList[i])));
+
         timer = Utility.setInterval(
                 () -> {
                     totalTime.setText(Integer.toString(remainingTime));
@@ -395,10 +438,16 @@ public class GameScene extends Scene {
                 },
                 1000
         );
+
+        orderTimer = Utility.setInterval(() -> {
+            newOrder();
+            return true;
+        }, Data.timeList[level - 1] * 1000);
     }
 
     @Override
     public void onStop() {
         timer.run();
+        orderTimer.run();
     }
 }
