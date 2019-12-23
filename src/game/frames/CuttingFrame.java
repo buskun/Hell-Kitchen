@@ -18,8 +18,7 @@ public class CuttingFrame extends JFrame {
     static final int width = 1400;
     static final int height = 900;
 
-    public CuttingFrame(ImageLoader imageLoader, AudioLoader audioLoader, Consumer<String> getItemListener) {
-        JLabel barTime = new JLabel();
+    public CuttingFrame(ImageLoader imageLoader, AudioLoader audioLoader, String holdingItem, Consumer<String> getItemListener) {
         setTitle("cutting");
         setBounds(100, 100, width, height);
         setResizable(false);
@@ -37,7 +36,7 @@ public class CuttingFrame extends JFrame {
         contentPane.setLayout(null);
 
         JLabel food = new JLabel();
-        cm.setIcon(food, imageLoader.getIcon("Ketchup"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(food, imageLoader.getIcon("cutting-" + holdingItem), CM.size(20, CMFlag.BY_H));
         cm.setBounds(food, CM.grid(40, 70, CM.size(20, CMFlag.BY_H)));
         contentPane.add(food);
 
@@ -96,7 +95,12 @@ public class CuttingFrame extends JFrame {
                     ) {
                         cutCount.set(cutCount.get() + 1);
                         cutDisplay.setText(cutCount.get().toString());
-                        if (cutCount.get() >= 4) dispose();
+                        if (cutCount.get() >= 4) {
+                            cm.setIcon(food, imageLoader.getIcon("cutting-" + holdingItem + "-cut"));
+                            cm.recalculateIcon(food);
+                            getItemListener.accept(holdingItem + "-cut");
+                            Utility.setTimeout(CuttingFrame.this::dispose, 1000);
+                        }
                     }
 
                     dragStartingPosition.set(null);

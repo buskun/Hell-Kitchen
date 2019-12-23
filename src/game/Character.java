@@ -30,6 +30,8 @@ public class Character {
     private WindowFrame window;
     private BoundingArea map;
 
+    private String holdingItem = "item-tomato-cut";
+
     public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, String> onChangeState) {
         scene = cScene;
         cm = scene.getCM();
@@ -43,7 +45,7 @@ public class Character {
         percentPPMHeight = 100 * (double) pixelPerMove / scene.getHeight();
         percentPPMWidth = 100 * (double) pixelPerMove / scene.getHeight();
 
-        cm.setIcon(characterIcon, imageLoader.getIcon("character"), CM.size(13, CMFlag.BY_H));
+        cm.setIcon(characterIcon, imageLoader.getIcon(holdingItem.equals("") ? "character" : "avatar-" + holdingItem), CM.size(13, CMFlag.BY_H));
         cm.setBounds(characterIcon, CM.grid(15, 15, CM.size(13, CMFlag.BY_H)));
         scene.add(characterIcon);
     }
@@ -81,28 +83,37 @@ public class Character {
             JFrame refrigeratorFrame = new RefrigeratorFrame(imageLoader, audioLoader, this::holdItem);
             refrigeratorFrame.setVisible(true);
         }
-        if (Boolean.TRUE.equals(interactable.get("Cutting"))) {
-            JFrame cuttingFrame = new CuttingFrame(imageLoader, audioLoader, this::holdItem);
-            cuttingFrame.setVisible(true);
-        }
-        if (Boolean.TRUE.equals(interactable.get("pan"))) {
-            JFrame panFrame = new panFrame(imageLoader, audioLoader, this::holdItem);
-            panFrame.setVisible(true);
-        }
         if (Boolean.TRUE.equals(interactable.get("Drinking"))) {
             JFrame waterFrame = new waterFrame(imageLoader, audioLoader, this::holdItem);
             waterFrame.setVisible(true);
         }
-        if (Boolean.TRUE.equals(interactable.get("pot"))) {
-            JFrame potFrame = new potFrame(imageLoader, audioLoader, this::holdItem);
-            potFrame.setVisible(true);
+        if (!holdingItem.equals("")) {
+            if (Boolean.TRUE.equals(interactable.get("Cutting")) && imageLoader.has("cutting-" + holdingItem)) {
+                JFrame cuttingFrame = new CuttingFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                cuttingFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("pan")) && imageLoader.has("pan-" + holdingItem + "-1")) {
+                JFrame panFrame = new PanFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                panFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("pot")) && imageLoader.has("pot-" + holdingItem + "-1")) {
+                JFrame potFrame = new PotFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                potFrame.setVisible(true);
+            }
         }
     }
 
     public void holdItem(String item) {
-        changeState.accept("hold", item);
 
-        cm.setIcon(characterIcon, imageLoader.getIcon(item));
+        holdingItem = item;
+
+        if (holdingItem.equals("")) {
+            cm.setIcon(characterIcon, imageLoader.getIcon("character"));
+        } else {
+            cm.setIcon(characterIcon, imageLoader.getIcon("avatar-" + holdingItem));
+        }
         cm.recalculateIcon(characterIcon);
+
+        changeState.accept("hold", item);
     }
 }
