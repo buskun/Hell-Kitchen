@@ -9,7 +9,7 @@ abstract public class Controller {
     private Scene loadingScene = null;
     private HashMap<String, Scene> sceneList = new HashMap<>();
     private HashMap<String, Class<Scene>> sceneMap = new HashMap<>();
-    private Window window;
+    private WindowFrame window;
     private volatile HashMap<String, Object> gameState = new HashMap<>();
 
     private Scene currentScene;
@@ -59,7 +59,7 @@ abstract public class Controller {
         run = false;
     }
 
-    public final void setWindow(Window _window) {
+    public final void setWindow(WindowFrame _window) {
         window = _window;
         window.addComponentListener(new ComponentAdapter() {
             @Override
@@ -71,7 +71,7 @@ abstract public class Controller {
         });
     }
 
-    public final Window getWindow() { return window; }
+    public final WindowFrame getWindow() { return window; }
 
     public final void removeScene(String name) { sceneList.remove(name); }
 
@@ -92,7 +92,7 @@ abstract public class Controller {
         if (window == null) return;
         for (String name : sceneMap.keySet()) {
             try {
-                sceneList.put(name, sceneMap.get(name).getDeclaredConstructor(Window.class, Controller.class).newInstance(window, this));
+                sceneList.put(name, sceneMap.get(name).getDeclaredConstructor(WindowFrame.class, Controller.class).newInstance(window, this));
             } catch (IllegalAccessException exception) {
                 System.err.println("Cannot access class: " + sceneMap.get(name));
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException exception) {

@@ -2,14 +2,14 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
+import base.WindowFrame;
 import utility.*;
 import utility.animation.Animator;
 
 public class LoadingScene extends Scene {
     Animator<String> animator;
 
-    public LoadingScene(Window window, Controller controller) { super(window, controller); }
+    public LoadingScene(WindowFrame window, Controller controller) { super(window, controller); }
 
     @Override
     public void init() {

@@ -20,7 +20,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     private ImageLoader imageLoader;
     private AudioLoader audioLoader;
     private Controller controller;
-    private Window window;
+    private WindowFrame window;
     private CM cm;
     private boolean readyFlag = false;
     private HashMap<String, JComponent> componentIDMap = new HashMap<>();
@@ -31,7 +31,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     private CustomImageIcon background = null;
     private ArrayList<Runnable> backgroundAutoResizeQueue = new ArrayList<>();
 
-    public Scene(Window _window, Controller _controller) {
+    public Scene(WindowFrame _window, Controller _controller) {
         imageLoader = new ImageLoader(this::onStartLoadingImage, this::onImageLoaded);
         audioLoader = new AudioLoader(this::onStartLoadingAudio, this::onAudioLoaded);
         cm = new CM(this);
@@ -62,11 +62,11 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     public abstract void onStop();
 
-    protected ImageLoader getImageLoader() {
+    public final ImageLoader getImageLoader() {
         return imageLoader;
     }
 
-    protected AudioLoader getAudioLoader() {
+    public final AudioLoader getAudioLoader() {
         return audioLoader;
     }
 
@@ -230,7 +230,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
         if (background != null) changeBackground(background);
     }
 
-    public final Window getWindow() { return window; }
+    public final WindowFrame getWindow() { return window; }
 
     public final Controller getController() { return controller; }
 
