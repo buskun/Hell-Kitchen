@@ -270,4 +270,6 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     public void unbindID(JComponent component) { unbindID(IDOf(component)); }
 
     public void addAnimation(Animation animation) { animations.add(animation); }
+
+    public void onStateChange(String name, Object value) { }
 }
