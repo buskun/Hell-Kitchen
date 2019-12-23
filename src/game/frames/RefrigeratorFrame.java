@@ -18,6 +18,7 @@ public class RefrigeratorFrame extends JFrame {
         setBounds(100, 100, width, height);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        JLabel character = new JLabel();
 
         CM cm = new CM(() -> this, visible -> {}, () -> null, this::addComponentListener);
 
@@ -31,8 +32,8 @@ public class RefrigeratorFrame extends JFrame {
         contentPane.setLayout(null);
 
         JButton Burger = new JButton();
-        cm.setIcon(Burger, imageLoader.getIcon("Burger"), CM.size(30, CMFlag.BY_H));
-        cm.setBounds(Burger, CM.grid(30, 50, CM.size(30, CMFlag.BY_H)));
+        cm.setIcon(Burger, imageLoader.getIcon("BurgerFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Burger, CM.grid(29, 5, CM.size(20, CMFlag.BY_H)));
         Burger.setBounds(0, 0, 100, 200);
         Burger.setOpaque(false);
         Burger.setContentAreaFilled(false);
@@ -41,8 +42,8 @@ public class RefrigeratorFrame extends JFrame {
         Burger.addActionListener(e -> getItemListener.accept("Burger"));
 
         JButton Fish = new JButton();
-        cm.setIcon(Fish, imageLoader.getIcon("Fish"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Fish, CM.grid(48, 5, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Fish, imageLoader.getIcon("FishFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Fish, CM.grid(47, 5, CM.size(20, CMFlag.BY_H)));
         Fish.setOpaque(false);
         Fish.setContentAreaFilled(false);
         Fish.setBorderPainted(false);
@@ -50,8 +51,8 @@ public class RefrigeratorFrame extends JFrame {
         Fish.addActionListener(e -> getItemListener.accept("Fish"));
 
         JButton Ketchup = new JButton();
-        cm.setIcon(Ketchup, imageLoader.getIcon("Ketchup"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Ketchup, CM.grid(30, 32, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Ketchup, imageLoader.getIcon("KetchupFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Ketchup, CM.grid(29, 32, CM.size(20, CMFlag.BY_H)));
         Ketchup.setOpaque(false);
         Ketchup.setContentAreaFilled(false);
         Ketchup.setBorderPainted(false);
@@ -59,8 +60,8 @@ public class RefrigeratorFrame extends JFrame {
         Ketchup.addActionListener(e -> getItemListener.accept("Ketchup"));
 
         JButton Lettuce = new JButton();
-        cm.setIcon(Lettuce, imageLoader.getIcon("Lettuce"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Lettuce, CM.grid(48, 32, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Lettuce, imageLoader.getIcon("LettuceFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Lettuce, CM.grid(47, 32, CM.size(20, CMFlag.BY_H)));
         Lettuce.setOpaque(false);
         Lettuce.setContentAreaFilled(false);
         Lettuce.setBorderPainted(false);
@@ -68,8 +69,8 @@ public class RefrigeratorFrame extends JFrame {
         Lettuce.addActionListener(e -> getItemListener.accept("Lettuce"));
 
         JButton Meat = new JButton();
-        cm.setIcon(Meat, imageLoader.getIcon("Meat"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Meat, CM.grid(30, 60, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Meat, imageLoader.getIcon("MeatFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Meat, CM.grid(29, 60, CM.size(20, CMFlag.BY_H)));
         Meat.setOpaque(false);
         Meat.setContentAreaFilled(false);
         Meat.setBorderPainted(false);
@@ -77,8 +78,8 @@ public class RefrigeratorFrame extends JFrame {
         Meat.addActionListener(e -> getItemListener.accept("Meat"));
 
         JButton Potato = new JButton();
-        cm.setIcon(Potato, imageLoader.getIcon("Potato"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Potato, CM.grid(48, 60, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Potato, imageLoader.getIcon("PotatoFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Potato, CM.grid(47, 60, CM.size(20, CMFlag.BY_H)));
         Potato.setOpaque(false);
         Potato.setContentAreaFilled(false);
         Potato.setBorderPainted(false);
@@ -86,8 +87,8 @@ public class RefrigeratorFrame extends JFrame {
         Potato.addActionListener(e -> getItemListener.accept("Potato"));
 
         JButton Rice = new JButton();
-        cm.setIcon(Rice, imageLoader.getIcon("Rice"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(Rice, CM.grid(68, 60, CM.size(20, CMFlag.BY_H)));
+        cm.setIcon(Rice, imageLoader.getIcon("RiceFridge"), CM.size(20, CMFlag.BY_H));
+        cm.setBounds(Rice, CM.grid(67, 60, CM.size(20, CMFlag.BY_H)));
         Rice.setOpaque(false);
         Rice.setContentAreaFilled(false);
         Rice.setBorderPainted(false);

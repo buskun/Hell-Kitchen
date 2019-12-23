@@ -30,7 +30,6 @@ public class gameScene2 extends Scene{
         imageLoader.add("Rice", "resources/refrigeratorFrame/Rice.png");
     }
 
-
     @Override
     public void init() {
         changeBackground(getImageLoader().getIcon("background"));
@@ -90,10 +89,6 @@ public class gameScene2 extends Scene{
         Rice.setContentAreaFilled(false);
         Rice.setBorderPainted(false);
         add(Rice);
-
-
-
-
 
 
         ready();

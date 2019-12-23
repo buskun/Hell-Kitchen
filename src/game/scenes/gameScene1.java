@@ -5,6 +5,10 @@ import base.Scene;
 import base.Window;
 import components.CustomImageIcon;
 import game.frames.RefrigeratorFrame;
+import game.frames.cuttingFrame;
+import game.frames.panFrame;
+import game.frames.waterFrame;
+import game.frames.potFrame;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
@@ -34,14 +38,65 @@ public class gameScene1 extends Scene {
         imageLoader.add("Drinking", "resources/gameScene/Drinking.png");
         imageLoader.add("pot", "resources/gameScene/pot.png");
         imageLoader.add("pan", "resources/gameScene/pan.png");
+
         imageLoader.add("backgroundFrame", "resources/refrigeratorFrame/Bgfridge.png");
-        imageLoader.add("Burger", "resources/refrigeratorFrame/Burger.png");
-        imageLoader.add("Fish", "resources/refrigeratorFrame/Fish.png");
-        imageLoader.add("Ketchup", "resources/refrigeratorFrame/Ketchup.png");
-        imageLoader.add("Lettuce", "resources/refrigeratorFrame/Lettuce.png");
-        imageLoader.add("Meat", "resources/refrigeratorFrame/Meat.png");
-        imageLoader.add("Potato", "resources/refrigeratorFrame/Potato.png");
-        imageLoader.add("Rice", "resources/refrigeratorFrame/Rice.png");
+        imageLoader.add("BurgerFridge", "resources/refrigeratorFrame/Burger.png");
+        imageLoader.add("FishFridge", "resources/refrigeratorFrame/Fish.png");
+        imageLoader.add("KetchupFridge", "resources/refrigeratorFrame/Ketchup.png");
+        imageLoader.add("LettuceFridge", "resources/refrigeratorFrame/Lettuce.png");
+        imageLoader.add("MeatFridge", "resources/refrigeratorFrame/Meat.png");
+        imageLoader.add("PotatoFridge", "resources/refrigeratorFrame/Potato.png");
+        imageLoader.add("RiceFridge", "resources/refrigeratorFrame/Rice.png");
+
+        imageLoader.add("iconRice", "resources/refrigeratorFrame/Icon+burgur.png");
+        imageLoader.add("iconFish", "resources/refrigeratorFrame/Icon+fish.png");
+        imageLoader.add("iconLettuce", "resources/refrigeratorFrame/Icon+lettuce.png");
+        imageLoader.add("iconMeat", "resources/refrigeratorFrame/Icon+meat.png");
+        imageLoader.add("iconPotato", "resources/refrigeratorFrame/Icon+potato.png");
+        imageLoader.add("iconRice", "resources/refrigeratorFrame/Icon+rice.png");
+
+        imageLoader.add("Bgcutting", "resources/cuttingFrame/Bgcutting.png");
+        imageLoader.add("Potato", "resources/cuttingFrame/Potato.png");
+        imageLoader.add("Meat", "resources/cuttingFrame/Meat.png");
+        imageLoader.add("Lettuce", "resources/cuttingFrame/Lettuce.png");
+        imageLoader.add("Fish", "resources/cuttingFrame/Fish.png");
+        imageLoader.add("FishCut", "resources/cuttingFrame/FishCut.png");
+        imageLoader.add("KetchupCut", "resources/cuttingFrame/KetchupCut.png");
+        imageLoader.add("LettuceCut", "resources/cuttingFrame/LettuceCut.png");
+        imageLoader.add("MeatCut", "resources/cuttingFrame/MeatCut.png");
+
+        imageLoader.add("bgPan", "resources/panFrame/Bgkata.png");
+        imageLoader.add("BgkataOil", "resources/panFrame/BgkataOil.png");
+        imageLoader.add("FishCut1", "resources/panFrame/FishCut.png");
+        imageLoader.add("FishCut2", "resources/panFrame/Fish2.png");
+        imageLoader.add("FishCut3", "resources/panFrame/Fish3.png");
+        imageLoader.add("FrenchfriesCut1", "resources/panFrame/FrenchfriesCut.png");
+        imageLoader.add("FrenchfriesCut2", "resources/panFrame/Frenchfries2.png");
+        imageLoader.add("FrenchfriesCut3", "resources/panFrame/Frenchfries3.png");
+        imageLoader.add("MeatCut1", "resources/panFrame/MeatCut.png");
+        imageLoader.add("MeatCut2", "resources/panFrame/Meat2.png");
+        imageLoader.add("MeatCut3", "resources/panFrame/Meat3.png");
+        imageLoader.add("offBtn", "resources/panFrame/Off.png");
+        imageLoader.add("onBtn", "resources/panFrame/On.png");
+
+        imageLoader.add("Bgdrink", "resources/waterFrame/Bgdrink.png");
+        imageLoader.add("Fanta", "resources/waterFrame/Fanta.png");
+        imageLoader.add("Pepsi", "resources/waterFrame/Pepsi.png");
+        imageLoader.add("Sprite", "resources/waterFrame/Sprite.png");
+        imageLoader.add("DrinkL", "resources/waterFrame/DrinkL.png");
+        imageLoader.add("DrinkM", "resources/waterFrame/DrinkM.png");
+        imageLoader.add("DrinkS", "resources/waterFrame/DrinkS.png");
+
+        imageLoader.add("Bgpot", "resources/ponFrame/Bgpot.png");
+        imageLoader.add("PotWithBoilWater", "resources/ponFrame/PotWithBoilWater.png");
+        imageLoader.add("Potwithketchup1", "resources/ponFrame/Potwithketchup1.png");
+        imageLoader.add("PotWithKetchup2", "resources/ponFrame/PotWithKetchup2.png");
+        imageLoader.add("PotWithKetchup3", "resources/ponFrame/PotWithKetchup3.png");
+        imageLoader.add("PotWithRice1", "resources/ponFrame/PotWithRice1.png");
+        imageLoader.add("PotWithRice2", "resources/ponFrame/PotWithRice2.png");
+        imageLoader.add("PotWithRice3", "resources/ponFrame/PotWithRice3.png");
+        imageLoader.add("PotWithWater", "resources/ponFrame/PotWithWater.png");
+
     }
 
     private BoundingArea map = new BoundingArea();
@@ -161,11 +216,31 @@ public class gameScene1 extends Scene {
             JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
             refrigeratorFrame.setVisible(true);
         }
-        if (Boolean.TRUE.equals(interactable.get("plate")) && isActionKeyPressed) System.out.println("kuy");
+        if (Boolean.TRUE.equals(interactable.get("Cutting")) && isActionKeyPressed)
+        {
+            JFrame cuttingFrame = new cuttingFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+            cuttingFrame.setVisible(true);
+        }
+        if (Boolean.TRUE.equals(interactable.get("pan")) && isActionKeyPressed)
+        {
+            JFrame panFrame = new panFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+            panFrame.setVisible(true);
+        }
+        if (Boolean.TRUE.equals(interactable.get("Drinking")) && isActionKeyPressed)
+        {
+            JFrame waterFrame = new waterFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+            waterFrame.setVisible(true);
+        }
+        if (Boolean.TRUE.equals(interactable.get("pot")) && isActionKeyPressed)
+        {
+            JFrame potFrame = new potFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
+            potFrame.setVisible(true);
+        }
     }
 
     public void onAddItem(String item) {
         System.out.println(item);
+
     }
 
     @Override
