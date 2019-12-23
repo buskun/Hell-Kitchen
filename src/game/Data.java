@@ -10,4 +10,8 @@ public class Data {
     public static Integer[] timeList = new Integer[]{
             5, 10, 20, 30
     };
+
+    public static Integer[] totalTimeList = new Integer[]{
+            600, 480, 420, 360, 300
+    };
 }

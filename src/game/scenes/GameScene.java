@@ -228,7 +228,7 @@ public class GameScene extends Scene {
     private JLabel barTime = new JLabel();
     private JLabel totalTime = new JLabel();
     private JLabel totalScore = new JLabel();
-    private int remainingTime = 100;
+    private int remainingTime;
     private Runnable timer;
     private Runnable orderTimer;
     private ArrayList<String> currentItemsOnPlate = new ArrayList<>();
@@ -426,13 +426,15 @@ public class GameScene extends Scene {
         int level = (int) getController().getState("level");
         IntStream.range(0, level).forEach(i -> allOrder.addAll(Arrays.asList(Data.orderList[i])));
 
+        remainingTime = Data.totalTimeList[(int) getController().getState("difficulty") - 1];
         timer = Utility.setInterval(
                 () -> {
                     totalTime.setText(Integer.toString(remainingTime));
                     repaint();
                     remainingTime--;
                     if (remainingTime < 0) {
-//                        getController().changeScene("Result");
+                        getController().changeState("score", totalScoreI);
+                        getController().changeScene("Result");
                     }
                     return remainingTime > 0;
                 },
