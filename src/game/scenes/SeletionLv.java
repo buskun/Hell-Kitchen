@@ -53,7 +53,7 @@ public class SeletionLv extends Scene {
 
         JButton backBtn = new JButton();
         cm.setIcon(backBtn, getImageLoader().getIcon("closebtn"), CM.size(13, CMFlag.BY_H));
-        cm.setBounds(backBtn, CM.grid(80, 5,  CM.size(13, CMFlag.BY_H)));
+        cm.setBounds(backBtn, CM.grid(82, 5,  CM.size(13, CMFlag.BY_H)));
         backBtn.setOpaque(false);
         backBtn.setContentAreaFilled(false);
         backBtn.setBorderPainted(false);

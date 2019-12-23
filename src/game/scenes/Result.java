@@ -68,7 +68,7 @@ public class Result extends Scene {
         cm.setBounds(orderFail, CM.grid(62, 30, CM.size(25, CMFlag.BY_H)));
         add(orderFail);
 
-        JLabel totalScore = new JLabel();
+        JLabel totalScore = new JLabel(Integer.toString((int)getController().getState("score")));
         totalScore.setText("0");
         totalScore.setFont(new Font("Dimbo", Font.PLAIN, 40));
         cm.setBounds(totalScore, CM.grid(62, 42, CM.size(25, CMFlag.BY_H)));
