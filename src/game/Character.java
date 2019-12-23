@@ -91,15 +91,15 @@ public class Character {
         if (!holdingItem.equals("")) {
             if (Boolean.TRUE.equals(interactable.get("Cutting")) && imageLoader.has("cutting-" + holdingItem)) {
                 JFrame cuttingFrame = new CuttingFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
-                cuttingFrame.setVisible(true);
             }
             if (Boolean.TRUE.equals(interactable.get("pan")) && imageLoader.has("pan-" + holdingItem + "-1")) {
                 JFrame panFrame = new PanFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
-                panFrame.setVisible(true);
             }
             if (Boolean.TRUE.equals(interactable.get("pot")) && imageLoader.has("pot-" + holdingItem + "-1")) {
                 JFrame potFrame = new PotFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
-                potFrame.setVisible(true);
+            }
+            if (Boolean.TRUE.equals(interactable.get("trash"))) {
+                holdItem("");
             }
         }
 

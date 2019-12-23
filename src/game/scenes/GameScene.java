@@ -32,8 +32,9 @@ public class GameScene extends Scene {
         imageLoader.add("Sent", "resources/gameScene2/Sent.png");
         imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
         imageLoader.add("plate", "resources/gameScene2/Dish.png");
-        imageLoader.add("Cuttingbar","resources/cuttingFrame/cuttingBar.png");
+        imageLoader.add("Cuttingbar", "resources/cuttingFrame/cuttingBar.png");
 
+        imageLoader.add("trash", "resources/gameScene/Trash.png");
 
         imageLoader.add("character", "resources/gameScene/Iconplayer.png");
         imageLoader.add("refrigerator", "resources/gameScene/Fridge.png");
@@ -117,6 +118,7 @@ public class GameScene extends Scene {
         imageLoader.add("dish-item-lettuce-cut", "resources/icondish/DishWithPak.png");
         imageLoader.add("dish-item-meat-cut-fried", "resources/icondish/DishWithMeat.png");
         imageLoader.add("dish-item-bread", "resources/icondish/DishBurger(1).png");
+        imageLoader.add("dish-item-tomato-cut", "resources/icondish/DishWithTomato.png");
         imageLoader.add("dish-food-burger", "resources/icondish/DishBurger.png");
 
         imageLoader.add("dish-item-fish-fried", "resources/icondish/DishWithFish.png");
@@ -126,7 +128,6 @@ public class GameScene extends Scene {
         imageLoader.add("dish-item-rice", "resources/icondish/DishWithRice.png");
         imageLoader.add("dish-food-sushi", "resources/icondish/DishWithSushi.png");
 
-        imageLoader.add("dish-item-tomato-cut-boiled", "resources/icondish/DishWithTomato.png");
         imageLoader.add("dish-food-soup", "resources/icondish/DishWithSoup.png");
 
         imageLoader.add("cup-s", "resources/waterFrame/GlassSizeS.png");
@@ -292,6 +293,12 @@ public class GameScene extends Scene {
         cm.setBounds(orderBar, CM.grid(24, 0, CM.size(51, 14)));
         add(orderBar);
         map.add("orderBar", orderBar);
+
+        JLabel trash = new JLabel();
+        cm.setIcon(trash, imageLoader.getIcon("trash"), CM.size(15, 20, CMFlag.BY_H));
+        cm.setBounds(trash, CM.grid(5, 75, CM.size(15, 20, CMFlag.BY_H)));
+        add(trash);
+        map.add("trash", trash);
 
         JLabel totalScore = new JLabel();
         totalScore.setText("0");
