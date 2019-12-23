@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class AudioLoader extends ResourceLoader<Clip> {
+    private float gain = 0f;
+
     public AudioLoader(Runnable onStartLoading, Runnable onLoaded) {
         super(onStartLoading, onLoaded, (File file) -> {
             try {
@@ -107,5 +109,16 @@ public class AudioLoader extends ResourceLoader<Clip> {
             @Override
             public float getLevel() { return 0; }
         });
+    }
+
+    public void setGain(float cGain) {
+        gain = cGain;
+    }
+
+    @Override
+    public Clip get(String name) {
+        Clip clip = super.get(name);
+        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(gain);
+        return clip;
     }
 }

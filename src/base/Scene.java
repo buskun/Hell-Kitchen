@@ -158,6 +158,7 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
         window.repaint();
 
         try {
+            audioLoader.setGain((int) controller.getState("volume") - 50);
             onStart();
         } catch (Exception exception) {
             System.err.println("Error while starting Scene " + getClass().getName());

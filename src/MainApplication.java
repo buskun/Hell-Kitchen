@@ -22,8 +22,8 @@ public class MainApplication {
 
         gameController.changeState("level", 1);
         gameController.changeState("difficulty", 1);
-        gameController.changeState("volume", 100);
-        gameController.changeState("song", 3);
+        gameController.changeState("volume", 50);
+        gameController.changeState("song", 1);
 
         gameController.init();
         gameController.changeScene("gameScene");

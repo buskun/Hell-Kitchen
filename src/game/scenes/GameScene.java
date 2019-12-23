@@ -213,7 +213,7 @@ public class GameScene extends Scene {
 
     @Override
     public void loadAudio(AudioLoader audioLoader) {
-        audioLoader.add("theme", "resources/soundtrack/Main Theme 1.wav");
+        audioLoader.add("theme", "resources/soundtrack/" + Data.songList[(int) getController().getState("song")]);
     }
 
     private Recipe[] recipes = new Recipe[]{
