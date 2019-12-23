@@ -1,5 +1,7 @@
 package base;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -14,6 +16,10 @@ abstract public class Controller {
     private boolean run = false;
     private int gameTick;
 
+    public Controller(int gameTickPerSec) {
+        gameTick = gameTickPerSec;
+    }
+
     public final void setLoadingScene(Scene newLoadingScene) {
         if (loadingScene != null) {
             window.remove(loadingScene);
@@ -21,13 +27,10 @@ abstract public class Controller {
         }
         loadingScene = newLoadingScene;
         window.add(loadingScene);
+        window.addComponentListener(loadingScene);
     }
 
     public final Scene getLoadingScene() { return loadingScene; }
-
-    public Controller(int gameTickPerSec) {
-        gameTick = gameTickPerSec;
-    }
 
     public abstract void init();
 
@@ -55,7 +58,17 @@ abstract public class Controller {
         run = false;
     }
 
-    public final void setWindow(Window _window) { window = _window; }
+    public final void setWindow(Window _window) {
+        window = _window;
+        window.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+
+                if (loadingScene != null) loadingScene.setBounds(window.getBounds());
+            }
+        });
+    }
 
     public final Window getWindow() { return window; }
 
