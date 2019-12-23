@@ -2,31 +2,27 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
-import game.frames.*;
-import utility.animation.Animation;
-import utility.animation.AnimationMap;
+import base.WindowFrame;
+import game.Character;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
-import utility.cm.DimensionStore;
-import utility.cm.PointStore;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
-public class gameScene1 extends Scene {
+public class GameScene extends Scene {
 
-    public gameScene1(Window _window, Controller _controller) {
+    public GameScene(WindowFrame _window, Controller _controller) {
         super(_window, _controller);
     }
 
     public void loadImage(ImageLoader imageLoader) {
         imageLoader.add("background", "resources/gameScene/background.png");
         imageLoader.add("head", "resources/gameScene/Iconplayer.png");
+        imageLoader.add("character", "resources/gameScene/Iconplayer.png");
         imageLoader.add("refrigerator", "resources/gameScene/Fridge.png");
         imageLoader.add("bar", "resources/gameScene/bar.png");
         imageLoader.add("plate", "resources/gameScene/plate.png");
@@ -96,7 +92,7 @@ public class gameScene1 extends Scene {
     }
 
     private BoundingArea map = new BoundingArea();
-    private JLabel character = new JLabel();
+    private Character character;
     private JLabel refrigerator = new JLabel();
     private JLabel bar = new JLabel();
     private JLabel plate = new JLabel();
@@ -104,8 +100,6 @@ public class gameScene1 extends Scene {
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
-    private boolean pickupBurger = false;
-
     private HashMap<String, Boolean> interactable = new HashMap<>();
 
 
@@ -116,9 +110,7 @@ public class gameScene1 extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        cm.setIcon(character, imageLoader.getIcon("head"), CM.size(13, CMFlag.BY_H));
-        cm.setBounds(character, CM.grid(15, 15, CM.size(13, CMFlag.BY_H)));
-        add(character);
+        character = new Character(this, map, interactable, this::onHoldItem);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
         cm.setBounds(refrigerator, CM.grid(85, 20, 15, 40));
@@ -163,80 +155,34 @@ public class gameScene1 extends Scene {
         ready();
     }
 
-    public void moveCharacter(double pX, double pY) {
-        interactable.keySet().forEach(key -> interactable.put(key, false));
-
-        Window window = getWindow();
-        CM cm = getCM();
-        DimensionStore characterSize = cm.getScaledSize(character);
-        PointStore characterLocation = cm.getScaledLocation(character);
-
-        pX = Math.min(Math.max(characterLocation.getX() + pX, 0), 100 - characterSize.getW());
-        pY = Math.min(Math.max(characterLocation.getY() + pY, 0), 100 - characterSize.getH());
-
-        Rectangle newCharacterBounds = CM.grid(
-                pX, pY,
-                characterSize.getW(),
-                characterSize.getH(),
-                characterSize.getFlag()
-        ).calculate(window.getWidth(), window.getHeight());
-
-        if (map.intersects(newCharacterBounds)) return;
-
-        cm.setLocation(character, CM.position(pX, pY));
-        cm.recalculateLocation(character);
-    }
-
     @Override
     public void tick() {
         ImageLoader imageLoader = getImageLoader();
 
         boolean isActionKeyPressed = isKeyPressed(KeyEvent.VK_SPACE, true);
         CM cm = getCM();
-        
-        if (isActionKeyPressed) {
-            if (Boolean.TRUE.equals(interactable.get("refrigerator"))) {
-                JFrame refrigeratorFrame = new RefrigeratorFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-                refrigeratorFrame.setVisible(true);
-            }
-            if (Boolean.TRUE.equals(interactable.get("Cutting"))) {
-                JFrame cuttingFrame = new cuttingFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-                cuttingFrame.setVisible(true);
-            }
-            if (Boolean.TRUE.equals(interactable.get("pan"))) {
-                JFrame panFrame = new panFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-                panFrame.setVisible(true);
-            }
-            if (Boolean.TRUE.equals(interactable.get("Drinking"))) {
-                JFrame waterFrame = new waterFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-                waterFrame.setVisible(true);
-            }
-            if (Boolean.TRUE.equals(interactable.get("pot"))) {
-                JFrame potFrame = new potFrame(getImageLoader(), getAudioLoader(), this::onAddItem);
-                potFrame.setVisible(true);
-            }
-        }
+
+        if (isActionKeyPressed) character.doAction();
     }
 
     @Override
     public void onKeyPress(KeyEvent e) {
-        int pixelPerMove = 15;
-        double percentPPMHeight = 100 * (double) pixelPerMove / getHeight();
-        double percentPPMWidth = 100 * (double) pixelPerMove / getWidth();
-
         if (isKeyPressed(KeyEvent.VK_UP))
-            moveCharacter(0, -percentPPMHeight);
+            character.move(0, -1);
         if (isKeyPressed(KeyEvent.VK_DOWN))
-            moveCharacter(0, percentPPMHeight);
+            character.move(0, 1);
         if (isKeyPressed(KeyEvent.VK_LEFT))
-            moveCharacter(-percentPPMWidth, 0);
+            character.move(-1, 0);
         if (isKeyPressed(KeyEvent.VK_RIGHT))
-            moveCharacter(percentPPMWidth, 0);
+            character.move(1, 0);
     }
 
-    public void onAddItem(String item) {
-        System.out.println(item);
+    public void onHoldItem(String item) {
+        ImageLoader imageLoader = getImageLoader();
+        CM cm = getCM();
 
+//        cm.setIcon(character, imageLoader.getIcon(item));
+//        cm.recalculateIcon(character);
     }
 
     @Override
