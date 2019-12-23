@@ -273,8 +273,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculate(JComponent component) {
         ready = false;
-        int width = getWindow.get().getWidth();
-        int height = getWindow.get().getHeight();
+        int width = getWindow.get().getContentPane().getWidth();
+        int height = getWindow.get().getContentPane().getHeight();
 
         Rectangle newComponentBounds = component.getBounds();
 
@@ -297,8 +297,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculateLocation(JComponent component) {
         ready = false;
-        int width = getWindow.get().getWidth();
-        int height = getWindow.get().getHeight();
+        int width = getWindow.get().getContentPane().getWidth();
+        int height = getWindow.get().getContentPane().getHeight();
 
         Rectangle newComponentBounds = component.getBounds();
 
@@ -310,8 +310,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculateSize(JComponent component) {
         ready = false;
-        int width = getWindow.get().getWidth();
-        int height = getWindow.get().getHeight();
+        int width = getWindow.get().getContentPane().getWidth();
+        int height = getWindow.get().getContentPane().getHeight();
 
         Rectangle newComponentBounds = component.getBounds();
 
@@ -323,8 +323,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculateIcon(JComponent component) {
         ready = false;
-        int width = getWindow.get().getWidth();
-        int height = getWindow.get().getHeight();
+        int width = getWindow.get().getContentPane().getWidth();
+        int height = getWindow.get().getContentPane().getHeight();
 
         iconCalculationList.stream().filter(ic -> ic.is(component)).findFirst().ifPresent(ic -> {
             try {
@@ -340,8 +340,8 @@ public class CM extends ComponentAdapter {
 
     synchronized public void recalculate() {
         ready = false;
-        int width = getWindow.get().getWidth();
-        int height = getWindow.get().getHeight();
+        int width = getWindow.get().getContentPane().getWidth();
+        int height = getWindow.get().getContentPane().getHeight();
 
         ArrayList<Runnable> queue = new ArrayList<>();
 
