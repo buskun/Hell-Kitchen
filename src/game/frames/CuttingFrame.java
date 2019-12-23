@@ -35,13 +35,21 @@ public class CuttingFrame extends JFrame {
         cm.setBounds(contentPane, CM.grid(0, 0, 100, 100));
         contentPane.setLayout(null);
 
+
         JLabel food = new JLabel();
         cm.setIcon(food, imageLoader.getIcon("cutting-" + holdingItem), CM.size(20, CMFlag.BY_H));
         cm.setBounds(food, CM.grid(40, 70, CM.size(20, CMFlag.BY_H)));
         contentPane.add(food);
 
+        JLabel cuttingBar = new JLabel();
+        cm.setIcon(cuttingBar, imageLoader.getIcon("Cuttingbar"), CM.size(22,10));
+        cm.setBounds(cuttingBar, CM.grid(76, 70, CM.size(22, 10)));
+        contentPane.add(cuttingBar);
+
+
+
         JLabel cutDisplay = new JLabel();
-        cm.setBounds(cutDisplay, CM.grid(90, 50, CM.size(48, CMFlag.BY_H)));
+        cm.setBounds(cutDisplay, CM.grid(94.5, 50.7, CM.size(48, CMFlag.BY_H)));
         contentPane.add(cutDisplay);
         contentPane.setComponentZOrder(cutDisplay, 0);
 
