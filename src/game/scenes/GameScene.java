@@ -22,12 +22,18 @@ public class GameScene extends Scene {
     }
 
     public void loadImage(ImageLoader imageLoader) {
-        imageLoader.add("background", "resources/gameScene/background.png");
-        imageLoader.add("head", "resources/gameScene/Iconplayer.png");
+        imageLoader.add("background", "resources/gameScene2/Bg.png");
+        imageLoader.add("orderBar","resources/gameScene2/Order.png");
+        imageLoader.add("TableCenter","resources/gameScene2/TableCenter.png");
+        imageLoader.add("Tableleft","resources/gameScene2/Tableleft.png");
+        imageLoader.add("Tabledown","resources/gameScene2/Tabledown.png");
+        imageLoader.add("Sent","resources/gameScene2/Sent.png");
+        imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
+        imageLoader.add("plate", "resources/gameScene2/Dish.png");
+
         imageLoader.add("character", "resources/gameScene/Iconplayer.png");
         imageLoader.add("refrigerator", "resources/gameScene/Fridge.png");
-        imageLoader.add("bar", "resources/gameScene/bar.png");
-        imageLoader.add("plate", "resources/gameScene/plate.png");
+
         imageLoader.add("Cutting", "resources/gameScene/Cutting.png");
         imageLoader.add("Drinking", "resources/gameScene/Drinking.png");
         imageLoader.add("pot", "resources/gameScene/pot.png");
@@ -133,6 +139,8 @@ public class GameScene extends Scene {
         imageLoader.add("orderWaterSpriteS", "resources/order/orderWaterSpriteS.png");
 
 
+
+
     }
 
     private BoundingArea map = new BoundingArea();
@@ -144,6 +152,7 @@ public class GameScene extends Scene {
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
+    private JLabel Tableleft = new JLabel();
     private JLabel barScore = new JLabel();
     private JLabel barTime = new JLabel();
     private JLabel totalTime = new JLabel();
@@ -196,6 +205,12 @@ public class GameScene extends Scene {
         cm.setBounds(pan, CM.grid(54, 83, CM.size(14, CMFlag.BY_H)));
         add(pan);
         map.add("pan", pan);
+
+        cm.setIcon(Tableleft, imageLoader.getIcon("Tableleft"), CM.size(10, 47));
+        cm.setBounds(Tableleft, CM.grid(-2, 28, CM.size(10, 47)));
+        add(Tableleft);
+        map.add("Tableleft", Tableleft);
+
 
         JLabel totalScore = new JLabel();
         totalScore.setText("0");
