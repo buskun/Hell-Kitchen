@@ -157,7 +157,7 @@ public class GameScene extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        character = new Character(this, map, interactable, this::onHoldItem);
+        character = new Character(this, map, interactable, this::changeState);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
         cm.setBounds(refrigerator, CM.grid(85, 20, 15, 40));
@@ -194,27 +194,6 @@ public class GameScene extends Scene {
         add(pan);
         map.add("pan", pan);
 
-        JLabel totalScore = new JLabel();
-        totalScore.setText("0");
-        totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
-        cm.setBounds(totalScore, CM.grid(92, -4, CM.size(25, CMFlag.BY_H)));
-        add(totalScore);
-        cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
-        cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
-        add(barScore);
-        map.add("barScore",barScore);
-
-        JLabel totalTime = new JLabel();
-        totalTime.setText("0");
-        totalTime.setFont(new Font("Dimbo", Font.PLAIN, 35));
-        cm.setBounds(totalTime, CM.grid(92, 74, CM.size(25, CMFlag.BY_H)));
-        add(totalTime);
-
-        cm.setIcon(barTime,imageLoader.getIcon("timeBar"),CM.size(19, 14));
-        cm.setBounds(barTime,CM.grid(80,80,CM.size(19, 14)));
-        add(barTime);
-        map.add("barTime",barTime);
-
 
 
 
@@ -248,7 +227,7 @@ public class GameScene extends Scene {
             character.move(1, 0);
     }
 
-    public void onHoldItem(String item) {
+    public void changeState(String name, String item) {
         ImageLoader imageLoader = getImageLoader();
         CM cm = getCM();
 

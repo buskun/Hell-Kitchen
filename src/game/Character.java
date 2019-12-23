@@ -3,7 +3,6 @@ package game;
 import base.Scene;
 import base.WindowFrame;
 import game.frames.*;
-import game.scenes.GameScene;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
@@ -15,7 +14,7 @@ import utility.loader.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class Character {
     private static int pixelPerMove = 15;
@@ -24,14 +23,14 @@ public class Character {
     private JLabel characterIcon = new JLabel();
     private Scene scene;
     private CM cm;
-    private Consumer<String> holdItemConsumer;
+    private BiConsumer<String, String> changeState;
     private ImageLoader imageLoader;
     private AudioLoader audioLoader;
     private HashMap<String, Boolean> interactable;
     private WindowFrame window;
     private BoundingArea map;
 
-    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, Consumer<String> holdItem) {
+    public Character(Scene cScene, BoundingArea cMap, HashMap<String, Boolean> interactableMap, BiConsumer<String, String> onChangeState) {
         scene = cScene;
         cm = scene.getCM();
         imageLoader = scene.getImageLoader();
@@ -39,7 +38,7 @@ public class Character {
         interactable = interactableMap;
         window = scene.getWindow();
         map = cMap;
-        holdItemConsumer = holdItem;
+        changeState = onChangeState;
 
         percentPPMHeight = 100 * (double) pixelPerMove / scene.getHeight();
         percentPPMWidth = 100 * (double) pixelPerMove / scene.getHeight();
@@ -55,8 +54,14 @@ public class Character {
         DimensionStore characterSize = cm.getScaledSize(characterIcon);
         PointStore characterLocation = cm.getScaledLocation(characterIcon);
 
-        double pX = Math.min(Math.max(characterLocation.getX() + x * percentPPMWidth, 0), 100 - characterSize.getW());
-        double pY = Math.min(Math.max(characterLocation.getY() + y * percentPPMHeight, 0), 100 - characterSize.getH());
+        double pX = Math.min(
+                Math.max(characterLocation.getX() + x * percentPPMWidth, 0),
+                100 - ((double) characterIcon.getWidth() / scene.getWidth()) * 100
+        );
+        double pY = Math.min(
+                Math.max(characterLocation.getY() + y * percentPPMHeight, 0),
+                100 - ((double) characterIcon.getHeight() / scene.getHeight()) * 100
+        );
 
         Rectangle newCharacterBounds = CM.grid(
                 pX, pY,
@@ -95,7 +100,7 @@ public class Character {
     }
 
     public void holdItem(String item) {
-        holdItemConsumer.accept(item);
+        changeState.accept("hold", item);
 
         cm.setIcon(characterIcon, imageLoader.getIcon(item));
         cm.recalculateIcon(characterIcon);
