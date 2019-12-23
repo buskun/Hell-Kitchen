@@ -38,7 +38,7 @@ public class PotFrame extends JFrame {
 
         JButton onBtn = new JButton();
         cm.setIcon(onBtn, imageLoader.getIcon("onBtn"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(onBtn, CM.grid(70, 70, CM.size(20, CMFlag.BY_H)));
+        cm.setBounds(onBtn, CM.grid(76, 70, CM.size(20, CMFlag.BY_H)));
         onBtn.setOpaque(false);
         onBtn.setContentAreaFilled(false);
         onBtn.setBorderPainted(false);
@@ -52,7 +52,7 @@ public class PotFrame extends JFrame {
 
         JButton offBtn = new JButton();
         cm.setIcon(offBtn, imageLoader.getIcon("offBtn"), CM.size(20, CMFlag.BY_H));
-        cm.setBounds(offBtn, CM.grid(10, 70, CM.size(20, CMFlag.BY_H)));
+        cm.setBounds(offBtn, CM.grid(12, 70, CM.size(20, CMFlag.BY_H)));
         offBtn.setOpaque(false);
         offBtn.setContentAreaFilled(false);
         offBtn.setBorderPainted(false);

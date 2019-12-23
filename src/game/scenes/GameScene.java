@@ -4,6 +4,7 @@ import base.Controller;
 import base.Scene;
 import base.WindowFrame;
 import game.Character;
+import game.Recipe;
 import utility.Utility;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
@@ -23,11 +24,11 @@ public class GameScene extends Scene {
 
     public void loadImage(ImageLoader imageLoader) {
         imageLoader.add("background", "resources/gameScene2/Bg.png");
-        imageLoader.add("orderBar","resources/gameScene2/Order.png");
-        imageLoader.add("TableCenter","resources/gameScene2/TableCenter.png");
-        imageLoader.add("Tableleft","resources/gameScene2/Tableleft.png");
-        imageLoader.add("Tabledown","resources/gameScene2/Tabledown.png");
-        imageLoader.add("Sent","resources/gameScene2/Sent.png");
+        imageLoader.add("orderBar", "resources/gameScene2/Order.png");
+        imageLoader.add("TableCenter", "resources/gameScene2/TableCenter.png");
+        imageLoader.add("Tableleft", "resources/gameScene2/Tableleft.png");
+        imageLoader.add("Tabledown", "resources/gameScene2/Tabledown.png");
+        imageLoader.add("Sent", "resources/gameScene2/Sent.png");
         imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
         imageLoader.add("plate", "resources/gameScene2/Dish.png");
 
@@ -99,6 +100,35 @@ public class GameScene extends Scene {
         imageLoader.add("pan-item-potato-cut-2", "resources/panFrame/Frenchfries2.png");
         imageLoader.add("pan-item-potato-cut-3", "resources/panFrame/Frenchfries3.png");
 //        String name = "plate-item-bread-item-lettuce-cut-item-tomato-cut";
+        //B->L->M->T
+        imageLoader.add("dish", "resources/icondish/Dish.png");
+        imageLoader.add("dish-food-burger-item-bread-item-meat-cut-fried", "resources/icondish/Dish_bread_meat.png");
+        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut-item-meat-cut-fried", "resources/icondish/Dish_bread_meat_pak.png");
+        imageLoader.add("dish-food-burger-item-bread-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_bread_meat_tomato.png");
+        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut", "resources/icondish/Dish_bread_pak.png");
+        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_bread_tamato_pak.png");
+        imageLoader.add("dish-food-burger-item-bread-item-tomato-cut", "resources/icondish/Dish_bread_tomato.png");
+        imageLoader.add("dish-food-burger-item-lettuce-item-cut-meat-cut-fried", "resources/icondish/Dish_meat_pak.png");
+        imageLoader.add("dish-food-burger-item-lettuce-cut-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_pak_tomato.png");
+        imageLoader.add("dish-food-burger-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_tomato.png");
+        imageLoader.add("dish-food-burger-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_tomato_pak.png");
+        imageLoader.add("dish-food-burger-item-bread", "resources/icondish/DishBurger(1).png");
+        imageLoader.add("dish-food-burger", "resources/icondish/DishBurger.png");
+
+        imageLoader.add("dish-food-fish_n_chip-item-fish-fried", "resources/icondish/DishWithFish.png");
+        imageLoader.add("dish-food-fish_n_chip", "resources/icondish/DishWithFishnChip.png");
+
+        imageLoader.add("dish-food-french_fired", "resources/icondish/DishWithFrenchfrie.png");
+
+        imageLoader.add("dish-food-burger-item-meat", "resources/icondish/DishWithMeat.png");
+        imageLoader.add("dish-food-burger-item-lettuce-cut", "resources/icondish/DishWithPak.png");
+
+        imageLoader.add("dish-food-sushi-item-fish", "resources/icondish/DishWithFishforSushi.png");
+        imageLoader.add("dish-food-sushi-item-rice", "resources/icondish/DishWithRice.png");
+        imageLoader.add("dish-food-sushi", "resources/icondish/DishWithSushi.png");
+
+        imageLoader.add("dish-food-soup-item-tomato-cut-boiled", "resources/icondish/DishWithTomato.png");
+        imageLoader.add("dish-food-soup", "resources/icondish/DishWithSoup.png");
 
         imageLoader.add("avatar-drink-fanta-l", "resources/avatar/IconWithFantaL.png");
         imageLoader.add("avatar-drink-fanta-m", "resources/avatar/IconWithFantaM.png");
@@ -152,6 +182,13 @@ public class GameScene extends Scene {
         imageLoader.add("order-drink-pepsi-s", "resources/order/orderWaterSpriteS.png");
     }
 
+    private Recipe[] recipes = new Recipe[]{
+            new Recipe("food-sushi", "item-fish-cut", "item-rice-boiled"),
+            new Recipe("food-fish_n_chip","item-fish-cut-fried","item-potato-cut-fried"),
+            new Recipe("food-soup","item-tomato-cut-boiled"),
+            new Recipe("food-burger","item-tomato-cut","item-lettuce-cut","item-meat-cut-fried","item-bread")
+    };
+
     private BoundingArea map = new BoundingArea();
     private Character character;
     private JLabel refrigerator = new JLabel();
@@ -163,7 +200,7 @@ public class GameScene extends Scene {
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
-    private JLabel Tableleft = new  JLabel();
+    private JLabel Tableleft = new JLabel();
     private JLabel Tabledown = new JLabel();
     private JLabel barScore = new JLabel();
     private JLabel barTime = new JLabel();
@@ -193,8 +230,8 @@ public class GameScene extends Scene {
         add(plate);
         map.add("plate", plate);
 
-        cm.setIcon(bar, imageLoader.getIcon("bar"), CM.size(44, 38));
-        cm.setBounds(bar, CM.grid(25, 32, 44, 38));
+        cm.setIcon(bar, imageLoader.getIcon("bar"), CM.size(42, 36));
+        cm.setBounds(bar, CM.grid(25, 32, 42, 36));
         add(bar);
         map.add("bar", bar);
 
@@ -235,8 +272,8 @@ public class GameScene extends Scene {
         cm.setIcon(orderBar, imageLoader.getIcon("orderBar"), CM.size(51, 14));
         cm.setBounds(orderBar, CM.grid(24, 0, CM.size(51, 14)));
         add(orderBar);
-        map.add("orderBar",orderBar);
-        
+        map.add("orderBar", orderBar);
+
         JLabel totalScore = new JLabel();
         totalScore.setText("0");
         totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
