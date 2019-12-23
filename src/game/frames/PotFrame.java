@@ -59,12 +59,8 @@ public class PotFrame extends JFrame {
         contentPane.add(offBtn);
 
         offBtn.addActionListener(e -> {
-            if (cooking) {
-                if (cookedState != 2) {
-                    getItemListener.accept("");
-                } else {
-                    getItemListener.accept(holdingItem + "-boiled");
-                }
+            if (cooking && cookedState == 2) {
+                getItemListener.accept(holdingItem + "-boiled");
             }
 
             dispose();
@@ -81,6 +77,7 @@ public class PotFrame extends JFrame {
             if (!turnedOn) return;
 
             cooking = true;
+            getItemListener.accept("");
 
             StateManager<Integer> passedSecond = Utility.useState(-1);
 
@@ -107,10 +104,6 @@ public class PotFrame extends JFrame {
 
             remove(pan);
         });
-
-
-
-
 
 
         cm.recalculate();

@@ -74,17 +74,20 @@ public class RefrigeratorFrame extends JFrame {
         Lettuce.setContentAreaFilled(false);
         Lettuce.setBorderPainted(false);
         contentPane.add(Lettuce);
-        Lettuce.addActionListener(e -> getItemListener.accept("item-lettuce"));
+        Lettuce.addActionListener(e -> {
+            getItemListener.accept("item-lettuce");
+            dispose();
+        });
 
         JButton Meat = new JButton();
-        cm.setIcon(Meat, imageLoader.getIcon("item-lettuce"), CM.size(20, CMFlag.BY_H));
+        cm.setIcon(Meat, imageLoader.getIcon("item-meat"), CM.size(20, CMFlag.BY_H));
         cm.setBounds(Meat, CM.grid(29, 60, CM.size(20, CMFlag.BY_H)));
         Meat.setOpaque(false);
         Meat.setContentAreaFilled(false);
         Meat.setBorderPainted(false);
         contentPane.add(Meat);
         Meat.addActionListener(e -> {
-            getItemListener.accept("item-lettuce");
+            getItemListener.accept("item-meat");
             dispose();
         });
 

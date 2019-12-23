@@ -14,7 +14,8 @@ import utility.loader.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class GameScene extends Scene {
 
@@ -82,7 +83,7 @@ public class GameScene extends Scene {
 
         imageLoader.add("avatar-item-meat", "resources/avatar/Icon+meat.png");
         imageLoader.add("avatar-item-meat-cut", "resources/avatar/IconWithMeatCut.png");
-        imageLoader.add("avatar-item-meat-fried", "resources/avatar/IconWithMeatfin.png");
+        imageLoader.add("avatar-item-meat-cut-fried", "resources/avatar/IconWithMeatfin.png");
         imageLoader.add("item-meat", "resources/refrigeratorFrame/Meat.png");
         imageLoader.add("cutting-item-meat", "resources/cuttingFrame/Meat.png");
         imageLoader.add("cutting-item-meat-cut", "resources/cuttingFrame/MeatCut.png");
@@ -102,33 +103,50 @@ public class GameScene extends Scene {
 //        String name = "plate-item-bread-item-lettuce-cut-item-tomato-cut";
         //B->L->M->T
         imageLoader.add("dish", "resources/icondish/Dish.png");
-        imageLoader.add("dish-food-burger-item-bread-item-meat-cut-fried", "resources/icondish/Dish_bread_meat.png");
-        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut-item-meat-cut-fried", "resources/icondish/Dish_bread_meat_pak.png");
-        imageLoader.add("dish-food-burger-item-bread-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_bread_meat_tomato.png");
-        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut", "resources/icondish/Dish_bread_pak.png");
-        imageLoader.add("dish-food-burger-item-bread-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_bread_tamato_pak.png");
-        imageLoader.add("dish-food-burger-item-bread-item-tomato-cut", "resources/icondish/Dish_bread_tomato.png");
-        imageLoader.add("dish-food-burger-item-lettuce-item-cut-meat-cut-fried", "resources/icondish/Dish_meat_pak.png");
-        imageLoader.add("dish-food-burger-item-lettuce-cut-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_pak_tomato.png");
-        imageLoader.add("dish-food-burger-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_tomato.png");
-        imageLoader.add("dish-food-burger-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_tomato_pak.png");
-        imageLoader.add("dish-food-burger-item-bread", "resources/icondish/DishBurger(1).png");
+        imageLoader.add("dish-item-bread-item-meat-cut-fried", "resources/icondish/Dish_bread_meat.png");
+        imageLoader.add("dish-item-bread-item-lettuce-cut-item-meat-cut-fried", "resources/icondish/Dish_bread_meat_pak.png");
+        imageLoader.add("dish-item-bread-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_bread_meat_tomato.png");
+        imageLoader.add("dish-item-bread-item-lettuce-cut", "resources/icondish/Dish_bread_pak.png");
+        imageLoader.add("dish-item-bread-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_bread_tamato_pak.png");
+        imageLoader.add("dish-item-bread-item-tomato-cut", "resources/icondish/Dish_bread_tomato.png");
+        imageLoader.add("dish-item-lettuce-item-cut-meat-cut-fried", "resources/icondish/Dish_meat_pak.png");
+        imageLoader.add("dish-item-lettuce-cut-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_pak_tomato.png");
+        imageLoader.add("dish-item-meat-cut-fried-item-tomato-cut", "resources/icondish/Dish_meat_tomato.png");
+        imageLoader.add("dish-item-lettuce-cut-item-tomato-cut", "resources/icondish/Dish_tomato_pak.png");
+        imageLoader.add("dish-item-lettuce-cut", "resources/icondish/DishWithPak.png");
+        imageLoader.add("dish-item-meat-cut-fried", "resources/icondish/DishWithMeat.png");
+        imageLoader.add("dish-item-bread", "resources/icondish/DishBurger(1).png");
         imageLoader.add("dish-food-burger", "resources/icondish/DishBurger.png");
 
-        imageLoader.add("dish-food-fish_n_chip-item-fish-fried", "resources/icondish/DishWithFish.png");
+        imageLoader.add("dish-item-fish-fried", "resources/icondish/DishWithFish.png");
         imageLoader.add("dish-food-fish_n_chip", "resources/icondish/DishWithFishnChip.png");
 
-        imageLoader.add("dish-food-french_fired", "resources/icondish/DishWithFrenchfrie.png");
-
-        imageLoader.add("dish-food-burger-item-meat", "resources/icondish/DishWithMeat.png");
-        imageLoader.add("dish-food-burger-item-lettuce-cut", "resources/icondish/DishWithPak.png");
-
-        imageLoader.add("dish-food-sushi-item-fish", "resources/icondish/DishWithFishforSushi.png");
-        imageLoader.add("dish-food-sushi-item-rice", "resources/icondish/DishWithRice.png");
+        imageLoader.add("dish-item-fish", "resources/icondish/DishWithFishforSushi.png");
+        imageLoader.add("dish-item-rice", "resources/icondish/DishWithRice.png");
         imageLoader.add("dish-food-sushi", "resources/icondish/DishWithSushi.png");
 
-        imageLoader.add("dish-food-soup-item-tomato-cut-boiled", "resources/icondish/DishWithTomato.png");
+        imageLoader.add("dish-item-tomato-cut-boiled", "resources/icondish/DishWithTomato.png");
         imageLoader.add("dish-food-soup", "resources/icondish/DishWithSoup.png");
+
+        imageLoader.add("cup-s", "resources/waterFrame/GlassSizeS.png");
+        imageLoader.add("cup-m", "resources/waterFrame/GlassSizeM.png");
+        imageLoader.add("cup-l", "resources/waterFrame/GlassSizeL.png");
+
+        imageLoader.add("sprite-l", "resources/waterFrame/GlassSizeL-sprite.png");
+        imageLoader.add("sprite-m", "resources/waterFrame/GlassSizeM-sprite.png");
+        imageLoader.add("sprite-s", "resources/waterFrame/GlassSizeS-sprite.png");
+
+        imageLoader.add("pepsi-l", "resources/waterFrame/GlassSizeL-pepsi.png");
+        imageLoader.add("pepsi-m", "resources/waterFrame/GlassSizeM-pepsi.png");
+        imageLoader.add("pepsi-s", "resources/waterFrame/GlassSizeS-pepsi.png");
+
+        imageLoader.add("fanta-l", "resources/waterFrame/GlassSizeL-fanta.png");
+        imageLoader.add("fanta-m", "resources/waterFrame/GlassSizeM-fanta.png");
+        imageLoader.add("fanta-s", "resources/waterFrame/GlassSizeS-fanta.png");
+
+        imageLoader.add("drop-fanta", "resources/waterFrame/Fantadrop.png");
+        imageLoader.add("drop-pepsi", "resources/waterFrame/Pepsidrop.png");
+        imageLoader.add("drop-sprite", "resources/waterFrame/Spritedrop.png");
 
         imageLoader.add("avatar-drink-fanta-l", "resources/avatar/IconWithFantaL.png");
         imageLoader.add("avatar-drink-fanta-m", "resources/avatar/IconWithFantaM.png");
@@ -168,7 +186,6 @@ public class GameScene extends Scene {
 
         imageLoader.add("order-food-burger", "resources/order/orderburger.png");
         imageLoader.add("order-food-fish_n_chip", "resources/order/orderFishandchips.png");
-        imageLoader.add("order-food-french_fries", "resources/order/orderFrenchfries.png");
         imageLoader.add("order-food-soup", "resources/order/orderSoup.png");
         imageLoader.add("order-food-sushi", "resources/order/orderSushi.png");
         imageLoader.add("order-drink-fanta-l", "resources/order/orderWaterfantaL.png");
@@ -184,9 +201,9 @@ public class GameScene extends Scene {
 
     private Recipe[] recipes = new Recipe[]{
             new Recipe("food-sushi", "item-fish-cut", "item-rice-boiled"),
-            new Recipe("food-fish_n_chip","item-fish-cut-fried","item-potato-cut-fried"),
-            new Recipe("food-soup","item-tomato-cut-boiled"),
-            new Recipe("food-burger","item-tomato-cut","item-lettuce-cut","item-meat-cut-fried","item-bread")
+            new Recipe("food-fish_n_chip", "item-fish-cut-fried", "item-potato-cut-fried"),
+            new Recipe("food-soup", "item-tomato-cut-boiled"),
+            new Recipe("food-burger", "item-tomato-cut", "item-lettuce-cut", "item-meat-cut-fried", "item-bread")
     };
 
     private BoundingArea map = new BoundingArea();
@@ -207,6 +224,7 @@ public class GameScene extends Scene {
     private JLabel totalTime = new JLabel();
     private int remainingTime = 100;
     private Runnable timer;
+    private ArrayList<String> currentItemsOnPlate = new ArrayList<>();
 
     private HashMap<String, Boolean> interactable = new HashMap<>();
 
@@ -218,7 +236,7 @@ public class GameScene extends Scene {
 
         changeBackground(getImageLoader().getIcon("background"));
 
-        character = new Character(this, map, interactable, this::changeState);
+        character = new Character(this, map, interactable, this::actionToPlate);
 
         cm.setIcon(refrigerator, imageLoader.getIcon("refrigerator"), CM.size(15, 40));
         cm.setBounds(refrigerator, CM.grid(85, 21, 15, 40));
@@ -299,6 +317,8 @@ public class GameScene extends Scene {
             return true;
         });
 
+        cm.recalculate();
+
         ready();
     }
 
@@ -307,7 +327,6 @@ public class GameScene extends Scene {
         ImageLoader imageLoader = getImageLoader();
 
         boolean isActionKeyPressed = isKeyPressed(KeyEvent.VK_SPACE, true);
-        CM cm = getCM();
 
         if (isActionKeyPressed) character.doAction();
     }
@@ -324,11 +343,34 @@ public class GameScene extends Scene {
             character.move(1, 0);
     }
 
-    public void changeState(String name, String item) {
-        ImageLoader imageLoader = getImageLoader();
-        CM cm = getCM();
-        //cm.setIcon(character, imageLoader.getIcon(item));
-        //cm.recalculateIcon(character);
+    public void actionToPlate(String item, Consumer<String> holdItem) {
+        if (currentItemsOnPlate.stream().anyMatch(item::equals)) return;
+        Optional<Recipe> matched = Arrays.stream(recipes).filter(recipe -> recipe.matchAll(currentItemsOnPlate)).findFirst();
+
+        if (matched.isPresent()) {
+            holdItem.accept(matched.get().getProduct());
+            currentItemsOnPlate = new ArrayList<>();
+        } else if (
+                Arrays.stream(recipes)
+                        .filter(recipe -> currentItemsOnPlate.size() == 0 || recipe.match(currentItemsOnPlate))
+                        .anyMatch(recipe -> recipe.match(Collections.singletonList(item)))
+        ) {
+            currentItemsOnPlate.add(item);
+            holdItem.accept("");
+        }
+
+        Optional<Recipe> newMatchedRecipe = Arrays.stream(recipes).filter(recipe -> recipe.matchAll(currentItemsOnPlate)).findFirst();
+
+        if (currentItemsOnPlate.size() == 0) {
+            getCM().setIcon(plate, getImageLoader().getIcon("plate"));
+        } else if (newMatchedRecipe.isPresent()) {
+            getCM().setIcon(plate, getImageLoader().getIcon("dish-" + newMatchedRecipe.get().getProduct()));
+        } else {
+            currentItemsOnPlate.sort(String::compareTo);
+            getCM().setIcon(plate, getImageLoader().getIcon("dish-" + String.join("-", currentItemsOnPlate)));
+        }
+
+        getCM().recalculateIcon(plate);
     }
 
     @Override
@@ -339,14 +381,13 @@ public class GameScene extends Scene {
                     repaint();
                     remainingTime--;
                     if (remainingTime < 0) {
-                        getController().changeScene("Result");
+//                        getController().changeScene("Result");
                     }
                     return remainingTime > 0;
                 },
                 1000
         );
     }
-
 
     @Override
     public void onStop() {
