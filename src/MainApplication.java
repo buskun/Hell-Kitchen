@@ -21,7 +21,7 @@ public class MainApplication {
         Utility.setDefaultFont(Utility.getFont("Dimbo").deriveFont(20f));
 
         gameController.init();
-        gameController.changeScene("SeletionLv");
+        gameController.changeScene("Result");
         gameController.start();
     }
 }
