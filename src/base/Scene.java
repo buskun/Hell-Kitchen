@@ -203,7 +203,31 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
         animations.removeAll(toBeRemoved);
 
-        }
+        super.paintComponent(g);
+    }
+
+    @Override
+    public void setBounds(Rectangle r) {
+        super.setBounds(r);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setSize(Dimension d) {
+        super.setSize(d);
+        if (background != null) changeBackground(background);
     }
 
     public final Window getWindow() { return window; }
