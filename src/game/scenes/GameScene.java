@@ -148,10 +148,6 @@ public class GameScene extends Scene {
         add(pan);
         map.add("pan", pan);
 
-        cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
-        cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
-        add(barScore);
-        map.add("barScore",barScore);
         map.addIntersectionListener((name) -> {
             interactable.put(name, true);
             return true;

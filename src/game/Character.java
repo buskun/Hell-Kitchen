@@ -55,8 +55,14 @@ public class Character {
         DimensionStore characterSize = cm.getScaledSize(characterIcon);
         PointStore characterLocation = cm.getScaledLocation(characterIcon);
 
-        double pX = Math.min(Math.max(characterLocation.getX() + x * percentPPMWidth, 0), 100 - characterSize.getW());
-        double pY = Math.min(Math.max(characterLocation.getY() + y * percentPPMHeight, 0), 100 - characterSize.getH());
+        double pX = Math.min(
+                Math.max(characterLocation.getX() + x * percentPPMWidth, 0),
+                100 - ((double) characterIcon.getWidth() / scene.getWidth()) * 100
+        );
+        double pY = Math.min(
+                Math.max(characterLocation.getY() + y * percentPPMHeight, 0),
+                100 - ((double) characterIcon.getHeight() / scene.getHeight()) * 100
+        );
 
         Rectangle newCharacterBounds = CM.grid(
                 pX, pY,
