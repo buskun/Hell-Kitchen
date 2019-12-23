@@ -34,6 +34,7 @@ public class gameScene1 extends Scene {
         imageLoader.add("Drinking", "resources/gameScene/Drinking.png");
         imageLoader.add("pot", "resources/gameScene/pot.png");
         imageLoader.add("pan", "resources/gameScene/pan.png");
+        imageLoader.add("scoreBar","resources/gameScene/scoreBar.png");
 
         imageLoader.add("backgroundFrame", "resources/refrigeratorFrame/Bgfridge.png");
         imageLoader.add("BurgerFridge", "resources/refrigeratorFrame/Burger.png");
@@ -104,6 +105,7 @@ public class gameScene1 extends Scene {
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
+    private  JLabel barScore = new JLabel();
     private boolean pickupBurger = false;
 
     private HashMap<String, Boolean> interactable = new HashMap<>();
@@ -155,6 +157,10 @@ public class gameScene1 extends Scene {
         add(pan);
         map.add("pan", pan);
 
+        cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
+        cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
+        add(barScore);
+        map.add("barScore",barScore);
         map.addIntersectionListener((name) -> {
             interactable.put(name, true);
             return true;
