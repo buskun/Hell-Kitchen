@@ -2,15 +2,13 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
+import base.WindowFrame;
 import utility.cm.CM;
 import utility.loader.ImageLoader;
 
-import javax.swing.*;
-
 public class Result extends Scene {
 
-    public Result(Window _window, Controller _controller) {
+    public Result(WindowFrame _window, Controller _controller) {
         super(_window, _controller);
     }
     @Override

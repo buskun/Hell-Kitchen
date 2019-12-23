@@ -1,13 +1,10 @@
 import base.Controller;
 import base.Scene;
-import base.Window;
+import base.WindowFrame;
 import game.scenes.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameController extends Controller {
     private static final Dimension mainWindowSize = new Dimension(1200, 675);
@@ -18,7 +15,7 @@ public class GameController extends Controller {
     public GameController() { super(gameTickPerSec); }
 
     public void init() {
-        Window mainWindow = new Window(mainWindowTitle, mainWindowSize, mainWindowPosition);
+        WindowFrame mainWindow = new WindowFrame(mainWindowTitle, mainWindowSize, mainWindowPosition);
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setVisible(true);
 

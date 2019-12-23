@@ -2,20 +2,19 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
+import base.WindowFrame;
 import utility.animation.Animation;
 import utility.animation.AnimationMap;
 import utility.loader.ImageLoader;
 import utility.Utility;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class FirstSceneTest extends Scene {
     JButton button;
 
-    public FirstSceneTest(Window _window, Controller _controller) {
+    public FirstSceneTest(WindowFrame _window, Controller _controller) {
         super(_window, _controller);
     }
 

@@ -2,7 +2,7 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
+import base.WindowFrame;
 import utility.cm.CM;
 import utility.cm.CMFlag;
 import utility.loader.ImageLoader;
@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class SeletionLv extends Scene {
 
-    public SeletionLv(Window _window, Controller _controller) {
+    public SeletionLv(WindowFrame _window, Controller _controller) {
         super(_window, _controller);
     }
 

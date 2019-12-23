@@ -2,21 +2,15 @@ package game.scenes;
 
 import base.Controller;
 import base.Scene;
-import base.Window;
-import components.CustomImageIcon;
-import utility.Utility;
+import base.WindowFrame;
 import utility.cm.CM;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MenuScene extends Scene {
 
-    public MenuScene(Window _window, Controller _controller) {
+    public MenuScene(WindowFrame _window, Controller _controller) {
         super(_window, _controller);
     }
 
