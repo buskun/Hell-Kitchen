@@ -45,9 +45,7 @@ public class CuttingFrame extends JFrame {
         contentPane.add(cutDisplay);
         //setComponentZOrder(cutDisplay,1);
 
-        cm.setIcon(barTime, imageLoader.getIcon("cuttingBar"), CM.size(21, 14));
-        cm.setBounds(barTime, CM.grid(78, 80, CM.size(21, 14)));
-        add(barTime);
+
 
 
         StateManager<Point> dragStartingPosition = Utility.useState(Point.class);

@@ -31,13 +31,14 @@ public class GameScene extends Scene {
         imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
         imageLoader.add("plate", "resources/gameScene2/Dish.png");
 
+
         imageLoader.add("character", "resources/gameScene/Iconplayer.png");
         imageLoader.add("refrigerator", "resources/gameScene/Fridge.png");
 
         imageLoader.add("Cutting", "resources/gameScene/Cutting.png");
         imageLoader.add("Drinking", "resources/gameScene/Drinking.png");
-        imageLoader.add("pot", "resources/gameScene/pot.png");
-        imageLoader.add("pan", "resources/gameScene/pan.png");
+        imageLoader.add("potOnbar", "resources/gameScene/pot.png");
+        imageLoader.add("panOnbar", "resources/gameScene/pan.png");
         imageLoader.add("scoreBar", "resources/gameScene/scoreBar.png");
         imageLoader.add("timeBar", "resources/gameScene/timeBar.png");
 
@@ -154,13 +155,16 @@ public class GameScene extends Scene {
     private BoundingArea map = new BoundingArea();
     private Character character;
     private JLabel refrigerator = new JLabel();
+    private JLabel orderBar = new JLabel();
     private JLabel bar = new JLabel();
+    private JLabel sent = new JLabel();
     private JLabel plate = new JLabel();
     private JLabel Cutting = new JLabel();
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
-    private JLabel Tableleft = new JLabel();
+    private JLabel Tableleft = new  JLabel();
+    private JLabel Tabledown = new JLabel();
     private JLabel barScore = new JLabel();
     private JLabel barTime = new JLabel();
     private JLabel totalTime = new JLabel();
@@ -189,8 +193,8 @@ public class GameScene extends Scene {
         add(plate);
         map.add("plate", plate);
 
-        cm.setIcon(bar, imageLoader.getIcon("bar"), CM.size(44, 37));
-        cm.setBounds(bar, CM.grid(25, 32, 44, 37));
+        cm.setIcon(bar, imageLoader.getIcon("bar"), CM.size(44, 38));
+        cm.setBounds(bar, CM.grid(25, 32, 44, 38));
         add(bar);
         map.add("bar", bar);
 
@@ -204,13 +208,18 @@ public class GameScene extends Scene {
         add(Drinking);
         map.add("Drinking", Drinking);
 
-        cm.setIcon(pot, imageLoader.getIcon("pot"), CM.size(15, 12));
-        cm.setBounds(pot, CM.grid(34, 83, 15, 12));
+        cm.setIcon(pot, imageLoader.getIcon("potOnbar"), CM.size(15, 12));
+        cm.setBounds(pot, CM.grid(34, 84, 15, 12));
         add(pot);
         map.add("pot", pot);
 
-        cm.setIcon(pan, imageLoader.getIcon("pan"), CM.size(14, CMFlag.BY_H));
-        cm.setBounds(pan, CM.grid(54, 83, CM.size(14, CMFlag.BY_H)));
+        cm.setIcon(sent, imageLoader.getIcon("Sent"), CM.size(14, CMFlag.BY_H));
+        cm.setBounds(sent, CM.grid(10, 0, CM.size(14, CMFlag.BY_H)));
+        add(sent);
+        map.add("sent", sent);
+
+        cm.setIcon(pan, imageLoader.getIcon("panOnbar"), CM.size(14, CMFlag.BY_H));
+        cm.setBounds(pan, CM.grid(54, 84, CM.size(14, CMFlag.BY_H)));
         add(pan);
         map.add("pan", pan);
 
@@ -219,7 +228,15 @@ public class GameScene extends Scene {
         add(Tableleft);
         map.add("Tableleft", Tableleft);
 
+        cm.setIcon(Tabledown, imageLoader.getIcon("Tabledown"), CM.size(30, 25));
+        cm.setBounds(Tabledown, CM.grid(33, 83, CM.size(30, 25)));
+        add(Tabledown);
 
+        cm.setIcon(orderBar, imageLoader.getIcon("orderBar"), CM.size(51, 14));
+        cm.setBounds(orderBar, CM.grid(24, 0, CM.size(51, 14)));
+        add(orderBar);
+        map.add("orderBar",orderBar);
+        
         JLabel totalScore = new JLabel();
         totalScore.setText("0");
         totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
