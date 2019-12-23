@@ -12,14 +12,14 @@ public class MainApplication {
         gameController.addScene("first", FirstSceneTest.class);
         gameController.addScene("menu", MenuScene.class);
         gameController.addScene("SeletionLv", SeletionLv.class);
-        gameController.addScene("gameScene1", GameScene.class);
+        gameController.addScene("gameScene", GameScene.class);
         gameController.addScene("Result",Result.class);
 
         Utility.addCustomFont("Dimbo", "resources/font/Dimbo.ttf");
         Utility.setDefaultFont(Utility.getFont("Dimbo").deriveFont(20f));
 
         gameController.init();
-        gameController.changeScene("gameScene1");
+        gameController.changeScene("gameScene");
         gameController.start();
     }
 }
