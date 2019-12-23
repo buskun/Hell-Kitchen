@@ -295,7 +295,50 @@ public class CM extends ComponentAdapter {
         ready = true;
     }
 
-    public void recalculate() {
+    synchronized public void recalculateLocation(JComponent component) {
+        ready = false;
+        int width = getWindow.get().getWidth();
+        int height = getWindow.get().getHeight();
+
+        Rectangle newComponentBounds = component.getBounds();
+
+        pointCalculationList.stream().filter(pc -> pc.is(component)).findFirst().ifPresent(pc -> newComponentBounds.setLocation(pc.getStore().calculate(width, height)));
+
+        component.setBounds(newComponentBounds);
+        ready = true;
+    }
+
+    synchronized public void recalculateSize(JComponent component) {
+        ready = false;
+        int width = getWindow.get().getWidth();
+        int height = getWindow.get().getHeight();
+
+        Rectangle newComponentBounds = component.getBounds();
+
+        dimensionCalculationList.stream().filter(dc -> dc.is(component)).findFirst().ifPresent(dc -> newComponentBounds.setSize(dc.getStore().calculate(width, height)));
+
+        component.setBounds(newComponentBounds);
+        ready = true;
+    }
+
+    synchronized public void recalculateIcon(JComponent component) {
+        ready = false;
+        int width = getWindow.get().getWidth();
+        int height = getWindow.get().getHeight();
+
+        iconCalculationList.stream().filter(ic -> ic.is(component)).findFirst().ifPresent(ic -> {
+            try {
+                component.getClass().getMethod("setIcon", Icon.class)
+                        .invoke(component, ic.getOtherData().resize(
+                                ic.getStore().calculate(width, height)
+                        ));
+            } catch (Exception ignored) {}
+        });
+
+        ready = true;
+    }
+
+    synchronized public void recalculate() {
         ready = false;
         int width = getWindow.get().getWidth();
         int height = getWindow.get().getHeight();

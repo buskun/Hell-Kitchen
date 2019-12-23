@@ -6,10 +6,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public abstract class ResourceLoader<T> {
-    private final HashMap<String, String> waitList = new HashMap<>();
-    private final HashMap<String, T> loadedList = new HashMap<>();
+    private HashMap<String, String> waitList = new HashMap<>();
+    private HashMap<String, T> loadedList = new HashMap<>();
+    private HashMap<String, T> loadedListQueue = new HashMap<>();
     private boolean loading = false;
-    private int timeout = 0;
+    private int timeout = 10000;
     private T fallback;
     private Function<File, T> fileReader;
     private Runnable onStartLoadingRes;
@@ -34,6 +35,7 @@ public abstract class ResourceLoader<T> {
     public void add(String name, String path) {
         waitList.put(name, path);
         loadedList.put(name, null);
+        loadedListQueue.put(name, null);
     }
 
     synchronized protected void loader(String name) {
@@ -41,7 +43,7 @@ public abstract class ResourceLoader<T> {
         try {
             loadedValue = fileReader.apply(new File(waitList.get(name)));
 
-            loadedList.put(name, loadedValue);
+            loadedListQueue.put(name, loadedValue);
 
             onLoad(name, loadedValue);
         } catch (Exception exception) {
@@ -50,8 +52,6 @@ public abstract class ResourceLoader<T> {
         }
 
         if (loadedValue == null) {
-            loadedList.remove(name);
-
             onLoadFailed(name);
         }
     }
@@ -90,7 +90,7 @@ public abstract class ResourceLoader<T> {
         while (true) {
             boolean allLoaded = true;
 
-            for (T img : loadedList.values()) {
+            for (T img : loadedListQueue.values()) {
                 if (img == null) {
                     allLoaded = false;
                     break;
@@ -101,6 +101,10 @@ public abstract class ResourceLoader<T> {
             if (allLoaded) break;
             try { wait(); } catch (Exception ignored) {}
         }
+
+        loadedList = loadedListQueue;
+        loadedListQueue = new HashMap<>();
+        loadedList.forEach((key, value) -> loadedListQueue.put(key, null));
 
         onLoadedRes.run();
         loading = false;

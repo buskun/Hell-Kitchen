@@ -191,22 +191,43 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        if (!cm.isReady()) return;
 
-        boolean hasAnimation = false;
         ArrayList<Animation> toBeRemoved = new ArrayList<>();
 
         for (Animation animation : animations) {
-            hasAnimation = true;
             if (animation.next()) continue;
 
             toBeRemoved.add(animation);
         }
 
-        if (hasAnimation) {
-            animations.removeAll(toBeRemoved);
-            repaint();
-        }
+        animations.removeAll(toBeRemoved);
+
+        super.paintComponent(g);
+    }
+
+    @Override
+    public void setBounds(Rectangle r) {
+        super.setBounds(r);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        if (background != null) changeBackground(background);
+    }
+
+    @Override
+    public void setSize(Dimension d) {
+        super.setSize(d);
+        if (background != null) changeBackground(background);
     }
 
     public final Window getWindow() { return window; }
@@ -249,82 +270,4 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
     public void unbindID(JComponent component) { unbindID(IDOf(component)); }
 
     public void addAnimation(Animation animation) { animations.add(animation); }
-
-    public Rectangle grid(double x, double y, double width, double height) {
-        return new Rectangle(
-                (int) Math.round(getWidth() * x),
-                (int) Math.round(getHeight() * y),
-                (int) Math.round(getWidth() * width),
-                (int) Math.round(getHeight() * height)
-        );
-    }
-
-    public Rectangle grid(Point pos, Dimension size) {
-        return new Rectangle(
-                (int) Math.round(pos.getX()),
-                (int) Math.round(pos.getY()),
-                (int) Math.round(size.getWidth()),
-                (int) Math.round(size.getHeight())
-        );
-    }
-
-    public Rectangle grid(double x, double y, Dimension size) {
-        return new Rectangle(
-                (int) Math.round(getWidth() * x),
-                (int) Math.round(getHeight() * y),
-                (int) Math.round(size.getWidth()),
-                (int) Math.round(size.getHeight())
-        );
-    }
-
-    public Rectangle grid(Point pos, double width, double height) {
-        return new Rectangle(
-                (int) Math.round(pos.getX()),
-                (int) Math.round(pos.getY()),
-                (int) Math.round(getWidth() * width),
-                (int) Math.round(getHeight() * height)
-        );
-    }
-
-    public Dimension size(double width, double height) {
-        return new Dimension(
-                (int) Math.round(getWidth() * width),
-                (int) Math.round(getHeight() * height)
-        );
-    }
-
-    public Dimension sizeByW(double val) {
-        return new Dimension(
-                (int) Math.round(getWidth() * val),
-                (int) Math.round(getWidth() * val)
-        );
-    }
-
-    public Dimension sizeByH(double val) {
-        return new Dimension(
-                (int) Math.round(getHeight() * val),
-                (int) Math.round(getHeight() * val)
-        );
-    }
-
-    public Point position(double x, double y) {
-        return new Point(
-                (int) Math.round(getWidth() * x),
-                (int) Math.round(getHeight() * y)
-        );
-    }
-
-    public Point positionByW(double val) {
-        return new Point(
-                (int) Math.round(getWidth() * val),
-                (int) Math.round(getWidth() * val)
-        );
-    }
-
-    public Point positionByH(double val) {
-        return position(
-                (int) Math.round(getWidth() * val),
-                (int) Math.round(getWidth() * val)
-        );
-    }
 }

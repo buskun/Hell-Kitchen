@@ -100,6 +100,11 @@ class AData implements Comparable<AData> {
 }
 
 public enum AnimationMap {
+    LINEAR(new AData[]{
+            new AData(0, 0),
+            new AData(100, 100),
+    }),
+
     EASE_IN_SINE(0.47, 0, 0.745, 0.715),
     EASE_OUT_SINE(0.39, 0.575, 0.565, 1),
     EASE_IN_OUT_SINE(0.445, 0.05, 0.55, 0.95),
