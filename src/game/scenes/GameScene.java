@@ -10,6 +10,7 @@ import utility.cm.CMFlag;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
@@ -31,6 +32,7 @@ public class GameScene extends Scene {
         imageLoader.add("pot", "resources/gameScene/pot.png");
         imageLoader.add("pan", "resources/gameScene/pan.png");
         imageLoader.add("scoreBar","resources/gameScene/scoreBar.png");
+        imageLoader.add("timeBar","resources/gameScene/timeBar.png");
 
         imageLoader.add("backgroundFrame", "resources/refrigeratorFrame/Bgfridge.png");
         imageLoader.add("BurgerFridge", "resources/refrigeratorFrame/Burger.png");
@@ -41,12 +43,35 @@ public class GameScene extends Scene {
         imageLoader.add("PotatoFridge", "resources/refrigeratorFrame/Potato.png");
         imageLoader.add("RiceFridge", "resources/refrigeratorFrame/Rice.png");
 
-        imageLoader.add("iconRice", "resources/refrigeratorFrame/Icon+burgur.png");
-        imageLoader.add("iconFish", "resources/refrigeratorFrame/Icon+fish.png");
-        imageLoader.add("iconLettuce", "resources/refrigeratorFrame/Icon+lettuce.png");
-        imageLoader.add("iconMeat", "resources/refrigeratorFrame/Icon+meat.png");
-        imageLoader.add("iconPotato", "resources/refrigeratorFrame/Icon+potato.png");
-        imageLoader.add("iconRice", "resources/refrigeratorFrame/Icon+rice.png");
+        imageLoader.add("iconRice", "resources/iconPickup/Icon+burgur.png");
+        imageLoader.add("iconFish", "resources/iconPickup/Icon+fish.png");
+        imageLoader.add("iconLettuce", "resources/iconPickup/Icon+lettuce.png");
+        imageLoader.add("iconMeat", "resources/iconPickup/Icon+meat.png");
+        imageLoader.add("iconPotato", "resources/iconPickup/Icon+potato.png");
+        imageLoader.add("IconWithBurger", "resources/iconPickup/IconWithBurger.png");
+        imageLoader.add("IconWithFantaL", "resources/iconPickup/IconWithFantaL.png");
+        imageLoader.add("IconWithFantaM", "resources/iconPickup/IconWithFantaM.png");
+        imageLoader.add("IconWithFantaS", "resources/iconPickup/IconWithFantaS.png");
+        imageLoader.add("IconWithFishCut", "resources/iconPickup/IconWithFishCut.png");
+        imageLoader.add("IconWithFishfin", "resources/iconPickup/IconWithFishfin.png");
+        imageLoader.add("IconWithFishnChip", "resources/iconPickup/IconWithFishnChip.png");
+        imageLoader.add("IconWithKetchupCut", "resources/iconPickup/IconWithKetchupCut.png");
+        imageLoader.add("IconWithMeatCut", "resources/iconPickup/IconWithMeatCut.png");
+        imageLoader.add("IconWithMeatfin", "resources/iconPickup/IconWithMeatfin.png");
+        imageLoader.add("IconWithPakCut", "resources/iconPickup/IconWithPakCut.png");
+        imageLoader.add("IconWithPepsiL", "resources/iconPickup/IconWithPepsiL.png");
+        imageLoader.add("IconWithPepsiM", "resources/iconPickup/IconWithPepsiM.png");
+        imageLoader.add("IconWithPepsiS", "resources/iconPickup/IconWithPepsiS.png");
+        imageLoader.add("IconWithPotatoCut", "resources/iconPickup/IconWithPotatoCut.png");
+        imageLoader.add("IconWithPotatofin", "resources/iconPickup/IconWithPotatofin.png");
+        imageLoader.add("IconWithSoup", "resources/iconPickup/IconWithSoup.png");
+        imageLoader.add("IconWithSpriteL", "resources/iconPickup/IconWithSpriteL.png");
+        imageLoader.add("IconWithSpriteM", "resources/iconPickup/IconWithSpriteM.png");
+        imageLoader.add("IconWithSpriteS", "resources/iconPickup/IconWithSpriteS.png");
+        imageLoader.add("IconWithSushi", "resources/iconPickup/IconWithSushi.png");
+
+
+
 
         imageLoader.add("Bgcutting", "resources/cuttingFrame/Bgcutting.png");
         imageLoader.add("Potato", "resources/cuttingFrame/Potato.png");
@@ -90,6 +115,24 @@ public class GameScene extends Scene {
         imageLoader.add("PotWithRice3", "resources/ponFrame/PotWithRice3.png");
         imageLoader.add("PotWithWater", "resources/ponFrame/PotWithWater.png");
 
+        imageLoader.add("orderburger","resources/order/orderburger.png");
+        imageLoader.add("orderFishandchips","resources/order/orderFishandchips.png");
+        imageLoader.add("orderFrenchfries","resources/order/orderFrenchfries.png");
+        imageLoader.add("orderSoup","resources/order/orderSoup.png");
+        imageLoader.add("orderSushi","resources/order/orderSushi.png");
+        imageLoader.add("orderWaterfantaL","resources/order/orderWaterfantaL.png");
+        imageLoader.add("orderWaterfantaM","resources/order/orderWaterfantaM.png");
+        imageLoader.add("orderWaterfantaS","resources/order/orderWaterfantaS.png");
+        imageLoader.add("orderWaterPepsiL","resources/order/orderWaterPepsiL.png");
+        imageLoader.add("orderWaterPepsiM","resources/order/orderWaterPepsiM.png");
+        imageLoader.add("orderWaterPepsiS","resources/order/orderWaterPepsiS.png");
+        imageLoader.add("orderWaterSpriteL","resources/order/orderWaterSpriteL.png");
+        imageLoader.add("orderWaterSpriteM","resources/order/orderWaterSpriteM.png");
+        imageLoader.add("orderWaterSpriteS","resources/order/orderWaterSpriteS.png");
+
+
+
+
     }
 
     private BoundingArea map = new BoundingArea();
@@ -101,6 +144,9 @@ public class GameScene extends Scene {
     private JLabel Drinking = new JLabel();
     private JLabel pot = new JLabel();
     private JLabel pan = new JLabel();
+    private JLabel barScore = new JLabel();
+    private JLabel barTime = new JLabel();
+
     private HashMap<String, Boolean> interactable = new HashMap<>();
 
 
@@ -148,10 +194,30 @@ public class GameScene extends Scene {
         add(pan);
         map.add("pan", pan);
 
+        JLabel totalScore = new JLabel();
+        totalScore.setText("0");
+        totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
+        cm.setBounds(totalScore, CM.grid(92, -4, CM.size(25, CMFlag.BY_H)));
+        add(totalScore);
         cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
         cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
         add(barScore);
         map.add("barScore",barScore);
+
+        JLabel totalTime = new JLabel();
+        totalTime.setText("0");
+        totalTime.setFont(new Font("Dimbo", Font.PLAIN, 35));
+        cm.setBounds(totalTime, CM.grid(92, 74, CM.size(25, CMFlag.BY_H)));
+        add(totalTime);
+
+        cm.setIcon(barTime,imageLoader.getIcon("timeBar"),CM.size(19, 14));
+        cm.setBounds(barTime,CM.grid(80,80,CM.size(19, 14)));
+        add(barTime);
+        map.add("barTime",barTime);
+
+
+
+
         map.addIntersectionListener((name) -> {
             interactable.put(name, true);
             return true;
