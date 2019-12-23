@@ -9,7 +9,7 @@ public abstract class ResourceLoader<T> {
     private final HashMap<String, String> waitList = new HashMap<>();
     private final HashMap<String, T> loadedList = new HashMap<>();
     private boolean loading = false;
-    private int timeout = 0;
+    private int timeout = 10000;
     private T fallback;
     private Function<File, T> fileReader;
     private Runnable onStartLoadingRes;
