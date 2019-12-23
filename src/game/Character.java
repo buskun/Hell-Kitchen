@@ -82,7 +82,7 @@ public class Character {
             refrigeratorFrame.setVisible(true);
         }
         if (Boolean.TRUE.equals(interactable.get("Cutting"))) {
-            JFrame cuttingFrame = new cuttingFrame(imageLoader, audioLoader, this::holdItem);
+            JFrame cuttingFrame = new CuttingFrame(imageLoader, audioLoader, this::holdItem);
             cuttingFrame.setVisible(true);
         }
         if (Boolean.TRUE.equals(interactable.get("pan"))) {
