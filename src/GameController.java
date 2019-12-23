@@ -4,6 +4,7 @@ import base.WindowFrame;
 import game.scenes.*;
 
 import javax.swing.*;
+import java.applet.AudioClip;
 import java.awt.*;
 
 public class GameController extends Controller {
@@ -20,9 +21,6 @@ public class GameController extends Controller {
         mainWindow.setVisible(true);
 
         setWindow(mainWindow);
-
-        changeState("level", 1);
-        changeState("difficulty", 1);
 
         Scene loadingScene = new LoadingScene(mainWindow, this);
         loadingScene.init();

@@ -14,4 +14,6 @@ public class Data {
     public static Integer[] totalTimeList = new Integer[]{
             600, 480, 420, 360, 300
     };
+
+    public static String[] songList = new String[]{ "Main Theme 1.mp3", "Main Theme 2.mp3", "Main Theme 3.mp3", "Main Theme 4.mp3", "Main Theme 5.mp3" };
 }

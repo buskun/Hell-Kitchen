@@ -11,11 +11,18 @@ import utility.Utility;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
+import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -202,6 +209,11 @@ public class GameScene extends Scene {
         imageLoader.add("order-drink-sprite-l", "resources/order/orderWaterSpriteL.png");
         imageLoader.add("order-drink-sprite-m", "resources/order/orderWaterSpriteM.png");
         imageLoader.add("order-drink-sprite-s", "resources/order/orderWaterSpriteS.png");
+    }
+
+    @Override
+    public void loadAudio(AudioLoader audioLoader) {
+        audioLoader.add("theme", "resources/soundtrack/Main Theme 1.wav");
     }
 
     private Recipe[] recipes = new Recipe[]{
@@ -421,6 +433,7 @@ public class GameScene extends Scene {
 
     @Override
     public void onStart() {
+        getAudioLoader().get("theme").loop(Clip.LOOP_CONTINUOUSLY);
         allOrder = new ArrayList<>();
 
         int level = (int) getController().getState("level");
@@ -449,6 +462,7 @@ public class GameScene extends Scene {
 
     @Override
     public void onStop() {
+        getAudioLoader().get("theme").stop();
         timer.run();
         orderTimer.run();
     }

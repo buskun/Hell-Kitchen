@@ -346,7 +346,7 @@ public class CM extends ComponentAdapter {
         ArrayList<Runnable> queue = new ArrayList<>();
 
         synchronized (calculationComponentList) {
-            for (JComponent component : calculationComponentList) {
+            for (JComponent component : (ArrayList<JComponent>) calculationComponentList.clone()) {
                 Rectangle bound = component.getBounds();
 
                 StateManager<Boolean> edited = Utility.useState(false);

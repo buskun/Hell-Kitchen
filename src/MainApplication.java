@@ -3,7 +3,7 @@ import game.scenes.MenuScene;
 import game.scenes.SeletionLv;
 import game.scenes.GameScene;
 import game.scenes.Result;
-import game.scenes.settingScene;
+import game.scenes.SettingScene;
 import utility.Utility;
 
 public class MainApplication {
@@ -15,13 +15,18 @@ public class MainApplication {
         gameController.addScene("SeletionLv", SeletionLv.class);
         gameController.addScene("gameScene", GameScene.class);
         gameController.addScene("Result",Result.class);
-        gameController.addScene("settingScene",settingScene.class);
+        gameController.addScene("settingScene", SettingScene.class);
 
         Utility.addCustomFont("Dimbo", "resources/font/Dimbo.ttf");
         Utility.setDefaultFont(Utility.getFont("Dimbo").deriveFont(20f));
 
+        gameController.changeState("level", 1);
+        gameController.changeState("difficulty", 1);
+        gameController.changeState("volume", 100);
+        gameController.changeState("song", 3);
+
         gameController.init();
-        gameController.changeScene("settingScene");
+        gameController.changeScene("gameScene");
         gameController.start();
     }
 }
