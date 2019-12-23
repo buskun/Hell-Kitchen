@@ -191,21 +191,18 @@ abstract public class Scene extends JLabel implements KeyListener, ComponentList
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        if (!cm.isReady()) return;
 
-        boolean hasAnimation = false;
         ArrayList<Animation> toBeRemoved = new ArrayList<>();
 
         for (Animation animation : animations) {
-            hasAnimation = true;
             if (animation.next()) continue;
 
             toBeRemoved.add(animation);
         }
 
-        if (hasAnimation) {
-            animations.removeAll(toBeRemoved);
-            repaint();
+        animations.removeAll(toBeRemoved);
+
         }
     }
 
