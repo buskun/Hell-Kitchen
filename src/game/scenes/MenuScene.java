@@ -23,6 +23,8 @@ public class MenuScene extends Scene {
         imageLoader.add("startpress", "resources/menu/startp.png");
         imageLoader.add("loadpress", "resources/menu/loadp.png");
         imageLoader.add("exitpress", "resources/menu/exitp.png");
+        imageLoader.add("setting","resources/menu/settingbtn.png");
+        imageLoader.add("settingpress","resources/menu/settingbtnP.png");
     }
 
     @Override
@@ -45,13 +47,14 @@ public class MenuScene extends Scene {
         add(startBtn);
 
         JButton loadGameBtn = new JButton();
-        cm.setIcon(loadGameBtn, imageLoader.getIcon("load"), CM.size(20, 10));
+        cm.setIcon(loadGameBtn, imageLoader.getIcon("setting"), CM.size(20, 10));
         cm.setBounds(loadGameBtn, CM.grid(75, 71, 20, 10));
         loadGameBtn.setOpaque(false);
         loadGameBtn.setContentAreaFilled(false);
         loadGameBtn.setBorderPainted(false);
 
-        cm.setActiveIcon(loadGameBtn, imageLoader.getIcon("load"), imageLoader.getIcon("loadpress"));
+        cm.setActiveIcon(loadGameBtn, imageLoader.getIcon("setting"), imageLoader.getIcon("settingpress"));
+        loadGameBtn.addActionListener(e -> getController().changeScene("settingScene"));
         add(loadGameBtn);
 
         JButton exitGameBtn = new JButton();
