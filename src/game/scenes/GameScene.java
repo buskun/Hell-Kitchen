@@ -4,6 +4,7 @@ import base.Controller;
 import base.Scene;
 import base.WindowFrame;
 import game.Character;
+import utility.Utility;
 import utility.bounding.BoundingArea;
 import utility.cm.CM;
 import utility.cm.CMFlag;
@@ -31,8 +32,8 @@ public class GameScene extends Scene {
         imageLoader.add("Drinking", "resources/gameScene/Drinking.png");
         imageLoader.add("pot", "resources/gameScene/pot.png");
         imageLoader.add("pan", "resources/gameScene/pan.png");
-        imageLoader.add("scoreBar","resources/gameScene/scoreBar.png");
-        imageLoader.add("timeBar","resources/gameScene/timeBar.png");
+        imageLoader.add("scoreBar", "resources/gameScene/scoreBar.png");
+        imageLoader.add("timeBar", "resources/gameScene/timeBar.png");
 
         imageLoader.add("backgroundFrame", "resources/refrigeratorFrame/Bgfridge.png");
         imageLoader.add("BurgerFridge", "resources/refrigeratorFrame/Burger.png");
@@ -48,6 +49,7 @@ public class GameScene extends Scene {
         imageLoader.add("iconLettuce", "resources/iconPickup/Icon+lettuce.png");
         imageLoader.add("iconMeat", "resources/iconPickup/Icon+meat.png");
         imageLoader.add("iconPotato", "resources/iconPickup/Icon+potato.png");
+        imageLoader.add("iconTomato", "resources/iconPickup/Icon+tomato.png");
         imageLoader.add("IconWithBurger", "resources/iconPickup/IconWithBurger.png");
         imageLoader.add("IconWithFantaL", "resources/iconPickup/IconWithFantaL.png");
         imageLoader.add("IconWithFantaM", "resources/iconPickup/IconWithFantaM.png");
@@ -55,7 +57,7 @@ public class GameScene extends Scene {
         imageLoader.add("IconWithFishCut", "resources/iconPickup/IconWithFishCut.png");
         imageLoader.add("IconWithFishfin", "resources/iconPickup/IconWithFishfin.png");
         imageLoader.add("IconWithFishnChip", "resources/iconPickup/IconWithFishnChip.png");
-        imageLoader.add("IconWithKetchupCut", "resources/iconPickup/IconWithKetchupCut.png");
+        imageLoader.add("IconWithTomatoCut", "resources/iconPickup/IconWithKetchupCut.png");
         imageLoader.add("IconWithMeatCut", "resources/iconPickup/IconWithMeatCut.png");
         imageLoader.add("IconWithMeatfin", "resources/iconPickup/IconWithMeatfin.png");
         imageLoader.add("IconWithPakCut", "resources/iconPickup/IconWithPakCut.png");
@@ -71,10 +73,8 @@ public class GameScene extends Scene {
         imageLoader.add("IconWithSushi", "resources/iconPickup/IconWithSushi.png");
 
 
-
-
         imageLoader.add("Bgcutting", "resources/cuttingFrame/Bgcutting.png");
-        imageLoader.add("Ketchup","resources/cuttingFrame/Ketchup.png");
+        imageLoader.add("Ketchup", "resources/cuttingFrame/Ketchup.png");
         imageLoader.add("Potato", "resources/cuttingFrame/Potato.png");
         imageLoader.add("Meat", "resources/cuttingFrame/Meat.png");
         imageLoader.add("Lettuce", "resources/cuttingFrame/Lettuce.png");
@@ -116,22 +116,20 @@ public class GameScene extends Scene {
         imageLoader.add("PotWithRice3", "resources/ponFrame/PotWithRice3.png");
         imageLoader.add("PotWithWater", "resources/ponFrame/PotWithWater.png");
 
-        imageLoader.add("orderburger","resources/order/orderburger.png");
-        imageLoader.add("orderFishandchips","resources/order/orderFishandchips.png");
-        imageLoader.add("orderFrenchfries","resources/order/orderFrenchfries.png");
-        imageLoader.add("orderSoup","resources/order/orderSoup.png");
-        imageLoader.add("orderSushi","resources/order/orderSushi.png");
-        imageLoader.add("orderWaterfantaL","resources/order/orderWaterfantaL.png");
-        imageLoader.add("orderWaterfantaM","resources/order/orderWaterfantaM.png");
-        imageLoader.add("orderWaterfantaS","resources/order/orderWaterfantaS.png");
-        imageLoader.add("orderWaterPepsiL","resources/order/orderWaterPepsiL.png");
-        imageLoader.add("orderWaterPepsiM","resources/order/orderWaterPepsiM.png");
-        imageLoader.add("orderWaterPepsiS","resources/order/orderWaterPepsiS.png");
-        imageLoader.add("orderWaterSpriteL","resources/order/orderWaterSpriteL.png");
-        imageLoader.add("orderWaterSpriteM","resources/order/orderWaterSpriteM.png");
-        imageLoader.add("orderWaterSpriteS","resources/order/orderWaterSpriteS.png");
-
-
+        imageLoader.add("orderburger", "resources/order/orderburger.png");
+        imageLoader.add("orderFishandchips", "resources/order/orderFishandchips.png");
+        imageLoader.add("orderFrenchfries", "resources/order/orderFrenchfries.png");
+        imageLoader.add("orderSoup", "resources/order/orderSoup.png");
+        imageLoader.add("orderSushi", "resources/order/orderSushi.png");
+        imageLoader.add("orderWaterfantaL", "resources/order/orderWaterfantaL.png");
+        imageLoader.add("orderWaterfantaM", "resources/order/orderWaterfantaM.png");
+        imageLoader.add("orderWaterfantaS", "resources/order/orderWaterfantaS.png");
+        imageLoader.add("orderWaterPepsiL", "resources/order/orderWaterPepsiL.png");
+        imageLoader.add("orderWaterPepsiM", "resources/order/orderWaterPepsiM.png");
+        imageLoader.add("orderWaterPepsiS", "resources/order/orderWaterPepsiS.png");
+        imageLoader.add("orderWaterSpriteL", "resources/order/orderWaterSpriteL.png");
+        imageLoader.add("orderWaterSpriteM", "resources/order/orderWaterSpriteM.png");
+        imageLoader.add("orderWaterSpriteS", "resources/order/orderWaterSpriteS.png");
 
 
     }
@@ -147,6 +145,9 @@ public class GameScene extends Scene {
     private JLabel pan = new JLabel();
     private JLabel barScore = new JLabel();
     private JLabel barTime = new JLabel();
+    private JLabel totalTime = new JLabel();
+    private int remainingTime = 100;
+    private Runnable timer;
 
     private HashMap<String, Boolean> interactable = new HashMap<>();
 
@@ -200,22 +201,20 @@ public class GameScene extends Scene {
         totalScore.setFont(new Font("Dimbo", Font.PLAIN, 35));
         cm.setBounds(totalScore, CM.grid(92, -4, CM.size(25, CMFlag.BY_H)));
         add(totalScore);
-        cm.setIcon(barScore,imageLoader.getIcon("scoreBar"),CM.size(19, 14));
-        cm.setBounds(barScore,CM.grid(80,2,CM.size(19, 14)));
+        cm.setIcon(barScore, imageLoader.getIcon("scoreBar"), CM.size(19, 14));
+        cm.setBounds(barScore, CM.grid(80, 2, CM.size(19, 14)));
         add(barScore);
-        map.add("barScore",barScore);
+        map.add("barScore", barScore);
 
-        JLabel totalTime = new JLabel();
         totalTime.setText("0");
         totalTime.setFont(new Font("Dimbo", Font.PLAIN, 35));
         cm.setBounds(totalTime, CM.grid(92, 74, CM.size(25, CMFlag.BY_H)));
         add(totalTime);
 
-        cm.setIcon(barTime,imageLoader.getIcon("timeBar"),CM.size(19, 14));
-        cm.setBounds(barTime,CM.grid(80,80,CM.size(19, 14)));
+        cm.setIcon(barTime, imageLoader.getIcon("timeBar"), CM.size(19, 14));
+        cm.setBounds(barTime, CM.grid(80, 80, CM.size(19, 14)));
         add(barTime);
-        map.add("barTime",barTime);
-
+        map.add("barTime", barTime);
 
         map.addIntersectionListener((name) -> {
             interactable.put(name, true);
@@ -250,17 +249,29 @@ public class GameScene extends Scene {
     public void changeState(String name, String item) {
         ImageLoader imageLoader = getImageLoader();
         CM cm = getCM();
-//        cm.setIcon(character, imageLoader.getIcon(item));
-//        cm.recalculateIcon(character);
+        //cm.setIcon(character, imageLoader.getIcon(item));
+        //cm.recalculateIcon(character);
     }
 
     @Override
     public void onStart() {
-
+        timer = Utility.setInterval(
+                () -> {
+                    totalTime.setText(Integer.toString(remainingTime));
+                    repaint();
+                    remainingTime--;
+                    if (remainingTime < 0) {
+                        getController().changeScene("Result");
+                    }
+                    return remainingTime > 0;
+                },
+                1000
+        );
     }
+
 
     @Override
     public void onStop() {
-
+        timer.run();
     }
 }
