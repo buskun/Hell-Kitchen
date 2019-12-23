@@ -10,6 +10,7 @@ abstract public class Controller {
     private HashMap<String, Scene> sceneList = new HashMap<>();
     private HashMap<String, Class<Scene>> sceneMap = new HashMap<>();
     private Window window;
+    private volatile HashMap<String, Object> gameState = new HashMap<>();
 
     private Scene currentScene;
 
@@ -106,5 +107,14 @@ abstract public class Controller {
 
     public int getGameTick() {
         return gameTick;
+    }
+
+    synchronized public void changeState(String name, Object newValue) {
+        gameState.put(name, newValue);
+        sceneList.forEach((sceneName, scene) -> scene.onStateChange(name, newValue));
+    }
+
+    synchronized public Object getState(String name) {
+        return gameState.get(name);
     }
 }
