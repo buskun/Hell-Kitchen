@@ -38,6 +38,8 @@ public class GameScene extends Scene {
         imageLoader.add("bar", "resources/gameScene2/TableCenter.png");
         imageLoader.add("plate", "resources/gameScene2/Dish.png");
         imageLoader.add("Cuttingbar", "resources/cuttingFrame/cuttingBar.png");
+        imageLoader.add("knife", "resources/cuttingFrame/Knife.png");
+        imageLoader.add("transparent", "resources/cuttingFrame/transparent.png");
 
         imageLoader.add("trash", "resources/gameScene/Trash.png");
 
@@ -126,11 +128,12 @@ public class GameScene extends Scene {
         imageLoader.add("dish-item-tomato-cut", "resources/icondish/DishWithTomato.png");
         imageLoader.add("dish-food-burger", "resources/icondish/DishBurger.png");
 
-        imageLoader.add("dish-item-fish-fried", "resources/icondish/DishWithFish.png");
+        imageLoader.add("dish-item-fish-cut-fried", "resources/icondish/DishWithFish.png");
+        imageLoader.add("dish-item-potato-cut-fried", "resources/icondish/DishWithFrenchfrie.png");
         imageLoader.add("dish-food-fish_n_chip", "resources/icondish/DishWithFishnChip.png");
 
-        imageLoader.add("dish-item-fish", "resources/icondish/DishWithFishforSushi.png");
-        imageLoader.add("dish-item-rice", "resources/icondish/DishWithRice.png");
+        imageLoader.add("dish-item-fish-cut", "resources/icondish/DishWithFishforSushi.png");
+        imageLoader.add("dish-item-rice-boiled", "resources/icondish/DishWithRice.png");
         imageLoader.add("dish-food-sushi", "resources/icondish/DishWithSushi.png");
 
         imageLoader.add("dish-food-soup", "resources/icondish/DishWithSoup.png");
@@ -407,6 +410,7 @@ public class GameScene extends Scene {
             orderBar.remove(cOrder.get().getComponent());
             totalScoreI += 20;
             totalScore.setText(Integer.toString(totalScoreI));
+            orderList.remove(cOrder.get());
             return true;
         }
 
@@ -415,9 +419,9 @@ public class GameScene extends Scene {
 
     public void newOrder() {
         if (orderList.size() >= 6) return;
-        int levelIndex = (int) Math.floor(Math.random() * ((int) getController().getState("level") - 1));
+        int levelIndex = (int) Math.floor(Math.random() * ((int) getController().getState("level")));
         int subIndex = (int) Math.floor(Math.random() * Data.orderList[levelIndex].length);
-        int index = IntStream.range(0, levelIndex).reduce(0, (acc, i) -> Data.orderList[i].length) + subIndex;
+        int index = IntStream.range(0, levelIndex).reduce(0, (acc, i) -> Data.orderList[i].length + acc) + subIndex;
         Order order = new Order(allOrder.get(index), new JLabel());
 
         getCM().setIcon(order.getComponent(), getImageLoader().getIcon(order.getName()), CM.size(14, CMFlag.BY_H));
@@ -437,6 +441,7 @@ public class GameScene extends Scene {
 
         int level = (int) getController().getState("level");
         IntStream.range(0, level).forEach(i -> allOrder.addAll(Arrays.asList(Data.orderList[i])));
+        System.out.println(allOrder.get(allOrder.size() - 1));
 
         remainingTime = Data.totalTimeList[(int) getController().getState("difficulty") - 1];
         timer = Utility.setInterval(
@@ -448,7 +453,7 @@ public class GameScene extends Scene {
                         getController().changeState("score", totalScoreI);
                         getController().changeScene("Result");
                     }
-                    return remainingTime > 0;
+                    return remainingTime >= 0;
                 },
                 1000
         );

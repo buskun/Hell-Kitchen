@@ -9,8 +9,8 @@ import javax.swing.*;
 import java.util.function.Consumer;
 
 public class RefrigeratorFrame extends JFrame {
-    static final int width = 1200;
-    static final int height = 900;
+    static final int width = 800;
+    static final int height = 600;
 
     public RefrigeratorFrame(ImageLoader imageLoader, AudioLoader audioLoader, Consumer<String> getItemListener) {
         setTitle("Refrigerator");

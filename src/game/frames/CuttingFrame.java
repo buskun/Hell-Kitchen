@@ -13,11 +13,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.util.function.Consumer;
 
-public class CuttingFrame extends JFrame {
+public class CuttingFrame extends JFrame implements MouseMotionListener {
     static final int width = 1400;
     static final int height = 900;
+
+    JLabel cursor = new JLabel();
 
     public CuttingFrame(ImageLoader imageLoader, AudioLoader audioLoader, String holdingItem, Consumer<String> getItemListener) {
         setTitle("cutting");
@@ -27,10 +30,18 @@ public class CuttingFrame extends JFrame {
 
         CM cm = new CM(() -> this, visible -> {}, () -> null, this::addComponentListener);
 
+        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(imageLoader.get("transparent"), new Point(0, 0), "null"));
+
+        addMouseMotionListener(this);
+
         JLabel contentPane = new JLabel();
         contentPane.setBounds(0, 0, width, height);
         contentPane.setLayout(null);
         setContentPane(contentPane);
+
+        cm.setIcon(cursor, imageLoader.getIcon("knife"), CM.size(15, CMFlag.BY_H));
+        cm.setSize(cursor, CM.size(15, CMFlag.BY_H));
+        contentPane.add(cursor);
 
         cm.setIcon(contentPane, imageLoader.getIcon("Bgcutting"), CM.size(100, 100));
         cm.setBounds(contentPane, CM.grid(0, 0, 100, 100));
@@ -42,10 +53,9 @@ public class CuttingFrame extends JFrame {
         contentPane.add(food);
 
         JLabel cuttingBar = new JLabel();
-        cm.setIcon(cuttingBar, imageLoader.getIcon("Cuttingbar"), CM.size(22,10));
+        cm.setIcon(cuttingBar, imageLoader.getIcon("Cuttingbar"), CM.size(22, 10));
         cm.setBounds(cuttingBar, CM.grid(76, 70, CM.size(22, 10)));
         contentPane.add(cuttingBar);
-
 
 
         JLabel cutDisplay = new JLabel();
@@ -121,5 +131,17 @@ public class CuttingFrame extends JFrame {
         revalidate();
         repaint();
         setVisible(true);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        cursor.setLocation(e.getX() - 10, e.getY() - 10);
+        repaint();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        cursor.setLocation(e.getX() - 10, e.getY() - 10);
+        repaint();
     }
 }

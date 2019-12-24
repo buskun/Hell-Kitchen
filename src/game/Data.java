@@ -5,10 +5,10 @@ public class Data {
             "order-drink-sprite-s", "order-drink-sprite-m", "order-drink-sprite-l",
             "order-drink-pepsi-s", "order-drink-pepsi-m", "order-drink-pepsi-l",
             "order-drink-fanta-s", "order-drink-fanta-m", "order-drink-fanta-l",
-    }, { "order-soup" }, { "order-sushi" }, { "order-fish_n_chip" }, { "order_burger" } };
+    }, { "order-food-soup" }, { "order-food-sushi" }, { "order-food-fish_n_chip" }, { "order-food-burger" } };
 
     public static Integer[] timeList = new Integer[]{
-            5, 10, 20, 30
+            5, 10, 15, 15, 15
     };
 
     public static Integer[] totalTimeList = new Integer[]{

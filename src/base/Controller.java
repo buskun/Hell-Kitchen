@@ -2,6 +2,8 @@ package base;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -66,7 +68,16 @@ abstract public class Controller {
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
 
-                if (loadingScene != null) loadingScene.setBounds(window.getBounds());
+                if (loadingScene != null) loadingScene.setBounds(window.getContentPane().getBounds());
+            }
+        });
+
+        window.addWindowFocusListener(new WindowAdapter() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                super.windowGainedFocus(e);
+
+                if (loadingScene != null && currentScene != null && currentScene.isReady()) loadingScene.stop();
             }
         });
     }
