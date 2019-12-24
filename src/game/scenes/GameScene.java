@@ -441,7 +441,6 @@ public class GameScene extends Scene {
 
         int level = (int) getController().getState("level");
         IntStream.range(0, level).forEach(i -> allOrder.addAll(Arrays.asList(Data.orderList[i])));
-        System.out.println(allOrder.get(allOrder.size() - 1));
 
         remainingTime = Data.totalTimeList[(int) getController().getState("difficulty") - 1];
         timer = Utility.setInterval(
@@ -467,7 +466,7 @@ public class GameScene extends Scene {
     @Override
     public void onStop() {
         getAudioLoader().get("theme").stop();
-        getAudioLoader().get("boil1").stop();
+        getAudioLoader().get("boil").stop();
         timer.run();
         orderTimer.run();
     }

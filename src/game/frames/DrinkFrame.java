@@ -12,8 +12,8 @@ import java.awt.*;
 import java.util.function.Consumer;
 
 public class DrinkFrame extends JFrame {
-    static final int width = 1200;
-    static final int height = 800;
+    static final int width = 900;
+    static final int height = 600;
     private String currentSize = "";
     private String currentDrink = "";
     private boolean filled = false;

@@ -7,14 +7,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Animation {
-    private Consumer<Double> valueSetter;
-    private Supplier<Number> valueGetter;
+    private final Consumer<Double> valueSetter;
+    private final Supplier<Number> valueGetter;
     private long lastAnimatedTime;
     private long startTime;
-    private int totalAnimateTime;
-    private double endValue;
+    private final int totalAnimateTime;
+    private final double endValue;
     private double startValue;
-    private AnimationMap easingEffect;
+    private final AnimationMap easingEffect;
     private boolean stopFlag;
 
     public Animation(Consumer<Animation> addAnimation, Consumer<Double> setter, Supplier<Number> getter, AnimationMap easing, double to, int time) {

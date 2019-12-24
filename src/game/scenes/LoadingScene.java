@@ -11,7 +11,7 @@ public class LoadingScene extends Scene {
 
     @Override
     public void init() {
-        changeBackground("resources/Loadingnarak.png");
+        changeBackground("resources/Loading.png");
         ready();
     }
 

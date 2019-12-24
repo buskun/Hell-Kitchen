@@ -77,8 +77,8 @@ class CubicBezier {
 }
 
 class AData implements Comparable<AData> {
-    private double _percentage;
-    private double _valuePercentage;
+    private final double _percentage;
+    private final double _valuePercentage;
 
     AData(double percentage, double valuePercentage) {
         _percentage = percentage;
@@ -228,7 +228,7 @@ public enum AnimationMap {
             new AData(100, 100),
     });
 
-    private AData[] animationData;
+    private final AData[] animationData;
     private CubicBezier cubicBezier;
 
     AnimationMap(AData[] data) {

@@ -8,7 +8,6 @@ import utility.cm.CMFlag;
 import utility.loader.ImageLoader;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -43,13 +42,6 @@ public class SeletionLv extends Scene {
         ImageLoader imageLoader = getImageLoader();
 
         changeBackground(getImageLoader().getIcon("seletion"));
-
-        JLabel totalStar = new JLabel();
-        totalStar.setText("10/30");
-        totalStar.setFont(new Font("Dimbo", Font.PLAIN, 75));
-
-        cm.setBounds(totalStar, CM.grid(12, -1.5, CM.size(25, CMFlag.BY_H)));
-        add(totalStar);
 
         JButton backBtn = new JButton();
         cm.setIcon(backBtn, getImageLoader().getIcon("closebtn"), CM.size(13, CMFlag.BY_H));

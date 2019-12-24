@@ -12,8 +12,8 @@ import javax.swing.*;
 import java.util.function.Consumer;
 
 public class PotFrame extends JFrame {
-    static final int width = 1200;
-    static final int height = 700;
+    static final int width = 900;
+    static final int height = 525;
 
     private boolean turnedOn = false;
     private boolean cooking = false;

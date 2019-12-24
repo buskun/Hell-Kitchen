@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Character {
-    private static int pixelPerMove = 15;
+    private static final int pixelPerMove = 15;
     private double percentPPMHeight;
     private double percentPPMWidth;
     private JLabel characterIcon = new JLabel();
@@ -32,6 +32,11 @@ public class Character {
     private HashMap<String, Boolean> interactable;
     private WindowFrame window;
     private BoundingArea map;
+    private JFrame refrigeratorFrame;
+    private JFrame drinkFrame;
+    private JFrame cuttingFrame;
+    private JFrame panFrame;
+    private JFrame potFrame;
 
     private String holdingItem = "";
 
@@ -84,22 +89,20 @@ public class Character {
 
     public void doAction() {
         if (Boolean.TRUE.equals(interactable.get("refrigerator"))) {
-            JFrame refrigeratorFrame = new RefrigeratorFrame(imageLoader, audioLoader, this::holdItem);
-            refrigeratorFrame.setVisible(true);
+            refrigeratorFrame = new RefrigeratorFrame(imageLoader, audioLoader, this::holdItem);
         }
         if (Boolean.TRUE.equals(interactable.get("Drinking")) && holdingItem.equals("")) {
-            JFrame waterFrame = new DrinkFrame(imageLoader, audioLoader, this::holdItem);
-            waterFrame.setVisible(true);
+            drinkFrame = new DrinkFrame(imageLoader, audioLoader, this::holdItem);
         }
         if (!holdingItem.equals("")) {
             if (Boolean.TRUE.equals(interactable.get("Cutting")) && imageLoader.has("cutting-" + holdingItem)) {
-                JFrame cuttingFrame = new CuttingFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                cuttingFrame = new CuttingFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
             }
             if (Boolean.TRUE.equals(interactable.get("pan")) && imageLoader.has("pan-" + holdingItem + "-1")) {
-                JFrame panFrame = new PanFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                panFrame = new PanFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
             }
             if (Boolean.TRUE.equals(interactable.get("pot")) && imageLoader.has("pot-" + holdingItem + "-1")) {
-                JFrame potFrame = new PotFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
+                potFrame = new PotFrame(imageLoader, audioLoader, holdingItem, this::holdItem);
             }
             if (Boolean.TRUE.equals(interactable.get("trash"))) {
                 holdItem("");
@@ -124,5 +127,13 @@ public class Character {
             cm.setIcon(characterIcon, imageLoader.getIcon("avatar-" + holdingItem));
         }
         cm.recalculateIcon(characterIcon);
+    }
+
+    public void gameEnd() {
+        if (refrigeratorFrame != null) refrigeratorFrame.dispose();
+        if (drinkFrame != null) drinkFrame.dispose();
+        if (cuttingFrame != null) cuttingFrame.dispose();
+        if (panFrame != null) panFrame.dispose();
+        if (potFrame != null) potFrame.dispose();
     }
 }

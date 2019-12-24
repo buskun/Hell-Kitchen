@@ -7,7 +7,6 @@ import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -17,8 +16,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.function.Consumer;
 
 public class CuttingFrame extends JFrame implements MouseMotionListener {
-    static final int width = 1400;
-    static final int height = 900;
+    static final int width = 700;
+    static final int height = 450;
 
     JLabel cursor = new JLabel();
 
