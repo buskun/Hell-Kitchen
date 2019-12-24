@@ -3,10 +3,13 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.WindowFrame;
+import game.Data;
 import utility.cm.CM;
 import utility.cm.CMFlag;
+import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,8 +23,10 @@ public class Result extends Scene {
         imageLoader.add("background", "resources/Result/background.png");
         imageLoader.add("exit", "resources/menu/exit.png");
         imageLoader.add("exitpress", "resources/menu/exitp.png");
-
-
+    }
+    public void loadAudio(AudioLoader audioLoader) {
+        audioLoader.add("theme", "resources/soundtrack/" + Data.songList[(int) getController().getState("song")]);
+        audioLoader.add("timeRunout", "resources/soundtrack/timeRunout.wav");
     }
     @Override
     public void init() {
@@ -68,11 +73,7 @@ public class Result extends Scene {
         cm.setBounds(orderFail, CM.grid(62, 30, CM.size(25, CMFlag.BY_H)));
         add(orderFail);
 
-        JLabel totalScore = new JLabel(Integer.toString((int)getController().getState("score")));
-        totalScore.setText("0");
-        totalScore.setFont(new Font("Dimbo", Font.PLAIN, 40));
-        cm.setBounds(totalScore, CM.grid(62, 42, CM.size(25, CMFlag.BY_H)));
-        add(totalScore);
+
 
 
 
@@ -91,11 +92,12 @@ public class Result extends Scene {
 
     @Override
     public void onStart() {
+        getAudioLoader().get("timeRunout").loop(Clip.LOOP_CONTINUOUSLY);
 
     }
 
     @Override
     public void onStop() {
-
+        getAudioLoader().get("timeRunout").stop();
     }
 }

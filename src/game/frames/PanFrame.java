@@ -7,6 +7,7 @@ import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.util.function.Consumer;
 
@@ -44,6 +45,7 @@ public class PanFrame extends JFrame {
         onBtn.setBorderPainted(false);
         contentPane.add(onBtn);
         onBtn.addActionListener(e -> {
+            audioLoader.get("Frying").loop(Clip.LOOP_CONTINUOUSLY);
             cm.setIcon(contentPane, imageLoader.getIcon("pan-on"));
             cm.recalculateIcon(contentPane);
             remove(onBtn);
@@ -62,6 +64,7 @@ public class PanFrame extends JFrame {
             if (cooking && cookedState == 2) {
                 if (interval != null) interval.run();
                 getItemListener.accept(holdingItem + "-fried");
+                audioLoader.get("Frying").stop();
             }
 
             dispose();

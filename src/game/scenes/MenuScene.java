@@ -3,9 +3,12 @@ package game.scenes;
 import base.Controller;
 import base.Scene;
 import base.WindowFrame;
+import game.Data;
 import utility.cm.CM;
+import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class MenuScene extends Scene {
@@ -25,6 +28,10 @@ public class MenuScene extends Scene {
         imageLoader.add("exitpress", "resources/menu/exitp.png");
         imageLoader.add("setting","resources/menu/settingbtn.png");
         imageLoader.add("settingpress","resources/menu/settingbtnP.png");
+    }
+    public void loadAudio(AudioLoader audioLoader) {
+        audioLoader.add("theme", "resources/soundtrack/" + Data.songList[(int) getController().getState("song")]);
+        audioLoader.add("menuTheme", "resources/soundtrack/menuTheme.wav");
     }
 
     @Override
@@ -78,11 +85,11 @@ public class MenuScene extends Scene {
 
     @Override
     public void onStart() {
-
+        getAudioLoader().get("menuTheme").loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     @Override
     public void onStop() {
-
+        getAudioLoader().get("menuTheme").stop();
     }
 }

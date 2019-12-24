@@ -7,6 +7,7 @@ import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -34,7 +35,6 @@ public class CuttingFrame extends JFrame {
         cm.setIcon(contentPane, imageLoader.getIcon("Bgcutting"), CM.size(100, 100));
         cm.setBounds(contentPane, CM.grid(0, 0, 100, 100));
         contentPane.setLayout(null);
-
 
         JLabel food = new JLabel();
         cm.setIcon(food, imageLoader.getIcon("cutting-" + holdingItem), CM.size(20, CMFlag.BY_H));
@@ -65,7 +65,6 @@ public class CuttingFrame extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-
                 if (e.getX() <= food.getLocation().getX()
                         && e.getX() >= food.getLocation().getX() + food.getWidth()) {
                     validCut.set(false);
@@ -79,12 +78,13 @@ public class CuttingFrame extends JFrame {
                 super.mouseClicked(e);
                 validCut.set(true);
                 dragStartingPosition.set(e.getPoint());
+                audioLoader.get("cut").loop(1);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-
+                audioLoader.get("cut").stop();
                 dragStoppingPosition.set(e.getPoint());
 
                 if (dragStartingPosition.get() != null && dragStoppingPosition.get() != null) {

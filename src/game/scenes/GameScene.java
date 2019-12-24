@@ -16,13 +16,8 @@ import utility.loader.ImageLoader;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -214,6 +209,10 @@ public class GameScene extends Scene {
     @Override
     public void loadAudio(AudioLoader audioLoader) {
         audioLoader.add("theme", "resources/soundtrack/" + Data.songList[(int) getController().getState("song")]);
+        audioLoader.add("boil", "resources/soundtrack/Boil 1.wav");
+        audioLoader.add("cut", "resources/soundtrack/cuttingLettuce.wav");
+        audioLoader.add("soda", "resources/soundtrack/Soda Can.wav");
+        audioLoader.add("Frying", "resources/soundtrack/Frying.wav");
     }
 
     private Recipe[] recipes = new Recipe[]{
@@ -362,11 +361,11 @@ public class GameScene extends Scene {
     public void onKeyPress(KeyEvent e) {
         if (isKeyPressed(KeyEvent.VK_UP))
             character.move(0, -1);
-        if (isKeyPressed(KeyEvent.VK_DOWN))
+        else if (isKeyPressed(KeyEvent.VK_DOWN))
             character.move(0, 1);
-        if (isKeyPressed(KeyEvent.VK_LEFT))
+        else if (isKeyPressed(KeyEvent.VK_LEFT))
             character.move(-1, 0);
-        if (isKeyPressed(KeyEvent.VK_RIGHT))
+        else if (isKeyPressed(KeyEvent.VK_RIGHT))
             character.move(1, 0);
     }
 
@@ -463,6 +462,7 @@ public class GameScene extends Scene {
     @Override
     public void onStop() {
         getAudioLoader().get("theme").stop();
+        getAudioLoader().get("boil1").stop();
         timer.run();
         orderTimer.run();
     }

@@ -42,6 +42,7 @@ public class DrinkFrame extends JFrame {
                     if (drop != null && cup != null && drop.getBounds().intersects(cup.getBounds())) {
                         dropAnimation.stop();
                         dropAnimation = null;
+                        audioLoader.get("soda").loop(1);
 
                         cm.setIcon(cup, imageLoader.getIcon(currentDrink + "-" + currentSize));
                         cm.recalculateIcon(cup);

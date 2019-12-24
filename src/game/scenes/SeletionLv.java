@@ -53,7 +53,7 @@ public class SeletionLv extends Scene {
 
         JButton backBtn = new JButton();
         cm.setIcon(backBtn, getImageLoader().getIcon("closebtn"), CM.size(13, CMFlag.BY_H));
-        cm.setBounds(backBtn, CM.grid(82, 5,  CM.size(13, CMFlag.BY_H)));
+        cm.setBounds(backBtn, CM.grid(82, 5, CM.size(13, CMFlag.BY_H)));
         backBtn.setOpaque(false);
         backBtn.setContentAreaFilled(false);
         backBtn.setBorderPainted(false);
@@ -61,16 +61,15 @@ public class SeletionLv extends Scene {
         backBtn.addActionListener(e -> getController().changeScene("menu"));
         add(backBtn);
 
-        java.util.List<String> levelIconNameList = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-        java.util.List<String> levelSceneNameList = Arrays.asList("gameScene1","gameScene2");
+        java.util.List<String> levelIconNameList = Arrays.asList("1", "2", "3", "4", "5");
         java.util.List<JButton> levelButtonList = IntStream.range(0, levelIconNameList.size())
                 .mapToObj(index -> {
                     JButton btn = new JButton();
-                    cm.setIcon(btn, imageLoader.getIcon(levelIconNameList.get(index)), CM.size(15, CMFlag.BY_H));
+                    cm.setIcon(btn, imageLoader.getIcon(levelIconNameList.get(index)), CM.size(25, CMFlag.BY_H));
                     cm.setBounds(btn, CM.grid(
-                            7 + 19 * (index % 5),
-                            30 + 30 * Math.floorDiv(index, 5),
-                            CM.size(15, CMFlag.BY_H)));
+                            5 + 19 * (index % 5),
+                            50 + 30 * Math.floorDiv(index, 5),
+                            CM.size(25, CMFlag.BY_H)));
 
                     btn.setOpaque(false);
                     btn.setContentAreaFilled(false);
@@ -78,30 +77,12 @@ public class SeletionLv extends Scene {
 
                     add(btn);
 
-                    if (levelSceneNameList.size() > index)
-                        btn.addActionListener(e -> getController().changeScene(levelSceneNameList.get(index)));
+                    btn.addActionListener(e -> {
+                        getController().changeState("level", index + 1);
+                        getController().changeScene("gameScene");
+                    });
+
                     return btn;
-                })
-                .collect(Collectors.toList());
-        java.util.List<JLabel[]> levelStarsList = IntStream.range(0, levelIconNameList.size())
-                .mapToObj(index -> {
-                    JLabel[] starList = new JLabel[3];
-
-                    for (int i = 0; i < starList.length; i++) {
-                        JLabel star = new JLabel();
-                        cm.setIcon(star, imageLoader.getIcon("star"), CM.size(10, CMFlag.BY_H));
-                        cm.setBounds(star, CM.grid(
-                                3 + 19 * (index % 5) + 5.5 * i,
-                                45.5 + 30 * Math.floorDiv(index, 5),
-                                CM.size(10, CMFlag.BY_H)
-                        ));
-
-                        add(star);
-
-                        starList[i] = star;
-                    }
-
-                    return starList;
                 })
                 .collect(Collectors.toList());
 
@@ -138,6 +119,8 @@ public class SeletionLv extends Scene {
                     }
                 })
         );*/
+
+        cm.recalculate();
 
         ready();
     }

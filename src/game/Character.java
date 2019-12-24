@@ -54,7 +54,7 @@ public class Character {
         scene.add(characterIcon);
     }
 
-    public void move(int x, int y) {
+    synchronized public void move(int x, int y) {
         interactable.keySet().forEach(key -> interactable.put(key, false));
 
         DimensionStore characterSize = cm.getScaledSize(characterIcon);

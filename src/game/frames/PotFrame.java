@@ -7,6 +7,7 @@ import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
 import utility.loader.ImageLoader;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.util.function.Consumer;
 
@@ -44,6 +45,7 @@ public class PotFrame extends JFrame {
         onBtn.setBorderPainted(false);
         contentPane.add(onBtn);
         onBtn.addActionListener(e -> {
+            audioLoader.get("boil").loop(Clip.LOOP_CONTINUOUSLY);
             cm.setIcon(contentPane, imageLoader.getIcon("pot-on"));
             cm.recalculateIcon(contentPane);
             remove(onBtn);
@@ -59,6 +61,7 @@ public class PotFrame extends JFrame {
         contentPane.add(offBtn);
 
         offBtn.addActionListener(e -> {
+            audioLoader.get("boil").stop();
             if (cooking && cookedState == 2) {
                 getItemListener.accept(holdingItem + "-boiled");
             }

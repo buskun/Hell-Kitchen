@@ -26,7 +26,7 @@ public class MainApplication {
         gameController.changeState("song", 1);
 
         gameController.init();
-        gameController.changeScene("gameScene");
+        gameController.changeScene("menu");
         gameController.start();
     }
 }
