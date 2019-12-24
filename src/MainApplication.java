@@ -20,10 +20,11 @@ public class MainApplication {
         Utility.addCustomFont("Dimbo", "resources/font/Dimbo.ttf");
         Utility.setDefaultFont(Utility.getFont("Dimbo").deriveFont(20f));
 
-        gameController.changeState("level", 5);
+        gameController.changeState("level", 1);
         gameController.changeState("difficulty", 1);
         gameController.changeState("volume", 50);
         gameController.changeState("song", 0);
+        gameController.changeState("nick_name", "Bird");
 
         gameController.init();
         gameController.changeScene("menu");

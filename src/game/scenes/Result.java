@@ -4,6 +4,7 @@ import base.Controller;
 import base.Scene;
 import base.WindowFrame;
 import game.Data;
+import utility.Utility;
 import utility.cm.CM;
 import utility.cm.CMFlag;
 import utility.loader.AudioLoader;
@@ -25,6 +26,7 @@ public class Result extends Scene {
         imageLoader.add("exit", "resources/menu/exit.png");
         imageLoader.add("exitpress", "resources/menu/exitp.png");
     }
+
     public void loadAudio(AudioLoader audioLoader) {
         audioLoader.add("theme", "resources/soundtrack/" + Data.songList[(int) getController().getState("song")]);
         audioLoader.add("timeRunout", "resources/soundtrack/timeRunout.wav");
@@ -34,6 +36,7 @@ public class Result extends Scene {
     private JLabel level = new JLabel("0");
     private JLabel numberOrder = new JLabel();
     private JLabel totalOrderScore = new JLabel();
+    private JLabel signature = new JLabel();
 
     @Override
     public void init() {
@@ -87,6 +90,11 @@ public class Result extends Scene {
         cm.setBounds(totalScore, CM.grid(62, 42, CM.size(25, CMFlag.BY_H)));
         add(totalScore);
 
+        cm.setBounds(signature, CM.grid(36, 80, 15, 10));
+        signature.setHorizontalAlignment(SwingConstants.CENTER);
+        signature.setFont(Utility.getFont("Dimbo").deriveFont(40f));
+        add(signature);
+
         cm.recalculate();
         ready();
     }
@@ -102,8 +110,8 @@ public class Result extends Scene {
         totalOrderScore.setText(Integer.toString(getController().getState("score") != null ? (int) getController().getState("score") : 0));
         totalScore.setText(Integer.toString(getController().getState("score") != null ? (int) getController().getState("score") : 0));
         level.setText(Integer.toString((int) getController().getState("level")));
+        signature.setText((String) getController().getState("nick_name"));
         getAudioLoader().get("timeRunout").loop(Clip.LOOP_CONTINUOUSLY);
-
     }
 
     @Override
