@@ -120,4 +120,8 @@ public abstract class ResourceLoader<T> {
     }
 
     public T getFallback() { return fallback; }
+
+    public boolean has(String name) {
+        return loadedList.get(name) != null;
+    }
 }

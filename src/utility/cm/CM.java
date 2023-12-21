@@ -346,7 +346,7 @@ public class CM extends ComponentAdapter {
         ArrayList<Runnable> queue = new ArrayList<>();
 
         synchronized (calculationComponentList) {
-            for (JComponent component : calculationComponentList) {
+            for (JComponent component : (ArrayList<JComponent>) calculationComponentList.clone()) {
                 Rectangle bound = component.getBounds();
 
                 StateManager<Boolean> edited = Utility.useState(false);
@@ -397,6 +397,13 @@ public class CM extends ComponentAdapter {
 
     public boolean isReady() {
         return ready;
+    }
+
+    synchronized public void remove(JComponent component) {
+        calculationComponentList.remove(component);
+        pointCalculationList.removeIf(cm -> cm.getComponent() == component);
+        dimensionCalculationList.removeIf(cm -> cm.getComponent() == component);
+        iconCalculationList.removeIf(cm -> cm.getComponent() == component);
     }
 
     @Override

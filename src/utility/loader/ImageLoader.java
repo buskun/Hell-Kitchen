@@ -12,6 +12,7 @@ public class ImageLoader extends ResourceLoader<Image> {
             try {
                 return ImageIO.read(file);
             } catch (Exception exception) {
+                System.err.println("File name: " + file);
                 exception.printStackTrace();
             }
 

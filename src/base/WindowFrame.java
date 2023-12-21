@@ -10,6 +10,7 @@ public class WindowFrame extends JFrame {
     public WindowFrame(String title, Dimension size, Point position) {
         setTitle(title);
         setBounds(position.x, position.y, size.width, size.height);
+        setResizable(false);
 
         getContentPane().setLayout(new BorderLayout());
 
